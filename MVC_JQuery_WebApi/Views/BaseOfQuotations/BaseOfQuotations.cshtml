@@ -1,0 +1,572 @@
+﻿@using SharedCRCMS.Service
+@using StandartLibrary.Models.EntityModels.Counter
+@{
+    ViewBag.Title = (@StandartLibrary.Lang.Resources.Base_of_quotes_5469);
+    var appSetting = SharedCRCMS.Service.AppSettingService.AppSetting;
+    var showQuotationHiddenAreas = appSetting.Content.ShowQuotationHiddenAreas;
+    var displayQuotation = showQuotationHiddenAreas ? "block" : "none";
+
+    var disableChangeComponent = appSetting.Content.DisableChangeComponent;
+    var disabled = disableChangeComponent ? "disabled" : "";
+}
+
+@{ UploadQuotationDialogModel uploadQuotationDialogModel = new UploadQuotationDialogModel
+    {
+        ShowQuotationHiddenAreas = showQuotationHiddenAreas,
+        DisableChangeComponent = disableChangeComponent,
+        DisplayQuotation = displayQuotation,
+        Disabled = disabled,
+        AppSetting = appSetting,
+    };}
+
+@{
+    Html.RenderPartial("UploadQuotationDialog", uploadQuotationDialogModel);
+}
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped table-bordered table-advance table-hover valign-table-th" style="margin:0px !important;" id="Main_datatableAjax">
+            <thead>
+                <tr role="row" class="heading">
+                    <th class="th1">@(StandartLibrary.Lang.Resources.Group_5732)</th>
+                    <th class="th1" style="width:100px">@(StandartLibrary.Lang.Resources.Outfit_5492)</th>
+                    <th class="th1">@(StandartLibrary.Lang.Resources.Customer_5493)</th>
+                    <th class="th1">@(StandartLibrary.Lang.Resources.Division_5494)</th>
+                    <th class="th1">@(StandartLibrary.Lang.Resources.Component_5495)</th>
+                    <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.Model_5765))</th>
+                    <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.quotes_6887 + "<br />" + @StandartLibrary.Lang.Resources.beginning_6528 + "<br />" + @StandartLibrary.Lang.Resources.date_of_5567))</th>
+                    <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.quotes_6887 + "<br />" + @StandartLibrary.Lang.Resources.graduation_6888))</th>
+                    <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.quotes_6887 + "<br />" + @StandartLibrary.Lang.Resources.Actual_6891 + "<br />" + @StandartLibrary.Lang.Resources.preparation_time_6892))</th>
+                    <th class="th1">@Html.Raw((StandartLibrary.Lang.Resources.Reasons_for_pauses_5502 + "<br />" + @StandartLibrary.Lang.Resources.Counter_Reason))</th>
+                    <th class="th1">@Html.Raw((StandartLibrary.Lang.Resources.Approved_Denial_6893 + "<br />" + @StandartLibrary.Lang.Resources.Counter_Status))</th>
+                    <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.Total_qty_6898 + "<br />" + @StandartLibrary.Lang.Resources.Counter_Waiting_Time))</th>
+                    <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.approval_rejection_6900 + "<br />" + @StandartLibrary.Lang.Resources.date_of_5567))</th>
+                    <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.order_6901 + "<br />" + @StandartLibrary.Lang.Resources.date_of_5567))</th>
+                    <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.arrival_of_SP_6904 + "<br />" + @StandartLibrary.Lang.Resources.date_of_5567))</th>
+                    <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.delivery_of_spare_parts_6906 + "<br />" + StandartLibrary.Lang.Resources.Counter_Delivery_Time))</th>
+                    <th class="th1">@Html.Raw((StandartLibrary.Lang.Resources.QuotationAmount))</th>
+                </tr>
+                <tr role="row" class="filter">
+                    <td>
+                        <select type="text" class="form-control form-filter input-sm" id="group_id"></select>
+                    </td>
+                    <td>
+                        <select type="text" class="form-control form-filter input-sm" style="width:50px" id="document_id"></select>
+                    </td>
+                    <td>
+                        <select type="text" class="form-control form-filter input-sm" id="customer_id"></select>
+                    </td>
+                    <td>
+                        <select type="text" class="form-control form-filter input-sm" id="division"></select>
+                    </td>
+                    <td>
+                        <select type="text" class="form-control form-filter input-sm" id="smcsComponentDescription"></select>
+                    </td>
+                    <td>
+                        <select type="text" class="form-control form-filter input-sm" id="model_id"></select>
+                    </td>
+                    @*<td></td>*@
+                    <td></td>
+                    <td></td>
+                    @*<td></td>*@
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    @*<td></td>*@
+                    @*<td></td>*@
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    @*<td></td>*@
+                    <td></td>
+
+                    <td></td>
+                    @*<td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>*@
+                    <td></td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+@section Styles
+{
+    <style>
+        .valign-table-th th {
+            vertical-align: middle !important;
+        }
+    </style>
+}
+
+@section Scripts
+{
+    <script>
+        var searchResult = { searchId: "" }
+        function GetTable() {
+            $("#Main_datatableAjax").dataTable().fnDestroy();
+            var gridOnApproval = new Datatable();
+            gridOnApproval.init({
+                src: $("#Main_datatableAjax"),
+                onSuccess: function (grid) {
+                    // execute some code after table records loaded
+                },
+                onError: function (grid) {
+                    // execute some code on network or other general error
+                },
+                onDataLoad: function (grid) {
+                    // execute some code on ajax data load
+                },
+                loadingMessage: 'Loading...',
+                dataTable: {
+                    "bSort": false,
+                    "ordering": false,
+                    "bStateSave": false, // save datatable state(pagination, sort, etc) in cookie.
+                    "pageLength": 10, // default record count per page
+                    "timeout": 100000,
+                    "language": JSON.parse('@(@Html.Raw(HttpUtility.JavaScriptStringEncode(StandartLibrary.Lang.Resources.JqueryDataTableLanguage)))'),
+                    "ajax": {
+                        "url": "/BaseOfQuotations/Ajax_GetList", // ajax source
+                        "data": {
+                            document_id: $("#document_id").val(),
+                            document_id: $("#document_id").val(),
+                            division: $("#division").val(),
+                            customer_id: $("#customer_id").val(),
+                            smcsCode: $("#smcsComponentDescription").val(),
+                            model_id: $("#model_id").val(),                         
+                            QuatationDateOfEntry_Begin: $("#QuatationDateOfEntry_Begin").val(),
+                            QuatationDateOfEntry_End: $("#QuatationDateOfEntry_End").val(),
+                            group_id: $("#group_id").val()
+                        }
+                    },
+                    "columns": [
+                        {
+                            "data": "GroupName",
+                            "mRender": function (data, type, full) {
+                                return full.GroupName;
+                            }
+                        },
+                        {
+                            "data": "DocumentId",
+                            "mRender": function (data, type, full) {
+                                return full.DocumentNumber;
+                            }
+                        },
+                        {
+                            "data": "CustomerName",
+                            "mRender": function (data, type, full) {
+                                return "<span class='OnApprovalCustomerName_" + full.DocumentId + "'>" + full.CustomerName + "</span>";
+                            }
+                        },
+                        {
+                            "data": "SegmentText",
+                            "mRender": function (data, type, full) {
+                                return full.Division;
+                            }
+                        },
+                        {
+                            "data": "smcsComponentDescription",
+                            "mRender": function (data, type, full) {
+                                return full.smcsComponentDescription;
+                            }
+                        },
+                        {
+                            "data": "ModelName",
+                            "mRender": function (data, type, full) {
+                                return full.ModelName;
+                            }
+                        },
+                        { "data": "QuatationStartDate", "mRender": function (data, type, full) { return full.QuatationStartDate; } },
+                        { "data": "QuatationEndDate", "mRender": function (data, type, full) { return full.QuatationEndDate; } },                        
+                        { "data": "ActualPreparationTimeQuatation", "mRender": function (data, type, full) { return full.ActualPreparationTimeQuatation; } },
+                        { "data": "CausesOfPauses", "mRender": function (data, type, full) { return full.CausesOfPauses; } },
+                        { "data": "Approved_Rejection", "mRender": function (data, type, full) { return full.Approved_Rejection; } },                                                
+                        { "data": "TotalNumberOfDaysWaitingForApproval_Rejection", "mRender": function (data, type, full) { return full.TotalNumberOfDaysWaitingForApproval_Rejection; } },
+                        { "data": "DateOfApproval_Rejection", "mRender": function (data, type, full) { return full.DateOfApproval_Rejection; } },
+                        { "data": "OrderDate", "mRender": function (data, type, full) { return full.OrderDate; } },                        
+                        { "data": "DateOfArrivalOfSparePart", "mRender": function (data, type, full) { return full.DateOfArrivalOfSparePart; } },
+                        { "data": "ActualDeliveryTimeForSparePart", "mRender": function (data, type, full) { return full.ActualDeliveryTimeForSparePart; } },
+                        {
+                            "data": "QuotationAmount",
+                            "mRender": function (data, type, full) {
+                                return (full.QuotationAmount != null ? full.QuotationAmount : "") +" "+ (full.QuotationCurrency != null ? full.QuotationCurrency : "");
+                            }
+                        }                       
+                    ],
+                    "order": [[1, "asc"]],
+                    "fnInitComplete": function (oSettings, json) {
+                        searchResult.searchId = json.searchId;
+
+                        $('#QuatationDateOfEntry_Begin, #QuatationDateOfEntry_End').change(function () {
+                            delay(function () { GetTable(); }, 500);
+                        });
+                    }
+                }
+            });
+        }
+        function NoSparePartCheck() {
+            var isChecked = $('#NotSpareParts').is(':checked');
+
+            $("#SparePartsInStock").prop("disabled", isChecked);
+            $("#SparePartsInWarehousesRK").prop("disabled", isChecked);
+            $("#isSparePartsProvideTheCustomer").prop("disabled", isChecked);
+
+            $("#SparePartsInStock").prop("checked", false);
+            $("#SparePartsInWarehousesRK").prop("checked", false);
+            $("#isSparePartsProvideTheCustomer").prop("checked", false);
+        }
+    </script>
+
+    <script>
+        Dropzone.autoDiscover = false;
+
+    var ShowUploadQuotationdDialog_documentId=0;
+    var ShowUploadQuotationdDialog_existsUploaded=false;
+    var myDropzoneQuotationTruck = new Dropzone("#Quotationfile-dropzoneTruck,#Quotationfile-dropzoneAvia", {
+        url: "/AJAX/UploadedQuotation?documentId=0"/*,
+        acceptedFiles: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" */
+    });
+    myDropzoneQuotationTruck.on("addedfile", function (file) {
+        if (this.files[1] != null) {
+            this.removeFile(this.files[0]);
+        }
+    });
+    myDropzoneQuotationTruck.on("success", function (file, responseText) {
+        $("#CostParts").val(responseText.CostParts);
+        $("#CostWork").val(responseText.CostWork);
+        $("#CostRecovery").val(responseText.CostRecovery);
+        $("#CostTransportation").val(responseText.CostTransportation);
+        $("#CostReman").val(responseText.CostReman);
+        checkCost("change");
+        ShowUploadQuotationdDialog_existsUploaded = true;
+        RefreshQuotationUploadsList(ShowUploadQuotationdDialog_documentId);
+     });
+
+    var myDropzoneQuotationAvia = new Dropzone("#Quotationfile-dropzoneAvia", {
+        url: "/AJAX/UploadedQuotation?documentId=0"/*,
+        acceptedFiles: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" */
+    });
+
+    myDropzoneQuotationAvia.on("addedfile", function (file) {
+        // alert(this.files[this.files.length-1].fileName);
+        if (this.files[1] != null) {
+            this.removeFile(this.files[0]);
+        }
+    });
+    myDropzoneQuotationAvia.on("success", function (file, responseText) {
+        ShowUploadQuotationdDialog_existsUploaded = true;
+        RefreshQuotationUploadsList(ShowUploadQuotationdDialog_documentId);
+    });
+
+    function RemovedFile2(uploadId) {
+        if (confirm("@(StandartLibrary.Lang.Resources.Are_you_sure_you_want_to_delete_5517)"))
+        {
+            $.ajax({
+                type: "POST",
+                url: "/AJAX/RemoveUpload",
+                data: { uploadId: uploadId },
+                success: function (data) {
+                    RefreshQuotationUploadsList(ShowUploadQuotationdDialog_documentId);
+                },
+                error: myErrorFunction
+            });
+        }
+    }
+    function Add_UploadQuotationDialog_CustomerName()
+    {
+        var customerName = $("#modal_UploadQuotationDialog_CustomerNameAddText").val();
+        $("#modal_UploadQuotationDialog_CustomerNameList").html($("#modal_UploadQuotationDialog_CustomerNameList").html() +  "<div  class=\"CustomerNameItem\">" + customerName + "</div>");
+        $("#modal_UploadQuotationDialog_CustomerNameAddText").val(null).trigger('change');
+    }
+    function Add_UploadQuotationDialog_EmailName()
+    {
+        var EmailName = $("#modal_UploadQuotationDialog_EmailNameAddText").val();
+        $("#modal_UploadQuotationDialog_EmailNameList").html($("#modal_UploadQuotationDialog_EmailNameList").html() +  "<div  class=\"EmailNameItem\">" + EmailName + "</div>");
+        $("#modal_UploadQuotationDialog_EmailNameAddText").val(null).trigger('change');
+        viewUserList();
+    }
+    jQuery(document).ready(function () {
+        if (jQuery().datepicker) { $('.date-picker').datepicker({ rtl: Metronic.isRTL(), orientation: "left", autoclose: true }); }
+        SetSelect2("document_id", "", "", "/AJAX/GetDocumentNumber", 3, true, false, searchResult);
+        SetSelect2("customer_id", "", "", "/AJAX/GetCustomer", 3, true, false, searchResult);
+        SetSelect2("division", "", "", "/AJAX/GetDivision", 2, true, false, searchResult);
+        SetSelect2("smcsComponentDescription", "", "", "/AJAX/GetSmcsCode", 3, true, false, searchResult);
+        SetSelect2("model_id", "", "", "/AJAX/GetModel", 3, true, false, searchResult);
+        SetSelect2("group_id", "", "", "/AJAX/GetGroup", 2, true, false, searchResult);
+        $('#document_id, #customer_id, #division, #model_id, #smcsComponentDescription,#group_id').change(function () {
+            delay(function () { GetTable(); }, 500);
+        });
+
+        GetTable();
+        $('#CostParts, #CostWork, #CostRecovery, #CostTransportation, #CostReman').blur(function () { checkCost("blur")});
+        $('#CostParts, #CostWork, #CostRecovery, #CostTransportation, #CostReman').change(function () { checkCost("change") });
+
+        SetSelect2("modal_UploadQuotationDialog_CustomerNameAddText", "", "", "/AJAX/GetCustomerPSSR", 3, true, false, null );
+        SetSelect2("modal_UploadQuotationDialog_EmailNameAddText", "", "", "/AJAX/GetEmailPSSR", 3, true, false, null );
+
+    });
+
+    function RefreshQuotationUploadsList(documentId)
+    {
+        $.ajax({
+            type: "POST",
+            url: "/AJAX/GetUploadsList",
+            data: { documentId: documentId, typeId: 17 },
+            success: function (data) {
+                if (data.length > 40) {
+                    ShowUploadQuotationdDialog_existsUploaded = true;
+                    data = data.replace(new RegExp('RemovedFile', 'g'), 'RemovedFile2');
+                    data = data.replace(new RegExp('NotApplicable', 'g'), 'Неприменим');
+                    $("#btnNotApplicable").hide();
+                }
+                else {
+                    $("#btnNotApplicable").show();
+                }
+                $('#QuotationUploadsList').html(data);
+            },
+            error: myErrorFunction
+        });
+    }
+     function viewUserList() {
+        $('#modal_UploadQuotationDialog_EmailNameList').hide();
+        if ($('#modal_UploadQuotationDialog_EmailNameList').children()) {
+            if ($('#modal_UploadQuotationDialog_EmailNameList').children().length > 0) {
+                $('#modal_UploadQuotationDialog_EmailNameList').show();
+            } else {
+                $('#modal_UploadQuotationDialog_EmailNameList').hide();
+            }
+        }
+    }
+
+    viewUserList();
+
+    function btnEdit(documentId){
+        ShowUploadQuotationdDialog_documentId=documentId;
+        ShowUploadQuotationdDialog_existsUploaded = false;
+
+        myDropzoneQuotationTruck.options.url = "/AJAX/UploadedQuotation?quotationType=1&documentId=" + ShowUploadQuotationdDialog_documentId;
+        myDropzoneQuotationAvia.options.url = "/AJAX/UploadedQuotation?quotationType=2&documentId=" + ShowUploadQuotationdDialog_documentId;
+        RefreshQuotationUploadsList(ShowUploadQuotationdDialog_documentId);
+
+        $("#modal_UploadQuotationDialog_CustomerNameList").html("<div class=\"CustomerNameItem\">" + $(".InProcessCustomerName_" + ShowUploadQuotationdDialog_documentId).text() + "</div>");
+        $("#modal_UploadQuotationDialog_EmailNameList").html("");
+
+        $.ajax({
+            type: "POST",
+            url: "/AJAX/GetCounterItem",
+            data: {
+                documentId: ShowUploadQuotationdDialog_documentId,
+            },
+            success: function (data) {
+                $('#CostParts').val(data.PreparingQuotation_CostParts);
+                $('#CostWork').val(data.PreparingQuotation_CostWork);
+                $('#CostRecovery').val(data.PreparingQuotation_CostRecovery);
+                $('#CostTransportation').val(data.PreparingQuotation_CostTransportation);
+                $('#CostReman').val(data.PreparingQuotation_CostReman);
+                $('#CostQuotation').val(data.PreparingQuotation_CostPreQuotation);
+                if (data.PreparingQuotation_CurrencyType == null) {
+                    $("#currencyType@(appSetting.Content.AvailableCurrencyList[appSetting.Content.DefaultCurrency])").click();
+                } else {
+                    $("#currencyType" + data.PreparingQuotation_CurrencyType).click();
+                }
+                $('#modal_UploadQuotationDialog_Comment').val(data.Comment);
+                $('#DeliveryTermsTruckDays').val(data.PreparingQuotation_DeliveryTermsTruckDays);
+                $('#DeliveryTermsAviaDays').val(data.PreparingQuotation_DeliveryTermsAviaDays);
+                $("#NotSpareParts").prop("checked", data.PreparingQuotation_IsNotSpareParts == true);
+                $("#SparePartsInStock").prop("checked", data.PreparingQuotation_SparePartsInStock == true);
+
+                $("#SparePartsInWarehousesRK").prop("checked", data.SparePartsInWarehousesRK == true);
+
+                NoSparePartCheck();
+
+                $("#modal_UploadQuotationDialog").modal();
+                $('.trStopPssr').hide();
+                $.ajax({
+                    url: '/AJAX/GetWOPssr',
+                    type: 'POST',
+                    contentType: 'application/json;',
+                    data: JSON.stringify({ DocumentId: documentId }),
+                    success: function(data) {
+                        if (data != null) {
+                            //$("#WOPssr").val(data.PssrEmail);
+                            $("#WOPssr").html(data.PssrEmail);
+                            if (data.PssrEmail === undefined || data.PssrEmail === null) {
+                                $("#woPssr").prop("checked", false);
+                            } else {
+                                $("#woPssr").prop("checked", true);
+                            }
+                        } else {
+                            Warning('pssr data is null!');
+                        }
+                        $('.trStopPssr').show();
+                    }
+                });
+            },
+            error: myErrorFunction
+        });
+
+    }
+    function UploadQuotationDialog_complete() {
+        var customerNameItems = [];
+        $('div[class="CustomerNameItem"]').each(function (index, item) {
+            customerNameItems[customerNameItems.length] = $(item).html();
+        });
+        var emailNameItems = [];
+        $('div[class="EmailNameItem"]').each(function (index, item) {
+            emailNameItems[emailNameItems.length] = $(item).html();
+        });
+        if(!ShowUploadQuotationdDialog_existsUploaded)
+        {
+            Warning("@Html.Raw(StandartLibrary.Lang.Resources.Download_quote_6909)");
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/BaseOfQuotations/Ajax_QuotationEdit",
+            data: {
+                documentId: ShowUploadQuotationdDialog_documentId,
+                IsNotSpareParts: $("#NotSpareParts").is(":checked"),
+                IsSparePartsInStock: $("#SparePartsInStock").is(":checked"),
+                DeliveryTermsTruckDays:$("#DeliveryTermsTruckDays").val(),
+                DeliveryTermsAviaDays:$("#DeliveryTermsAviaDays").val(),
+                CostParts:$("#CostParts").val(),
+                CostWork:$("#CostWork").val(),
+                CostRecovery:$("#CostRecovery").val(),
+                CostTransportation:$("#CostTransportation").val(),
+                CostReman:$("#CostReman").val(),
+                CostPreQuotation:$("#CostPreQuotation").val(),
+                CurrencyType: $("#currencyTypeValue").val(),
+                Comment: $("#modal_UploadQuotationDialog_Comment").val(),
+                Customers: customerNameItems,
+                Emails: emailNameItems
+            },
+            success: function (data) {
+                if (data.status == "ok") {
+                    $("#modal_UploadQuotationDialog").modal('toggle');
+                    GetTable();
+                }
+            },
+            error: myErrorFunction
+        });
+    }
+
+    var costBeginChange = false;
+    function checkCost(mode) {
+        var bAlert = true;
+        if (mode == "change")
+        {
+            costBeginChange = true;
+            bAlert = false;
+        }
+        var bCheck = true;
+        if (!$.isNumeric($("#CostParts").val().replace(new RegExp(',', 'g'), '.'))) {
+            if (bAlert) {
+                if (costBeginChange) Warning("@Html.Raw(StandartLibrary.Lang.Resources.Field_Cost_of_spare_parts_should_be_a_number_7001.Replace("\"","'"))");
+                costBeginChange = false;
+                $("#CostParts").focus();
+            }
+            bCheck = false;
+        }
+        else if (!$.isNumeric($("#CostWork").val().replace(new RegExp(',', 'g'), '.'))) {
+            if (bAlert) {
+                if (costBeginChange) Warning("@Html.Raw(StandartLibrary.Lang.Resources.Field_Work_must_be_a_number_7002.Replace("\"","'"))");
+                costBeginChange = false;
+                $("#CostWork").focus();
+            }
+            bCheck = false;
+        }
+        else if (!$.isNumeric($("#CostRecovery").val().replace(new RegExp(',', 'g'), '.'))) {
+            if (bAlert) {
+                if (costBeginChange) Warning("@Html.Raw(StandartLibrary.Lang.Resources.The_Restore_field_must_be_a_number_7003.Replace("\"","'"))");
+                costBeginChange = false;
+                $("#CostRecovery").focus();
+            }
+            bCheck = false;
+        }
+        else if (!$.isNumeric($("#CostTransportation").val().replace(new RegExp(',', 'g'), '.'))) {
+            if (bAlert) {
+                if (costBeginChange) Warning("@Html.Raw(StandartLibrary.Lang.Resources.The_Transportation_field_must_be_a_number_7004.Replace("\"","'"))");
+                costBeginChange = false;
+                $("#CostTransportation").focus();
+            }
+            bCheck = false;
+        }
+        else if (!$.isNumeric($("#CostReman").val().replace(new RegExp(',', 'g'), '.'))) {
+            if (bAlert)
+            {
+                if (costBeginChange) Warning("@Html.Raw(StandartLibrary.Lang.Resources.Field_REMAN_must_be_a_number_7005.Replace("\"","'"))");
+                costBeginChange = false;
+                $("#CostReman").focus();
+            }
+            bCheck = false;
+        }
+
+        if (bCheck) {
+            $("#CostPreQuotation").val(
+                    convertToFloat($("#CostParts").val())
+                + convertToFloat($("#CostWork").val())
+                + convertToFloat($("#CostRecovery").val())
+                + convertToFloat($("#CostTransportation").val())
+                - convertToFloat($("#CostReman").val())
+            );
+        }
+        else {
+            $("#CostPreQuotation").val("@(StandartLibrary.Lang.Resources.Input_Error_5520)");
+        }
+    }
+    function notApplicable() {
+        $("#btnNotApplicable").hide();
+        $.ajax({
+            type: "POST",
+            url: "/AJAX/UploadNotApplicable",
+            data: { documentId: ShowUploadQuotationdDialog_documentId, typeId:17 },
+            success: function (data) {
+                if (data.status == "ok") {
+                    RefreshQuotationUploadsList(ShowUploadQuotationdDialog_documentId);
+                }
+            },
+            error: myErrorFunction
+        });
+    }
+    </script>
+    <style>
+        .pqtable {
+            margin-top: 20px;
+        }
+
+            .pqtable tr td {
+                padding: 3px;
+            }
+
+        .pqdebug {
+            border: dotted #000000;
+        }
+
+        .pgdivdebug {
+            border: dotted #0000FF;
+        }
+    </style>
+    <script type="text/javascript">
+        var pqDebug = 0;
+        $(document).keydown(function (e) {
+            if (e.keyCode === 121) {
+                //F10 key for debug
+                console.log('pqDebug:' + pqDebug);
+                if (pqDebug === 0) {
+                    $('.pqtable,.pqtable tr,.pqtable td').addClass('pqdebug');
+                    $('div').addClass('pgdivdebug');
+                    pqDebug = 1;
+                } else {
+                    $('.pqtable,.pqtable tr,.pqtable td').removeClass('pqdebug');
+                    $('div').removeClass('pgdivdebug');
+                    pqDebug = 0;
+                }
+                e.preventDefault();
+            }
+        });
+    </script>
+}

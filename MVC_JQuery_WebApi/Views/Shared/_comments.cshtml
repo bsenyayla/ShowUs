@@ -1,0 +1,48 @@
+﻿@using SharedCRCMS.Service
+@{
+    IEnumerable<StandartLibrary.Models.DataModels.Comment> Comments = ViewBag.Comments;
+}
+
+<div class="portlet">
+    <div class="portlet-title line">
+        <div class="caption"><i class="icon-comments"></i>@(StandartLibrary.Lang.Resources.Comments_5475)</div>
+        <div class="tools">
+            <a href="" class="collapse"></a>
+        </div>
+    </div>
+    <div class="portlet-body" id="chats">
+        <div class="scroller" style="max-height: 405px; min-height:200px;" data-always-visible="1" data-rail-visible1="1">
+            <ul class="chats">
+                @if (Comments != null)
+                {
+                    foreach (var comment in Comments)
+                    {
+
+                <li @if (comment.UserId == User.Identity.Name) { <text> class="out" </text>  } else { <text> class="in" </text>   }>
+
+                    <img class="avatar img-responsive" alt="" src="/assets/admin/layout/img/user-icon.png" />
+
+                    <div class="message">
+                        <span class="arrow"></span>
+                        <a href="#" class="name"> @comment.UserName</a>
+                        <span class="datetime">@string.Format("{0:dd.MM.yyyy hh:mm}", comment.CommentDate)</span>
+                        <span class="body">
+                            @comment.CommentText
+                        </span>
+                    </div>
+                </li>
+                    }
+                }
+            </ul>
+        </div>
+        <div class="chat-form">
+
+            <div class="input-group">
+                <textarea class="form-control" id="commentText" placeholder="@(StandartLibrary.Lang.Resources.Enter_your_message_here_5627)"></textarea>
+                <span class="input-group-btn">
+                    <button type="button" class="btn blue">@(StandartLibrary.Lang.Resources.Submit_5628)</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+<PUBLIC:COMPONENT URN="www.idb.com.tr" >
+   <PUBLIC:ATTACH EVENT="onreadystatechange" ONEVENT="InpStateChange()"  />
+   <PUBLIC:ATTACH EVENT="onkeyup" ONEVENT="InpKeyUp()" />
+   <PUBLIC:ATTACH EVENT="onkeydown" ONEVENT="InpKeyDown()" />
+
+   <SCRIPT LANGUAGE="JavaScript">
+
+	function InpStateChange()
+	{
+	  if (! value) value = "0";
+	} 
+      
+
+        function InpKeyDown()
+        { //numeric inputta sadece backspace (kodu 8) . ve rakkamlari kullanabilir
+          
+          if (event.keyCode == 46) { value = "0"; return false; };
+		  
+          validChars = "abcdefghi1`0123456789.+";
+	  validKeys  = "8,9,27";
+
+          if ((validChars.indexOf (String.fromCharCode(event.keyCode)) == -1)
+               && validKeys.indexOf (event.keyCode) == -1 && ! event.altKey)
+            { 
+	      event.cancelBubble = true;
+              event.keyCode = 0;
+	      event.returnValue = false;
+            } 
+ 	     else 
+ 	      if (validKeys.indexOf (event.keyCode) == -1 && ! event.altKey && value == "0") value = "";
+         }
+
+      function InpKeyUp()
+        {
+          if ((event.keyCode == 107) && (value != "")) value = value + "000"; //107 = +
+          if (String.fromCharCode(event.keyCode) == "0" && value == "0")
+           { value = "0";  // 0000 yazamamasi icin mutlaka 100 200 gibi olmali
+             return false;
+            };
+
+          value = PutCommas (value);
+	  
+	  if (! value) value = "0";
+         }
+
+
+      function PutCommas (NumSt)
+        {
+           if (! NumSt) return "";
+           if (NumSt.indexOf (".") > -1) NumSt = NumSt.substring (0, NumSt.indexOf ("."));
+           tmp = "";
+           for (i=0; i<=NumSt.length; i++)
+            if ((NumSt.charAt (i) != ",") && (NumSt.charAt (i) != "+"))
+             tmp = tmp + NumSt.charAt (i);
+
+           NumSt = tmp;
+
+           if (NumSt.length > 2)
+            { 
+              var st = "";
+              for (i=0; i<=NumSt.length; i++)
+               {
+                st = st + NumSt.charAt (i);
+                remain = NumSt.length - i - 1;
+                if ((remain > 0) && (remain % 3 == 0)) st = st + ",";
+               }
+             return st;
+            }
+           else return NumSt;
+         }
+</SCRIPT>
+</PUBLIC:COMPONENT>

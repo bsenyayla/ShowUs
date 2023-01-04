@@ -1,0 +1,110 @@
+<PUBLIC:COMPONENT URN="www.idb.com.tr" >
+<PUBLIC:ATTACH EVENT="onkeypress" ONEVENT="searchIt ()" />
+<PUBLIC:ATTACH EVENT="onfocus" ONEVENT="selectFocus()" />
+<PUBLIC:ATTACH EVENT="onblur" ONEVENT="FocusOut()" />
+<PUBLIC:ATTACH EVENT="onkeydown" ONEVENT="return KeyDown();" />
+<PUBLIC:EVENT NAME="onblurx" ID="myblur"  DISPID="-2147412082" />
+
+<script language="JavaScript">
+var inControl, location;	
+
+
+function selectFocus()
+{
+  setAttribute ("searchSt", "");
+  window.status = "";	
+  inControl = false;
+}
+
+
+function removeCommas (strx)
+{ 
+    if (strx)
+     { 
+        var stx = strx;
+        while (stx.indexOf (",") >= 0)
+        {
+           i = stx.indexOf (",");
+           stx = stx.substring (0,i) + stx.substring (i+1,stx.length);
+        }
+        return stx;
+     }
+}
+function FocusOut()
+{
+	if (inControl && location != this.selectedIndex) this.selectedIndex = location;
+	myblur.fire(createEventObject())	
+
+}
+
+function KeyDown()
+{
+	if (event.keyCode != 9 && event.keyCode != 13) inControl = false;
+	return true;			
+}
+
+
+
+function binarySearch (names, newname, size)
+ {
+    var low = 0;
+    var high = size-1;
+    var found = -1;
+    var newname = newname.toLowerCase();
+
+    while (low <= high)
+     {
+        test = parseInt ((low + high) / 2);
+        cmpst = names(test).text.substring (0, newname.length);
+        cmpst = removeCommas (cmpst.toLowerCase());
+
+        if (cmpst == newname) 
+	{
+	   x = test;
+	   while (x > 0 && cmpst == newname)
+	   {
+	     cmpst = names[x].innerText.substring (0, newname.length);
+             cmpst = removeCommas (cmpst.toLowerCase());
+	     if (cmpst == newname) {test = x; x--;}		     
+	   }
+
+	   return test; 
+	}
+
+        if (cmpst<newname) low = test + 1; else high = test - 1;
+
+     }
+	
+     return test+1;
+}
+
+function searchIt ()
+{
+   if (event.keyCode == 8)
+  {
+     searchSt = "";
+     window.status = "Girilen: " + searchSt;	
+  }
+   if (event.keyCode >= 48)
+   {
+      if (event.keyCode == 305) {event.keyCode = 73} 
+      inControl = true;		
+      var timeoutId = getAttribute ("timeoutId");
+      clearTimeout (timeoutId);
+      searchSt = getAttribute ("searchSt"); 
+      if (searchSt==null) searchSt = "";
+      searchSt = searchSt + String.fromCharCode(event.keyCode);
+      setAttribute ("searchSt", searchSt);
+
+      window.status = "Girilen: " + searchSt;	
+      location = binarySearch(options, searchSt, options.length);
+
+      if (location >= 0 && location < this.options.length) {selectedIndex = location;}	else {location = selectedIndex;}
+
+      timeoutId = setTimeout ("window.document.activeElement.setAttribute ('searchSt', '');window.status = 'Girilen:';", 3000);
+      setAttribute ("timeoutId", timeoutId);
+      event.returnValue = false;
+  }
+}
+</script>
+</PUBLIC:COMPONENT>

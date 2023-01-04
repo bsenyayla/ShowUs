@@ -1,0 +1,417 @@
+﻿@using SharedCRCMS.Service
+@using StandartLibrary.Models.DataModels
+@using SharedCRCMS.Helpers
+@{
+    var appSetting = SharedCRCMS.Service.AppSettingService.AppSetting;
+}
+<!DOCTYPE html>
+
+<html lang="@System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+@using SharedCRCMS.Models
+@{
+    var db = new CRCMSEntities();
+    var groups = db.Group.ToList();
+
+    var localUser = ProvisionAccessService.GetLocalUser(User.Identity.Name);
+    Counter_UserGroup userGroupItem = null;
+    if (localUser != null)
+    {
+        userGroupItem = db.Counter_UserGroup.SingleOrDefault(x => x.UserId == localUser.UserId);
+    }
+}
+<head>
+    <meta charset="utf-8" />
+    <title>@(StandartLibrary.Lang.Resources.Teller_5629) - @ViewBag.Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="Preview page of Metronic Admin Theme #1 for blank page layout" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/global/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME GLOBAL STYLES -->
+    <!-- BEGIN THEME LAYOUT STYLES -->
+    <link href="/assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="/assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/global/plugins/data-tables/DT_bootstrap.css" type="text/css" rel="stylesheet" />
+    <script src="/assets/global/plugins/bootstrap-toastr/toastr.min.css" type="text/css" rel="stylesheet">
+    </script>
+    <link href="/Content/Site.css" type="text/css" rel="stylesheet" />
+    <link href="/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/assets/global/plugins/dropzone/basic.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/global/plugins/dropzone/dropzone.min.css" />
+    <link href="/assets/global/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" type="text/css" />
+
+    <!-- END THEME LAYOUT STYLES -->
+    @RenderSection("Styles", required: false)
+
+    <link rel="shortcut icon" href="@Url.Content("~/Content/images/favicon.ico")" type="image/x-icon" />
+
+    <style>
+        .dataTables_wrapper .dataTables_processing {
+            margin-left: 50px;
+            margin-top: 40px;
+            margin-bottom: 10px;
+        }
+
+        element.style {
+        }
+
+        .checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+            position: static;
+        }
+
+        input[type=checkbox], input[type=radio] {
+            box-sizing: border-box;
+            padding: 0 !important;
+            margin: 0 !important;
+            width: 15px !important;
+            height: 15px !important;
+            position: static !important;
+            float: left !important;
+            line-height: 15px !important;
+        }
+
+        .chk2 input[type=checkbox] {
+            margin-top: 10px !important;
+        }
+
+        .chk1 {
+            float: left;
+            margin-top: 10px;
+            line-height: 15px;
+        }
+
+        .chk2 {
+            margin-left: 10px;
+            float: left;
+            height: 27px;
+        }
+
+        .chk3 {
+            clear: both;
+        }
+    </style>
+
+    @{
+        var currentUrl = Request.Url.LocalPath;
+    }
+</head>
+<!-- END HEAD -->
+
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-full-width">
+
+    <div id="modal_UploadDialog" class="modal fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" style="width:600px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title" id="modal_UploadDialog_title">@(StandartLibrary.Lang.Resources.Loading_5630)</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12" style="padding-left:40px">
+                        <div id="UploadsList" style="width:100%;max-height:200px;overflow:auto"></div>
+                        <div id="modal_UploadDialog_file-dropzone" class="dropzone" cdoms_perm="COUNTER_CABINET_RW" style="margin-top:20px;margin-bottom:20px;width:100%;min-height:100px;"></div>
+                        <a class="btn yellow" href="#" data-dismiss="modal" aria-hidden="true" cdoms_perm="COUNTER_CABINET_RW" onclick="modal_UploadDialog_notApplicable(); return false;">@(StandartLibrary.Lang.Resources.Not_applicable_5474)</a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn dark btn-outline" data-dismiss="modal" aria-hidden="true">@(StandartLibrary.Lang.Resources.Close_5490)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal_EditDialogComment" class="modal fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" style="width:500px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">@(StandartLibrary.Lang.Resources.Comments_on_the_side_5631)</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="#" class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-4" style="padding-left:40px">
+                                <span>@(StandartLibrary.Lang.Resources.Comments_5475):</span><br />
+                                <textarea cols="80" rows="5" id="EditDialogComment_Comment"></textarea>
+                                <input type="hidden" id="EditDialogComment_DocumentId" />
+                                <input type="hidden" id="EditDialogComment_Url" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn dark btn-outline" data-dismiss="modal" aria-hidden="true">@(StandartLibrary.Lang.Resources.Close_5490)</button>
+                    <button id="EditDialogComment_btnSave" class="btn green" cdoms_perm="COUNTER_CABINET_RW" data-dismiss="modal">@(StandartLibrary.Lang.Resources.Save_5576)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-wrapper">
+        <!-- BEGIN HEADER -->
+        <div class="navbar navbar-default navbar-fixed-top">
+            <!-- BEGIN HEADER INNER -->
+            <div class="page-header-inner ">
+                <!-- BEGIN LOGO -->
+                <div class="navbar-header" style="padding-right:50px">
+                    @Html.BrandAndLocation(appSetting.ProjectUrl.CRCMSPath, Request.Url.AbsoluteUri, AppSettingService.AppSetting.Content.HeaderLocationName)
+                </div>
+
+                <!-- END LOGO -->
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <!-- DOC: Remove data-hover="megamenu-dropdown" and data-close-others="true" attributes below to disable the horizontal opening on mouse hover -->
+                        <li class="classic-menu-dropdown @if (currentUrl.IndexOf("/PreparingQuotation") > -1 || currentUrl=="/") {<text>active</text>}">
+                            <a href="/PreparingQuotation/" aria-haspopup="true">
+                                <i class="icon-list"></i> @(StandartLibrary.Lang.Resources.PreparingQuotation)<span class="badge badge-success"></span>
+                            </a>
+                        </li>
+                        <li class="classic-menu-dropdown @if (currentUrl.IndexOf("/CustomerApproval") > -1 ) {<text>active</text>}">
+                            <a href="/CustomerApproval/" aria-haspopup="true">
+                                <i class="icon-list"></i> @(StandartLibrary.Lang.Resources.CustomerApproval)<span class="badge badge-success"></span>
+                            </a>
+                        </li>
+                        <li class="classic-menu-dropdown @if (currentUrl.IndexOf("/BaseOfQuotations") > -1 ) {<text>active</text>}">
+                            <a href="/BaseOfQuotations/" aria-haspopup="true">
+                                <i class="icon-list"></i> @(StandartLibrary.Lang.Resources.Base_of_quotes_5469)<span class="badge badge-success"></span>
+                            </a>
+                        </li>
+                        <li class="classic-menu-dropdown @if (currentUrl.IndexOf("/PSSREditor") > -1 ) {<text>active</text>}">
+                            <a href="/PSSREditor/" aria-haspopup="true">
+                                <i class="icon-list"></i> @(StandartLibrary.Lang.Resources.MailDefinition)<span class="badge badge-success"></span>
+                            </a>
+                        </li>
+                        <li class="classic-menu-dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @StandartLibrary.Lang.Resources.Other_6362
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li class="" style="display:none">
+                                    <a href="@(appSetting.ProjectUrl.WorkOrderHistoryPath)/Home/RebuildHistory" aria-haspopup="true" target="_blank">
+                                        @(StandartLibrary.Lang.Resources.WoHistory)<span class="selected"> </span>
+                                    </a>
+                                </li>
+
+                                <li class="">
+                                    <a href="/Report/" aria-haspopup="true">
+                                        @(StandartLibrary.Lang.Resources.Report_5468)<span class="selected"> </span>
+                                    </a>
+                                </li>
+
+                                <li class="" style="display:none">
+                                    <a href="/ProblemOrders/" aria-haspopup="true">
+                                        @(StandartLibrary.Lang.Resources.Problem_outfits_5632)<span class="selected"> </span>
+                                    </a>
+                                </li>
+
+                                <li class="">
+                                    <a href="/SearchDocument/" aria-haspopup="true">
+                                        @(StandartLibrary.Lang.Resources.Search_5634)
+                                    </a>
+                                </li>
+
+                                <li class="" style="display:none">
+                                    <a href="@(appSetting.ProjectUrl.WorkOrderHistoryPath)/Home/RebuildHistory" aria-haspopup="true" target="_blank">
+                                        @(StandartLibrary.Lang.Resources.WoHistory)<span class="selected"> </span>
+                                    </a>
+                                </li>
+
+                                <li class="classic-menu-dropdown" aria-haspopup="true" style="display:none">
+                                    <select class="form-control" id="CurrentGroupId">
+                                        <option value="0" @if (userGroupItem == null) { <text> selected</text> }>All - admin</option>
+                                        @foreach (var item in groups)
+                                        {
+                                            <option value="@item.GroupId" @if (userGroupItem != null && userGroupItem.GroupId == item.GroupId) { <text> selected</text> }>@item.Name</option>
+                                        }
+                                    </select>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav pull-right">
+                        <li class="classic-menu-dropdown" aria-haspopup="true">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">
+                                <img src="@(string.Format("/assets/images/flag-{0}.png", @System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName))" />
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu" style="">
+                                @foreach (var lang in appSetting.Content.LanguageList)
+                                {
+                                    if (lang != System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName)
+                                    {
+                                        <li class="">
+                                            <a href="@Url.Action("ChangeCulture", new { lang = lang })">
+                                                <img src="@(string.Format("/assets/images/flag-{0}.png", lang))" /> @lang.ToUpper()
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </li>
+
+                        <li class="classic-menu-dropdown">
+                            <a href="#" aria-haspopup="true">
+                                <i class="glyphicon glyphicon-user"></i> @User.Identity.Name
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span></span>
+                </a>
+                <!-- END RESPONSIVE MENU TOGGLER -->
+                <!-- BEGIN TOP NAVIGATION MENU -->
+                <!-- END TOP NAVIGATION MENU -->
+            </div>
+            <!-- END HEADER INNER -->
+        </div>
+        <!-- END HEADER -->
+        <!-- BEGIN HEADER & CONTENT DIVIDER -->
+        <div class="clearfix"> </div>
+        <!-- END HEADER & CONTENT DIVIDER -->
+        <!-- BEGIN CONTAINER -->
+        <div class="page-container">
+            <!-- BEGIN SIDEBAR -->
+            <!-- END SIDEBAR -->
+            <!-- BEGIN CONTENT -->
+            <div class="page-content-wrapper">
+                <!-- BEGIN CONTENT BODY -->
+                <div class="page-content">
+                    <!-- BEGIN PAGE HEADER-->
+                    <!-- BEGIN PAGE TITLE-->
+                    <h1 class="page-title" style="margin-bottom:10px;">
+                        @ViewBag.Title
+                    </h1>
+                    <!-- END PAGE TITLE-->
+                    <!-- END PAGE HEADER-->
+
+                    @RenderBody()
+                    <hr />
+                    <footer>
+                        <div class="">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <p>
+                                            @Html.Raw(appSetting.Content.FooterTitle) @Html.Raw(StandartLibrary.Lang.Resources.Assembly_Version)@typeof(Counter.MvcApplication).Assembly.GetName().Version
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+                <!-- END CONTENT BODY -->
+            </div>
+            <!-- END CONTENT -->
+        </div>
+        <!-- END CONTAINER -->
+        <!-- BEGIN FOOTER -->
+        @*<div class="page-footer">
+                <div class="page-footer-inner">@appSetting.Content.FooterTitle</div>
+                <div class="scroll-to-top">
+                    <i class="icon-arrow-up"></i>
+                </div>
+            </div>*@
+        <!-- END FOOTER -->
+    </div>
+
+    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+    <!-- BEGIN CORE PLUGINS -->
+    <!--[if lt IE 9]>
+    <script src="/assets/global/plugins/respond.min.js"></script>
+    <script src="/assets/global/plugins/excanvas.min.js"></script>
+    <![endif]-->
+
+    <script src="/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+    <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+    <script src="/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+    <script src="/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+
+    <script src="/assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+    <script src="/assets/global/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
+    <script src="/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script src="/assets/global/scripts/metronic.js" type="text/javascript"></script>
+
+    <script src="/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/assets/global/scripts/jquery.dataTables.min.js" type="text/javascript"></script>
+    @*<script src="/assets/global/plugins/data-tables/jquery.dataTables.js" type="text/javascript"></script>*@
+    @*<script src="/assets/global/plugins/data-tables/DT_bootstrap.js" type="text/javascript"></script>*@
+    <script src="/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="/assets/global/scripts/datatable.js"></script>
+    <script src="/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="/assets/global/plugins/select2/js/i18n/@(System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName).js" type="text/javascript"></script>
+    <script src="/Scripts/main.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/assets/global/plugins/dropzone/dropzone.min.js"></script>
+    <script src="/assets/js/jsLocalization.js" type="text/javascript"></script>
+
+    <script src="/assets/global/plugins/bootstrap-sweetalert/sweetalert.js" type="text/javascript"></script>
+    <script src="/assets/global/plugins/bootstrap-sweetalert/Alerts.js" type="text/javascript"></script>
+    <script src="/assets/js/jsLocalization.js" type="text/javascript"></script>
+    <script src="/assets/js/cdoms_perm.js" type="text/javascript"></script>
+
+    <!-- END JAVASCRIPTS -->
+    @RenderSection("Scripts", required: false)
+
+    <script>
+
+        var cdoms_permissions = @Html.Raw(SharedCRCMS.Service.ProvisionAccessService.GetPermissionListForJquery(User.Identity.Name));
+
+        var Cancel_Button_Text = '@Html.Raw(StandartLibrary.Lang.Resources.MessageBox_CancelButton)';
+        var OK_Button_Text = '@Html.Raw(StandartLibrary.Lang.Resources.MessageBox_OkButton)';
+        var SuccessTitle = '@Html.Raw(StandartLibrary.Lang.Resources.MessageBox_SuccessHeader)';
+        var WarningTitle = '@Html.Raw(StandartLibrary.Lang.Resources.MessageBox_WarningHeader)';
+        var InfoTitle = '@Html.Raw(StandartLibrary.Lang.Resources.MessageBox_InfoHeader)';
+        var Confirmation = '@Html.Raw(StandartLibrary.Lang.Resources.MessageBox_ConfirmHeader)';
+        var AlertTitle = '@Html.Raw(StandartLibrary.Lang.Resources.MessageBox_AlertHeader)';
+        var SendConfirmation = '@Html.Raw(StandartLibrary.Lang.Resources.SendConfirmation)';
+
+        jQuery(document).ready(function () {
+            SetSelect2("searchDocumentText", "", "", "/AJAX/GetDocumentNumber", 3, true, false);
+            $("#searchDocumentBtn").change(function () {
+                window.location = "/SearchDocument/?document_id=" + $("#searchDocumentText").val();
+            });
+
+            $("#CurrentGroupId").change(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/AJAX/SetCurrentGroupId",
+                    data: {
+                        GroupId: $("#CurrentGroupId").val()
+                    },
+                    success: function (data) {
+                        if (data.status == "ok") {
+                            window.location.reload();
+                        }
+                    },
+                    error: myErrorFunction
+                });
+            });
+        });
+    </script>
+</body>
+</html>

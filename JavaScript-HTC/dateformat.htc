@@ -1,0 +1,319 @@
+/*
+  dateformat.htc
+  
+*/
+
+<ATTACH   EVENT="ondocumentready"  HANDLER="init"       />
+<ATTACH   EVENT="onreadystatechange" HANDLER="inputBlur"       />
+<ATTACH   EVENT="onfocus" HANDLER="inputFocus"       />
+<ATTACH   EVENT="onblur" HANDLER="inputBlur"       />
+<ATTACH   EVENT="onkeydown" HANDLER="inputKeyDown"       />
+<ATTACH   EVENT="onclick" HANDLER="inputClick"       />
+
+<PROPERTY NAME="iname"  />
+<PROPERTY NAME="isValid"  />
+
+<script language="jscript">
+
+var position = 0;
+var nulldate = "__/__/____";
+var val = new String(nulldate);
+var ftime = 1;
+
+function getToDay(){
+  var d = new Date();
+  var gun, ay, yil;
+  gun=d.getDate();
+  ay=d.getMonth()+1;
+  yil=d.getYear();
+  if(gun<10) gun='0'+gun;
+  if(ay<10) ay='0'+ay;
+  return gun+'/'+ay+'/'+yil;
+}
+
+function init(){
+  if((value == null) || (value=='')){
+    value=nulldate;
+    val=nulldate;
+  } else {
+    val=value;
+  }
+}
+
+function inputBlur(){
+  if( ftime == 1 ) {
+    ftime=0;
+    return ;
+  };
+  var d = new Date();
+  var gun, ay, yil;
+  gun=d.getDate();
+  if(gun<10) gun="0"+gun;
+  ay=d.getMonth()+1;
+  if(ay<10) ay="0"+ay;
+  yil=d.getFullYear();
+  s = new String(value);
+  sa=s.split("/");
+  if(isNaN(sa[0])) sa[0]=gun;
+  if(isNaN(sa[1])) sa[1]=ay;
+  if(isNaN(sa[2])) sa[2]=yil;
+  val=sa[0]+"/"+sa[1]+"/"+sa[2];
+  value=val;
+  d.setFullYear(sa[2], sa[1]-1, sa[0]);
+  isValid=( 
+    (parseInt(sa[0]) == d.getDate()) && 
+    (parseInt(sa[1]) == d.getMonth()+1) && 
+    (parseInt(sa[2]) == d.getFullYear()) 
+  ); 
+  
+  //if(! isValid) alert( "!!! Tarih Hatalý !!! " );
+  
+}  
+
+function inputFocus(){
+  val=value;
+  position=0;
+  selectChar();
+}
+
+function inputClick(){
+  val=value;
+  position=0;
+  selectChar();
+}
+
+function updateVal(key){
+  var c;
+  //var b = false;
+  var validc ="0123456789";
+  c=val.charAt(position);
+  switch(position){
+    case 0: validc="0123"; break;
+    //case 1: validc="0123456789"; break;
+    case 3: validc="01"; break;
+    //case 4: validc="012"; break;
+  };
+  b=(validc.indexOf(key) > -1);
+  //alert(b + " - " + validc + " - " + key);
+  if(b){
+    val=val.substr(0,position)+(key)+val.substr(position+1);
+    value=val;
+    moveNext();
+  };
+  
+}
+
+function selectChar(){
+  var str;
+  str=value;
+  rng=createTextRange();
+  rng.moveStart("character",position);
+  rng.moveEnd("character", position - str.length + 1);
+  rng.select();
+}
+
+function moveNext(){
+  position+=(position<9);
+  if (val.charAt(position)=='/') position+=(position<9);
+  selectChar();
+}
+
+function moveBack(){
+  position-=(position>0);
+  if (val.charAt(position)=='/') position-=(position>0);
+  selectChar();
+}
+
+function setValue(gun, ay, yil){
+  if(gun<10) gun="0"+gun;
+  if(ay<10) ay="0"+ay;
+  if(yil<100) ay=1900+yil;
+  val=gun+"/"+ay+"/"+yil;
+  value=val;
+}
+
+function setToAB(){ // Ayin ilk gunune set eder
+  var d = new Date();
+  var ay = d.getMonth(); 
+  var yil = d.getFullYear();
+  s = val;
+  sa=s.split("/");
+  d.setFullYear(sa[2], sa[1]-1, 1);
+  if (parseInt(sa[1]) == d.getMonth()+1) ay=d.getMonth();
+  if (parseInt(sa[2]) == d.getFullYear()) yil=d.getFullYear(); 
+  setValue(1, ay+1, yil);  
+}
+
+function setToAS(){ // ayin son gunune set eder
+  var d = new Date();
+  var ay = d.getMonth(); 
+  var yil = d.getFullYear();
+  s = val;
+  sa=s.split("/");
+  d.setFullYear(sa[2], sa[1], 0);
+  if (parseInt(sa[1]) == d.getMonth()+1) ay=d.getMonth();
+  if (parseInt(sa[2]) == d.getFullYear()) yil=d.getFullYear(); 
+  setValue(d.getDate(), ay+1, yil);  
+}
+
+function setToYB(){ //yilin ilk gunune set eder
+  var d = new Date();
+  var yil = d.getFullYear();
+  s = val;
+  sa=s.split("/");
+  d.setFullYear(sa[2], 1, 1);
+  if (parseInt(sa[2]) == d.getFullYear()) yil=d.getFullYear(); 
+  setValue(1, 1, yil);  
+}
+
+function setToYS(){ //yilin son gunune set eder
+  var d = new Date();
+  var yil = d.getFullYear();
+  s = val;
+  sa=s.split("/");
+  d.setFullYear(sa[2], 1, 1);
+  if (parseInt(sa[2]) == d.getFullYear()) yil=d.getFullYear(); 
+  setValue(31, 12, yil);  
+}
+
+function stepDate(dir){
+  var d = new Date();
+  var gun, ay, yil;
+  gun=d.getDate();
+  ay=d.getMonth()+1;
+  yil=d.getFullYear();
+  s = new String(value);
+  sa=s.split("/");
+
+  s="value: " + value + " bugun: " + gun + "/" + ay + "/" + yil;
+  if(!isNaN(sa[0])) gun=sa[0];
+  if(!isNaN(sa[1])) ay=sa[1];
+  if(!isNaN(sa[2])) yil=sa[2];
+
+  s=s+" aktar: " + gun + "/" + ay + "/" + yil;
+
+  switch(position){
+    case 0:
+    case 1:
+      if(dir>0) gun++; else gun--;
+      break;
+    case 3:
+    case 4:
+    case 5:
+      if(dir>0) ay++; else ay--;
+      break;
+    default :
+      if(dir>0) yil++; else yil--;
+      break;
+  }
+  //s=s+" step: " + gun + "/" + ay + "/" + yil;
+  //window.status=s;
+  d.setFullYear(yil, ay-1, gun);
+  setValue(d.getDate(), d.getMonth()+1, d.getFullYear());
+}
+
+function inputKeyDown(){
+  var c;
+  if(event.ctrlKey){
+    event.returnValue = false;
+    switch(event.keyCode){
+      case 36: // home
+        setToAB();
+        position=0;
+        selectChar();
+        break;
+      case 35: // End
+        setToAS();
+        position=0;
+        selectChar();
+        break;
+    }
+  } else  
+  if(event.shiftKey){
+    switch(event.keyCode){
+      case 9:
+        break;
+      case 35: // End
+        event.returnValue = false;
+        setToYS();
+        position=0;
+        selectChar();
+        break;
+      case 36: // home
+        event.returnValue = false;
+        setToYB();
+        position=0;
+        selectChar();
+        break;
+    }
+  } else  
+  switch(event.keyCode){
+    //case 27: // Esc, silmek için
+    case 46: // delete
+      event.returnValue = false;
+      val=nulldate;
+      value=nulldate; 
+      position=0;
+      selectChar();
+      break;
+    case 107: // +, ileri, bulundugu alani 1 arttir. 
+    case 38: // Up
+      event.returnValue = false;
+      stepDate(1);
+      selectChar();
+      break;
+    case 109: // -, geri, bulundugu alani 1 eksilt. 
+    case 40: // Down
+      event.returnValue = false;
+      stepDate(-1);
+      selectChar();
+      break;
+    case 106: // *, silmek için
+      event.returnValue = false;
+      value=getToDay(); 
+      val=value;
+      position=0;
+      selectChar();
+      break;
+    case 8: // back
+    case 37: // Left
+      event.returnValue = false;
+      moveBack();
+      break;
+    case 39: // Right
+      event.returnValue = false;
+      moveNext();
+      break;
+    case 33: // PgUp
+    case 36: // home
+      event.returnValue = false;
+      position=0;
+      selectChar();
+      break;
+    case 34: // PgDn
+    case 35: // End
+      event.returnValue = false;
+      position=9;
+      selectChar();
+      break;
+    // Musade edilmeyen tuslar
+    //case 46: // delete
+    //  event.returnValue = false;
+    //  break;      
+    // Musade edilen tuslar
+    case 9: // tab
+    case 13: // Enter
+      break;
+    default: 
+      //alert(event.keyCode);
+      c=event.keyCode;
+      if (c>95) c=event.keyCode-48;
+      event.returnValue = false;
+      updateVal(String.fromCharCode(c));
+      break;
+      
+
+  }
+}
+
+</script>

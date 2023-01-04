@@ -1,0 +1,167 @@
+﻿@using StandartLibrary.Models.EntityModels.Counter
+@{
+    var model = (UploadQuotationDialogModel)Model;
+}
+<div id="modal_UploadQuotationDialog" class="modal fade" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width:900px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" id="modal_UploadDialog_title">@(StandartLibrary.Lang.Resources.Quote_completion_6870)</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4" style="padding-left:40px">
+                        @(StandartLibrary.Lang.Resources.Quotes_6871):
+                        <div id="QuotationUploadsList" style="width:100%;max-height:100px;overflow:auto"></div>
+                        <div>
+                            @(StandartLibrary.Lang.Resources.Truck_5472):
+                            <div id="Quotationfile-dropzoneTruck" class="dropzone" style="margin-top:0px;margin-bottom:10px;width:100%;min-height:50px;height:50px;padding:0px;"></div>
+                        </div>
+                        <div style="display:@(model.DisplayQuotation)">
+                            @(StandartLibrary.Lang.Resources.Air_5473):
+                            <div id="Quotationfile-dropzoneAvia" class="dropzone" style="margin-top:0px;margin-bottom:10px;width:100%;min-height:50px;height:50px;padding:0px;"></div>
+                        </div>
+                        <a id="btnNotApplicable" class="btn yellow" href="#" onclick="notApplicable(); return false;">@(StandartLibrary.Lang.Resources.Not_applicable_5474)</a>
+
+                        <div style="margin-top:20px;">
+                            @(StandartLibrary.Lang.Resources.Comments_5475)<br />
+                            <textarea cols="30" rows="4" id="modal_UploadQuotationDialog_Comment"> </textarea>
+                        </div>
+                    </div>
+                    <div xclass="col-md-4" class="@(model.ShowQuotationHiddenAreas?"col-md-4":"col-md-8")">
+
+                        <table class="pqtable">
+                            <tr>
+                                <td><input id="NotSpareParts" type="checkbox" onclick="NoSparePartCheck()" style="margin: 0px; padding: 0px; height: 20px; width: 20px;" class="form-control input-sm" /></td>
+                                <td style="font-weight: bold;">@(StandartLibrary.Lang.Resources.No_s_h_6872)</td>
+                            </tr>
+                        </table>
+                        <table class="pqtable">
+                            <tr>
+                                <td colspan="2" style="font-weight: bold;">@(StandartLibrary.Lang.Resources.Delivery_Terms_6873):</td>
+                            </tr>
+                            <tr>
+                                <td><input style="margin: 0px" type="checkbox" id="SparePartsInWarehousesRK" class="form-control input-sm" /></td>
+                                <td>@(StandartLibrary.Lang.Resources.Spare_parts_in_the_warehouses_of_the_Republic_of_Kazakhstan_5549)</td>
+                            </tr>
+                            <tr>
+                                <td><input id="SparePartsInStock" type="checkbox" style="margin: 0px; padding: 0px; height: 20px; width: 20px;" class="form-control input-sm" /></td>
+                                <td>@(StandartLibrary.Lang.Resources.S_h_in_stock_6874)</td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: top; padding-top: 3px;"><input style="margin: 0px" type="checkbox" id="isSparePartsProvideTheCustomer" class="form-control input-sm" /></td>
+                                <td style="font-weight: bold;">@(StandartLibrary.Lang.Resources.Spare_parts_will_be_provided_by_the_Customer_5532)</td>
+                            </tr>
+                        </table>
+                        <table style="display: @(model.DisplayQuotation)" class="pqtable">
+                            <tr>
+                                <td colspan="2">
+                                    <a href="#" onclick="$('#DeliveryTermsTruckDays').val('@("30-35 " + StandartLibrary.Lang.Resources.Days_6599)');$('#DeliveryTermsAviaDays').val('@("14-16 " + StandartLibrary.Lang.Resources.Days_6599)');">@(StandartLibrary.Lang.Resources.Truck_5472 + " 30-35 " + StandartLibrary.Lang.Resources.Days_6599 + ", " + StandartLibrary.Lang.Resources.Air_5473 + " 14-16 " + StandartLibrary.Lang.Resources.Days_6599)</a><br />
+
+                                    <a href="#" onclick="$('#DeliveryTermsTruckDays').val('@("60-65 " + StandartLibrary.Lang.Resources.Days_6599)');$('#DeliveryTermsAviaDays').val('@("22-25 " + StandartLibrary.Lang.Resources.Days_6599)');">@(StandartLibrary.Lang.Resources.Truck_5472 + " 60-65 " + StandartLibrary.Lang.Resources.Days_6599 + ", " + StandartLibrary.Lang.Resources.Air_5473 + " 22-25 " + StandartLibrary.Lang.Resources.Days_6599)</a><br />
+
+                                    <a href="#" onclick="$('#DeliveryTermsTruckDays').val('@("75-80 " + StandartLibrary.Lang.Resources.Days_6599)');$('#DeliveryTermsAviaDays').val('@("25-30 " + StandartLibrary.Lang.Resources.Days_6599)');">@(StandartLibrary.Lang.Resources.Truck_5472 + " 75-80 " + StandartLibrary.Lang.Resources.Days_6599 + ", " + StandartLibrary.Lang.Resources.Air_5473 + " 25-30 " + StandartLibrary.Lang.Resources.Days_6599)</a><br />
+                                    @(StandartLibrary.Lang.Resources.Truck_5472): <input id="DeliveryTermsTruckDays" type="text" size="10" class="form-control input-sm" />
+                                    @(StandartLibrary.Lang.Resources.Avia_5479): <input id="DeliveryTermsAviaDays" type="text" size="10" class="form-control input-sm" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="display: @(model.DisplayQuotation);" class="pqtable">
+                            <tr>
+                                <td>
+                                    <span style="font-weight: bold;">@(StandartLibrary.Lang.Resources.Recipient_Customer_6875)</span>
+                                    <div id="modal_UploadQuotationDialog_CustomerNameList" style="border: 1px solid gray; padding: 3px; margin-bottom: 5px; margin-top: 10px;"></div>
+                                    <select type="text" class="form-control form-filter input-sm" id="modal_UploadQuotationDialog_CustomerNameAddText" style="width: 200px;"></select>
+                                    <button class="btn dark btn-outline" onclick="Add_UploadQuotationDialog_CustomerName()">+</button>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table class="pqtable">
+                            @if (model.ShowQuotationHiddenAreas)
+                            {
+                            <tr class="trStopPssr">
+                                <td style="width: 20px"><input type="checkbox" id="woPssr" style="margin: 0px; padding: 0px; height: 20px; width: 20px;" class="form-control input-sm" /></td>
+                                <td style="font-weight: bold;">@(StandartLibrary.Lang.Resources.CounterPssrEmail)</td>
+                            </tr>
+                            <tr class="trStopPssr">
+                                <td colspan="2">
+                                    @*<input id="WOPssr" type="text" class="form-control" style="width: 200px" disabled="disabled" />*@
+                                    <span id="WOPssr"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <span style="font-weight: bold;">@(StandartLibrary.Lang.Resources.Recipient_Email_6876)</span>
+                                    <div id="modal_UploadQuotationDialog_EmailNameList" style="border: 1px solid gray; padding: 3px; margin-bottom: 5px; margin-top: 10px;"></div>
+                                    <select type="text" class="form-control form-filter input-sm" id="modal_UploadQuotationDialog_EmailNameAddText" style="width: 200px;"></select>
+                                    <button class="btn dark btn-outline" onclick="Add_UploadQuotationDialog_EmailName()">+</button>
+                                </td>
+                            </tr>
+                            }
+                            else
+                            {
+                            <tr class="trStopPssr">
+                                <td style="width: 20px"><input type="checkbox" id="woPssr" style="margin: 0px; padding: 0px; height: 20px; width: 20px;" class="form-control input-sm" /></td>
+                                <td style="font-weight: bold;">@(StandartLibrary.Lang.Resources.CounterPssrEmail) </td>
+                                <td>
+                                    @*<input id="WOPssr" type="text" class="form-control" style="width: 200px" disabled="disabled" />*@
+                                    <span id="WOPssr"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <span style="font-weight: bold;white-space: nowrap;">@(StandartLibrary.Lang.Resources.Recipient_Email_6876)</span>
+                                </td>
+                                <td>
+
+                                    <div id="modal_UploadQuotationDialog_EmailNameList" style="border: 1px solid gray; padding: 3px; margin-bottom: 5px; margin-top: 10px;"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <select type="text" class="form-control form-filter input-sm" id="modal_UploadQuotationDialog_EmailNameAddText" style="width: 200px;"></select>
+                                    <button class="btn dark btn-outline" onclick="Add_UploadQuotationDialog_EmailName()">+</button>
+                                </td>
+                            </tr>
+                            }
+                        </table>
+                    </div>
+                    <div class="col-md-4" style="display:@(model.DisplayQuotation)">
+                        <div style="text-align: center; width: 100%; font-weight: bold;">
+                            @(StandartLibrary.Lang.Resources.Preliminary_repair_cost_6877)
+                        </div>
+                        <div>
+                            @(StandartLibrary.Lang.Resources.Cost_of_spare_part_6878) <input type="text" id="CostParts" size="10" class="form-control input-sm" />
+                            @(StandartLibrary.Lang.Resources.Work_6879) <input type="text" id="CostWork" size="10" class="form-control input-sm" />
+                            @(StandartLibrary.Lang.Resources.Recovery_6880) <input id="CostRecovery" type="text" size="10" class="form-control input-sm" />
+                            @(StandartLibrary.Lang.Resources.Transportation_6881) <input id="CostTransportation" type="text" size="10" class="form-control input-sm" />
+                            @(StandartLibrary.Lang.Resources.REMAN_Refund_6882) <input id="CostReman" type="text" size="10" class="form-control input-sm" />
+                            @(StandartLibrary.Lang.Resources.Cost_of_preliminary_quotation_6883) <input id="CostPreQuotation" type="text" size="10" disabled class="form-control input-sm" />
+                            @(StandartLibrary.Lang.Resources.The_storage_cost_of_a_new_site_5550) <input id="CostRelativeOfTheNewNode" type="text" size="10" class="form-control input-sm" />
+                            <div style="margin-top:20px;">
+                                @(StandartLibrary.Lang.Resources.Currency_selection_without_VAT_6884)<br />
+                                <div class="row" style="margin-bottom:40px;">
+                                    @foreach (var curr in model.AppSetting.Content.AvailableCurrencyList)
+                                    {
+                                    <div class="col-md-@(12 / model.AppSetting.Content.AvailableCurrencyList.Count)">
+                                        <div class="chk1">@curr.Key</div>
+                                        <div class="chk2"><input type="radio" name="currencyType" value="@curr.Value" id="currencyType@(curr.Value)" onclick="$('#currencyTypeValue').val($(this).val())" class="form-control input-sm" /></div>
+                                        <div class="chk3"></div>
+                                    </div>
+                                    }
+                                    <input type="hidden" name="currencyTypeValue" id="currencyTypeValue" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn dark btn-outline" data-dismiss="modal" aria-hidden="true">@(StandartLibrary.Lang.Resources.Close_5490)</button>
+                <button class="btn dark btn-outline" onclick="return UploadQuotationDialog_complete()">@(StandartLibrary.Lang.Resources.Complete_5491)</button>
+            </div>
+        </div>
+    </div>
+</div>

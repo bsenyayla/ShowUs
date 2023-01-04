@@ -1,0 +1,149 @@
+﻿@using SharedCRCMS.Service
+@using SharedCRCMS.Models;
+@using StandartLibrary.Models.DataModels;
+@{
+
+    var items = (IEnumerable<CounterPssrEmail>)Model;
+    var customerName = (string)ViewBag.CustomerName;
+    var customerId = (int)ViewBag.CustomerId;
+    ViewBag.Title = (@StandartLibrary.Lang.Resources.MailDefinition) + (string.IsNullOrEmpty(customerName) ? "" : (" - " + customerName));
+}
+
+<div class="row form-body">
+    <button class="btn green" onclick="window.location='/PSSREditor/'">@Counter.Lang.Resources.Назад</button>
+    <table class="table" style="margin-top:15px;">
+        <tr>
+            <th>Email</th>
+            <th>@(StandartLibrary.Lang.Resources.Type_of_5570)</th>
+            <th><button class="btn green" onclick="Add()">+@(StandartLibrary.Lang.Resources.Add_5553)</button></th>
+        </tr>
+        @foreach (var item in items)
+        {
+        <tr>
+            <td id="email@(item.Id)" type="@item.Type">@item.Email</td>
+            <td>@(item.Type == 1 ? (@StandartLibrary.Lang.Resources.Main_5571) : (@StandartLibrary.Lang.Resources.Copy_5572))</td>
+            <td>
+                <button class="btn green" onclick="Change(@item.Id)">@(StandartLibrary.Lang.Resources.Edit_5573)</button>
+                <button class="btn green" onclick="Delete(@item.Id)">@(StandartLibrary.Lang.Resources.Delete_5574)</button>
+            </td>
+        </tr>
+        }
+    </table>
+</div>
+
+<div id="modalDialog" class="modal fade" role="dialog" aria-hidden="true" style="display:none;">
+    <div class="modal-dialog" style="width:400px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">@(StandartLibrary.Lang.Resources.Adding_Email_5575)</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="#" class="form-horizontal">
+                            @(StandartLibrary.Lang.Resources.Type_of_5570):
+                            <div style="width:200px">
+                                <div style="float:left;">@(StandartLibrary.Lang.Resources.Main_5571) <input id="dialogEmailType1" type="radio" name="emailType" style="margin:0px;padding:0px;" /></div>
+                                <div style="float:right;">@(StandartLibrary.Lang.Resources.Copy_5572) <input id="dialogEmailType2" type="radio" name="emailType" style="margin:0px;padding:0px;" /></div>
+                            </div>
+                            <br style="clear:both;" />
+                            Email:<br />
+                            <input id="dialogEmail" class="form-control" style="width:300px" onblur="$(this).val($(this).val().toLowerCase())" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn dark btn-outline" data-dismiss="modal" aria-hidden="true">@(StandartLibrary.Lang.Resources.Close_5490)</button>
+                <button id="btnSave" class="btn green" data-dismiss="modal">@(StandartLibrary.Lang.Resources.Save_5576)</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        jQuery(document).ready(function () {
+            SetSelect2("dialogCustomerList", "", "", "/AJAX/GetCustomerAll", 3, true, false, null);
+        });
+
+        function Add() {
+            $("#dialogEmailType1").prop("checked", true);
+            $("#dialogEmailType2").prop("checked", false);
+            $("#dialogEmail").val("");
+            $('#modalDialog').modal();
+            $("#btnSave").unbind("click");
+            $("#btnSave").click(function () {
+                var type = $("#dialogEmailType1").is(":checked") ? 1 : 2;
+                var email = $('#dialogEmail').val();
+                $.ajax({
+                    url: '/PSSREditor/AjaxAddEmail',
+                    type: 'POST',
+                    contentType: 'application/json;',
+                    data: JSON.stringify({ customerId: @customerId, type: type, email: email }),
+                    success: function (data) {
+                        if (data === 'ok') {
+                            window.location.reload();
+                        } else {
+                            Warning(data);
+                        }
+                    },
+                    error: function () {
+	                    alert('@Html.Raw(StandartLibrary.Lang.Resources.Email_address_is_wrong)');
+                    }
+                });
+            });
+        }
+        function Delete(id) {
+            if (confirm("@(StandartLibrary.Lang.Resources.Are_you_sure_you_want_to_delete_5517)")) {
+                $.ajax({
+                    url: '/PSSREditor/AjaxDeleteEmail',
+                    type: 'POST',
+                    contentType: 'application/json;',
+                    data: JSON.stringify({ id: id }),
+                    success: function (data) {
+                        window.location.reload();
+                    }
+                });
+            }
+        }
+        function Change(id) {
+            var email = $("#email" + id).text();
+            var type = $("#email" + id).attr("type");
+
+            $("#dialogEmailType1").prop("checked", type == 1);
+            $("#dialogEmailType2").prop("checked", type == 2);
+            $('#dialogEmail').val(email);
+            $('#modalDialog').modal();
+
+            $("#btnSave").unbind("click");
+            $("#btnSave").click(function () {
+                email = $('#dialogEmail').val();
+                type = $("#dialogEmailType1").is(":checked") ? 1 : 2;
+                $.ajax({
+                    url: '/PSSREditor/AjaxEditEmail',
+                    type: 'POST',
+                    contentType: 'application/json;',
+                    data: JSON.stringify({ id: id, email: email, type: type }),
+                    success: function (data) {
+                        if (data === 'ok') {
+                            window.location.reload();
+                        } else {
+                            Warning(data);
+                        }
+                    },
+                    error: function () {
+	                    alert('@Html.Raw(StandartLibrary.Lang.Resources.Email_address_is_wrong)');
+                    }
+                });
+            });
+
+        }
+    </script>
+}
+
+@section Styles{
+    <style>
+    </style>
+}

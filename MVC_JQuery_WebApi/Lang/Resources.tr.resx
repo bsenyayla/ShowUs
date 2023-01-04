@@ -1,0 +1,585 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="LangTest" xml:space="preserve">
+    <value>Dil Testi</value>
+  </data>
+  <data name="ДобрыйДень" xml:space="preserve">
+    <value>İyi günler!</value>
+  </data>
+  <data name="ВоВложенииКотировкиИОтчетПоРемонту" xml:space="preserve">
+    <value>Ekinde tırnak ve tamir raporu!</value>
+  </data>
+  <data name="ДоставкаЗапасныхЧастей" xml:space="preserve">
+    <value>Yedek parçaların teslimi!</value>
+  </data>
+  <data name="ЗавершениеКотировки" xml:space="preserve">
+    <value>Alıntı Tamamlandı!</value>
+  </data>
+  <data name="Авиа" xml:space="preserve">
+    <value>Hava!</value>
+  </data>
+  <data name="Трак" xml:space="preserve">
+    <value>Karayolu!</value>
+  </data>
+  <data name="ПрошуПодписатьКотировку" xml:space="preserve">
+    <value>Lütfen bir teklif imzalayın !!</value>
+  </data>
+  <data name="Спасибо" xml:space="preserve">
+    <value>Teşekkür ederim</value>
+  </data>
+  <data name="СУважением" xml:space="preserve">
+    <value>Saygılarımızla,</value>
+  </data>
+  <data name="Сегмент" xml:space="preserve">
+    <value>Segment</value>
+  </data>
+  <data name="Котировка" xml:space="preserve">
+    <value>Teklif</value>
+  </data>
+  <data name="Неприменим" xml:space="preserve">
+    <value>Geçerli değildir!</value>
+  </data>
+  <data name="Наряд" xml:space="preserve">
+    <value>WO!</value>
+  </data>
+  <data name="ВремяОжиданияНачалаПодготовкиДефектовки" xml:space="preserve">
+    <value>Kusur hazırlanmasının başlaması için bekleme süresi!</value>
+  </data>
+  <data name="ДатаНачалаДефектовки" xml:space="preserve">
+    <value>Kusurun başlangıç tarihi!</value>
+  </data>
+  <data name="ОбщееВремяРаботыНадДефектовкой" xml:space="preserve">
+    <value>Kusur üzerinde çalışma toplam süresi!</value>
+  </data>
+  <data name="ОсновноеВремяРаботыНадДефектовкой" xml:space="preserve">
+    <value>Çoğu zaman defektovkoj üzerinde çalışıyor!</value>
+  </data>
+  <data name="ВремяПаузРаботыНадДефектовкой" xml:space="preserve">
+    <value>Kusur üzerinde çalışmayı duraklatma zamanı!</value>
+  </data>
+  <data name="ПричиныПауз" xml:space="preserve">
+    <value>Duraklama nedenleri!</value>
+  </data>
+  <data name="ДатаЗагрузкиAdditionalWorkДокумента" xml:space="preserve">
+    <value>Ek çalışma belgesinin tarihi!</value>
+  </data>
+  <data name="ДатаНачалаОтчета" xml:space="preserve">
+    <value>Rapor başlangıç tarihi!</value>
+  </data>
+  <data name="ДатаЗавершенияОтчета" xml:space="preserve">
+    <value>Raporun tamamlanma tarihi!</value>
+  </data>
+  <data name="ОбщееВремяРаботыНадОтчетом" xml:space="preserve">
+    <value>Raporda toplam süre!</value>
+  </data>
+  <data name="ВозвратНаПеределкуДефектовки" xml:space="preserve">
+    <value>Açıklamalar Remaking için geri!</value>
+  </data>
+  <data name="ПричинаПеределкиДефектовки" xml:space="preserve">
+    <value>Kusur rework nedeni!</value>
+  </data>
+  <data name="ПринятыеНаряды" xml:space="preserve">
+    <value>Kabul edilen WO'lar!</value>
+  </data>
+  <data name="ОткрытьВExcel" xml:space="preserve">
+    <value>Excel'de aç!</value>
+  </data>
+  <data name="Комментарии" xml:space="preserve">
+    <value>Dusunceler</value>
+  </data>
+  <data name="ЗЧВНаличииНаСкладе" xml:space="preserve">
+    <value>S / h stokta!</value>
+  </data>
+  <data name="УсловияДоставки" xml:space="preserve">
+    <value>Teslim şartları</value>
+  </data>
+  <data name="ПолучательЗаказчик" xml:space="preserve">
+    <value>Alıcı Müşteri:!</value>
+  </data>
+  <data name="ПолучательEmail" xml:space="preserve">
+    <value>Alıcı e-postası:</value>
+  </data>
+  <data name="ПредварительнаяСтоимостьРемонта" xml:space="preserve">
+    <value>Tahmini tamir bedeli:</value>
+  </data>
+  <data name="СтоимостьЗЧ" xml:space="preserve">
+    <value>Yedek parça maliyeti :</value>
+  </data>
+  <data name="Работа" xml:space="preserve">
+    <value>Çalış:</value>
+  </data>
+  <data name="Восстановление" xml:space="preserve">
+    <value>iyileştirme</value>
+  </data>
+  <data name="Транспортировка" xml:space="preserve">
+    <value>Nakliye</value>
+  </data>
+  <data name="REMANВозврат" xml:space="preserve">
+    <value>REMAN İadesi:</value>
+  </data>
+  <data name="СтоимостьПредварительнойКотировки" xml:space="preserve">
+    <value>Ön teklif maliyeti:!</value>
+  </data>
+  <data name="ВыборВалютыБезНДС" xml:space="preserve">
+    <value>Para birimi seçimi: (KDV hariç)!</value>
+  </data>
+  <data name="Закрыть" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Завершить" xml:space="preserve">
+    <value>Tamamla</value>
+  </data>
+  <data name="Заказчик" xml:space="preserve">
+    <value>Müşteri</value>
+  </data>
+  <data name="Дивизион" xml:space="preserve">
+    <value>Bölümler!</value>
+  </data>
+  <data name="Компонент" xml:space="preserve">
+    <value>Bileşen!</value>
+  </data>
+  <data name="Модель" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Дата" xml:space="preserve">
+    <value>Tarih</value>
+  </data>
+  <data name="ДатаПоступленияНаКотировку" xml:space="preserve">
+    <value>tarih &lt;br /&gt; makbuzlar &lt;br /&gt; Bir teklif için!</value>
+  </data>
+  <data name="МодельМашины" xml:space="preserve">
+    <value>model &lt;br /&gt; makinası!</value>
+  </data>
+  <data name="ДатаНачалаКотировки" xml:space="preserve">
+    <value>tarih &lt;br /&gt; başlangıç &lt;br /&gt; tırnak!</value>
+  </data>
+  <data name="ДатаОкончанияКотировки" xml:space="preserve">
+    <value>tarih &lt;br /&gt; sonu &lt;br /&gt; tırnak!</value>
+  </data>
+  <data name="ОбщееКоличествоДнейПодготовкиКотировки" xml:space="preserve">
+    <value>Toplam tutarı &lt;br /&gt; hazırlık günleri &lt;br /&gt; tırnak!</value>
+  </data>
+  <data name="ФактическоеВремяПодготовкиКотировки" xml:space="preserve">
+    <value>gerçek &lt;br /&gt; hazırlık zamanı &lt;br /&gt; tırnak!</value>
+  </data>
+  <data name="ОдобреноОтказ" xml:space="preserve">
+    <value>Onaylandı \ İnkar!</value>
+  </data>
+  <data name="СтоимостьПредварительногоРемонта" xml:space="preserve">
+    <value>maliyeti &lt;br /&gt; önceki &lt;br /&gt; onarmak!</value>
+  </data>
+  <data name="СтоимостьОдобренногоРемонта" xml:space="preserve">
+    <value>maliyeti &lt;br /&gt; onaylı &lt;br /&gt; onarmak!</value>
+  </data>
+  <data name="ОбщееКолВоДнейОжиданияОдобренияОтказа" xml:space="preserve">
+    <value>Toplam adet &lt;br /&gt; bekleme günleri &lt;br /&gt; onay \ ret!</value>
+  </data>
+  <data name="ДатаBrОдобренияОтказа" xml:space="preserve">
+    <value>tarih &lt;br /&gt; onay \ ret!</value>
+  </data>
+  <data name="ДатаЗаказа" xml:space="preserve">
+    <value>tarih &lt;br /&gt; Sipariş!</value>
+  </data>
+  <data name="МетодДоставки" xml:space="preserve">
+    <value>yöntem &lt;br /&gt; Teslimat!</value>
+  </data>
+  <data name="ДатаПриходаЗЧ" xml:space="preserve">
+    <value>tarih &lt;br /&gt; SP varış!</value>
+  </data>
+  <data name="ФактическоеВремяДоставкиЗЧ" xml:space="preserve">
+    <value>gerçek &lt;br /&gt; zaman &lt;br /&gt; yedek parça teslimatı!</value>
+  </data>
+  <data name="СуммаКотировки" xml:space="preserve">
+    <value>Fiyat teklifi!</value>
+  </data>
+  <data name="REMAN" xml:space="preserve">
+    <value>REMAN!</value>
+  </data>
+  <data name="ПолеСтоимостьЗЧДолжноБытьЧислом" xml:space="preserve">
+    <value>\ Yedek parça maliyeti \ alanı bir sayı olmalı!</value>
+  </data>
+  <data name="ПолеРаботаДолжноБытьЧислом" xml:space="preserve">
+    <value>\ İş \ alanı bir sayı olmalı!</value>
+  </data>
+  <data name="ПолеВосстановлениеДолжноБытьЧислом" xml:space="preserve">
+    <value>\ Kurtarma \ alanı bir sayı olmalı!</value>
+  </data>
+  <data name="ПолеТранспортировкаДолжноБытьЧислом" xml:space="preserve">
+    <value>\ Ulaşım \ alanı bir sayı olmalı!</value>
+  </data>
+  <data name="ПолеREMANДолжноБытьЧислом" xml:space="preserve">
+    <value>\ REMAN \ alanı bir sayı olmalı!</value>
+  </data>
+  <data name="ОшибкаВвода" xml:space="preserve">
+    <value>Giriş Hatası !!</value>
+  </data>
+  <data name="ЗагрузитеКотировку" xml:space="preserve">
+    <value>Alıntı indir!</value>
+  </data>
+  <data name="Are You Sure You Want To Delete" xml:space="preserve">
+    <value>Silmek istediğinize emin misiniz?</value>
+  </data>
+  <data name="ИзменитьКотировку" xml:space="preserve">
+    <value>Teklifi değiştir!</value>
+  </data>
+  <data name="ОтветПолучен" xml:space="preserve">
+    <value>Cevap alındı!</value>
+  </data>
+  <data name="Отказ" xml:space="preserve">
+    <value>Ret</value>
+  </data>
+  <data name="ОбновлениеКотировки" xml:space="preserve">
+    <value>Güncelleme tırnak!</value>
+  </data>
+  <data name="Одобрен" xml:space="preserve">
+    <value>Tamam!</value>
+  </data>
+  <data name="Одобрение" xml:space="preserve">
+    <value>Onay</value>
+  </data>
+  <data name="ЗагрузитьПодписаннуюКотировку" xml:space="preserve">
+    <value>İmzalı bir teklif indirin!</value>
+  </data>
+  <data name="ОкончательнаяСтоимостьРемонта" xml:space="preserve">
+    <value>Son onarım maliyeti:!</value>
+  </data>
+  <data name="МетодЗаказа" xml:space="preserve">
+    <value>Sipariş Yöntemi:!</value>
+  </data>
+  <data name="CounterNotSpecified" xml:space="preserve">
+    <value>Belirtilmemiş</value>
+  </data>
+  <data name="ЗапчастиПредоставитЗаказчик" xml:space="preserve">
+    <value>Yedek parçalar Müşteri tarafından sağlanacaktır!</value>
+  </data>
+  <data name="НетЗЧ" xml:space="preserve">
+    <value>Yedek parça ihtiyacı yok!</value>
+  </data>
+  <data name="ЕстьВосстановительныеРаботы" xml:space="preserve">
+    <value>Restorasyon işi var!</value>
+  </data>
+  <data name="БазаКотировок" xml:space="preserve">
+    <value>Baz tırnak!</value>
+  </data>
+  <data name="ЕстьЗЧ" xml:space="preserve">
+    <value>Yedek parça var!</value>
+  </data>
+  <data name="НаОдобрении0Дней" xml:space="preserve">
+    <value>{0} günün onayı!</value>
+  </data>
+  <data name="КомментарииPSSR" xml:space="preserve">
+    <value>Dusunceler</value>
+  </data>
+  <data name="ЗагрузитеПодписаннуюКотировку" xml:space="preserve">
+    <value>İmzalı bir teklif indirin!</value>
+  </data>
+  <data name="ОшибкаОдобрения" xml:space="preserve">
+    <value>Onay Hatası!</value>
+  </data>
+  <data name="НетДанных" xml:space="preserve">
+    <value>Veri bulunamadı</value>
+  </data>
+  <data name="Заказано" xml:space="preserve">
+    <value>Sıralı!</value>
+  </data>
+  <data name="ВсеЗЧВНаличии" xml:space="preserve">
+    <value>Tüm yedek parçalar stokta!</value>
+  </data>
+  <data name="ОжидаемЗЧ" xml:space="preserve">
+    <value>SP&amp;#39;yi bekliyoruz!</value>
+  </data>
+  <data name="МожноЗагружатьТолькоXLSXФормат" xml:space="preserve">
+    <value>Sadece XLSX formatı indirilebilir!</value>
+  </data>
+  <data name="ЗагрузкаЛиста" xml:space="preserve">
+    <value>Sayfa yükleniyor!</value>
+  </data>
+  <data name="ОжидающиеЗаказа" xml:space="preserve">
+    <value>Sipariş bekleniyor!</value>
+  </data>
+  <data name="ДатаОдобрения" xml:space="preserve">
+    <value>Onay tarihi!</value>
+  </data>
+  <data name="ОжидающиеЗапчастей" xml:space="preserve">
+    <value>Yedek parça bekliyor!</value>
+  </data>
+  <data name="Машины" xml:space="preserve">
+    <value>Makina</value>
+  </data>
+  <data name="Заказа" xml:space="preserve">
+    <value>Sipariş tarihi</value>
+  </data>
+  <data name="ФайлЗагружен" xml:space="preserve">
+    <value>Yüklendi</value>
+  </data>
+  <data name="НеНачатые" xml:space="preserve">
+    <value>Başlamadı!</value>
+  </data>
+  <data name="ПроектныеРасходы" xml:space="preserve">
+    <value>Proje maliyetleri:!</value>
+  </data>
+  <data name="Дефектовка" xml:space="preserve">
+    <value>Sorun!</value>
+  </data>
+  <data name="Отчет" xml:space="preserve">
+    <value>Sonu?</value>
+  </data>
+  <data name="ДатаПоступления" xml:space="preserve">
+    <value>tarih &lt;br /&gt; Gelenler!</value>
+  </data>
+  <data name="ВПроцессе" xml:space="preserve">
+    <value>Süreci</value>
+  </data>
+  <data name="ЗавершитьИПеренестиВРазделЗавершенные" xml:space="preserve">
+    <value>Bitir ve \ &amp;#39;Tamamlandı \&amp;#39; konumuna git!</value>
+  </data>
+  <data name="ВозвратНаОбнов" xml:space="preserve">
+    <value>Güncellemeye geri dön.</value>
+  </data>
+  <data name="ВозвратВКабинетУчетчикаНаОбновление" xml:space="preserve">
+    <value>Güncelleme için hesap ofisine geri dönün!</value>
+  </data>
+  <data name="Запустить" xml:space="preserve">
+    <value>Başla</value>
+  </data>
+  <data name="ПричинаПаузы" xml:space="preserve">
+    <value>Durma nedeni:!</value>
+  </data>
+  <data name="ПричинаВозвратаНаОбновление" xml:space="preserve">
+    <value>Güncellemeye geri dönme nedeni:!</value>
+  </data>
+  <data name="ПереместитьВРазделВПроцессе" xml:space="preserve">
+    <value>\ &amp;#39;Devam ediyor \!</value>
+  </data>
+  <data name="ОтправитьНаОбработкуВСервисныйИнженер" xml:space="preserve">
+    <value>İşlem için Atölye Mühendisine gönderin!</value>
+  </data>
+  <data name="Основной" xml:space="preserve">
+    <value>Ana</value>
+  </data>
+  <data name="Изменить" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="Удалить" xml:space="preserve">
+    <value>Aýyrma</value>
+  </data>
+  <data name="ДобавлениеEmail" xml:space="preserve">
+    <value>E-posta ekleme!</value>
+  </data>
+  <data name="Тип" xml:space="preserve">
+    <value>Tip</value>
+  </data>
+  <data name="Сохранить" xml:space="preserve">
+    <value>Ýatlama</value>
+  </data>
+  <data name="PSSRАдресаРассылкиДля" xml:space="preserve">
+    <value>PSSR - için Posta Adresleri!</value>
+  </data>
+  <data name="Копия" xml:space="preserve">
+    <value>kopya</value>
+  </data>
+  <data name="Добавить" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="PSSRЗаказчики" xml:space="preserve">
+    <value>PSSR - Müşteriler!</value>
+  </data>
+  <data name="ДобавлениеЗаказчика" xml:space="preserve">
+    <value>Bir müşteri eklemek!</value>
+  </data>
+  <data name="ПодготовкаОтчета" xml:space="preserve">
+    <value>Teknik Rapor</value>
+  </data>
+  <data name="ДатаЗагрузки" xml:space="preserve">
+    <value>İndirme tarihi</value>
+  </data>
+  <data name="ВозвратНаПеределкуДефектовкиYesOrNo" xml:space="preserve">
+    <value>Tekrar çalışmaya dön &lt;br /&gt; Sorun &lt;br /&gt; (evet veya hayır)!</value>
+  </data>
+  <data name="Документа" xml:space="preserve">
+    <value>adı</value>
+  </data>
+  <data name="ПоискНаряда" xml:space="preserve">
+    <value>Arama kıyafeti!</value>
+  </data>
+  <data name="НомерНаряда" xml:space="preserve">
+    <value>Sipariş numarası:!</value>
+  </data>
+  <data name="ОжидающиеКорректировки" xml:space="preserve">
+    <value>Beklemede olan ayarlamalar!</value>
+  </data>
+  <data name="НаОдобрении10Дней" xml:space="preserve">
+    <value>10 gün onayı!</value>
+  </data>
+  <data name="НаОдобрении20Дней" xml:space="preserve">
+    <value>20 gün onayı!</value>
+  </data>
+  <data name="НаОдобрении30Дней" xml:space="preserve">
+    <value>Onay 30 gün!</value>
+  </data>
+  <data name="Редактировать" xml:space="preserve">
+    <value>Edit!</value>
+  </data>
+  <data name="ИдетПоиск" xml:space="preserve">
+    <value>Arama Penceresi</value>
+  </data>
+  <data name="НарядОтсутствуетВКабинетеКаунтера" xml:space="preserve">
+    <value>Kıyafet Sayaç ofisinde değil!</value>
+  </data>
+  <data name="ОтменитьОтказИПереместитьВCustomerApproval" xml:space="preserve">
+    <value>Reddetmeyi iptal edin ve Müşteri Onayına geçin!</value>
+  </data>
+  <data name="Назад" xml:space="preserve">
+    <value>Geri</value>
+  </data>
+  <data name="ВведитеВашеСообщениеСюда" xml:space="preserve">
+    <value>Mesajınızı buraya giriniz!</value>
+  </data>
+  <data name="Отправить" xml:space="preserve">
+    <value>Gönder</value>
+  </data>
+  <data name="Загрузка" xml:space="preserve">
+    <value>Yükleme</value>
+  </data>
+  <data name="КомментарииКНаряду" xml:space="preserve">
+    <value>Kıyafet üzerine yorumlar!</value>
+  </data>
+  <data name="Котировки" xml:space="preserve">
+    <value>Alıntılar!</value>
+  </data>
+  <data name="Поиск" xml:space="preserve">
+    <value>Ürün Ara</value>
+  </data>
+  <data name="СвязатьсяСРазработчиками" xml:space="preserve">
+    <value>Geliştiricilerle iletişim kurun!</value>
+  </data>
+  <data name="ПроблемныеНаряды" xml:space="preserve">
+    <value>Sorun kıyafetler!</value>
+  </data>
+  <data name="Привет" xml:space="preserve">
+    <value>Selam.</value>
+  </data>
+  <data name="Учетчик" xml:space="preserve">
+    <value>Muhasebeci</value>
+  </data>
+  <data name="TimeSpanFormat" xml:space="preserve">
+    <value>d'g 'h's 'm'd 's'sn'</value>
+  </data>
+</root>

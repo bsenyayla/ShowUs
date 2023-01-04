@@ -1,0 +1,776 @@
+﻿@using SharedCRCMS.Service
+@{
+    ViewBag.Title = @StandartLibrary.Lang.Resources.CustomerApproval;
+    var appSetting = SharedCRCMS.Service.AppSettingService.AppSetting;
+    var showQuotationHiddenAreas = appSetting.Content.ShowQuotationHiddenAreas;
+    var displayQuotation = showQuotationHiddenAreas ? "block" : "none";
+}
+<div id="modal_AnswerReceivedDialog" class="modal fade" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width:1000px">
+        <input type="hidden" name="reasonId" id="reasonId" value="" />
+        <input type="hidden" name="groupId" id="groupId" value="" />
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">@(StandartLibrary.Lang.Resources.Answer_received_5521)</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" style="padding-left:10px;padding-top:10px">
+                        <button class="btn green btn-outline" data-dismiss="modal" aria-hidden="true" onclick="OnAnswerReceivedDenial()">@(StandartLibrary.Lang.Resources.Renouncement_5467)</button>
+                        <button class="btn green btn-outline" data-dismiss="modal" aria-hidden="true" onclick="OnAnswerReceivedUpdateQuotation()">@(StandartLibrary.Lang.Resources.Quotation_Update_6910)</button>
+                        <button class="btn green btn-outline" data-dismiss="modal" aria-hidden="true" onclick="OnAnswerReceivedApproved()">@(StandartLibrary.Lang.Resources.Approved_5523)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal_AnswerReceivedApprovedDialog" class="modal fade" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width:1000px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">@(StandartLibrary.Lang.Resources.OK_6911)</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-2" style="padding-left:10px;padding-top:10px">
+                        <div class="">
+                            <div style="text-align:center;width:100%;font-weight:bold;">
+                                @Html.Raw((@StandartLibrary.Lang.Resources.Download_signed_quote_6912))
+                            </div>
+                            <div id="SignedQuotationUploadsList" style="width:100%;max-height:200px;overflow:auto"></div>
+                            <div id="SignedQuotationfile-dropzone" class="dropzone" style="margin-top:20px;margin-bottom:20px;width:100%;min-height:100px;"></div>
+                            <a id="btnNotApplicable" class="btn yellow" style="display:@displayQuotation" href="#" onclick="notApplicable(); return false;"> @(StandartLibrary.Lang.Resources.Not_applicable_5474)</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="display:@displayQuotation; padding-left:10px;padding-top:10px">
+                        <div class="boxGroup">
+                            <div style="text-align:center;width:100%;font-weight:bold;">
+                                @(StandartLibrary.Lang.Resources.Final_cost_of_repair_6913)
+                            </div>
+                            <div>
+                                @(StandartLibrary.Lang.Resources.Cost_of_spare_part_6878) <input style="margin:0px" type="text" id="CostParts" size="10" class="form-control input-sm" />
+                                @(StandartLibrary.Lang.Resources.Work_6879): <input type="text" id="CostWork" size="10" class="form-control input-sm" />
+                                @(StandartLibrary.Lang.Resources.Recovery_6880): <input id="CostRecovery" type="text" size="10" class="form-control input-sm" />
+                                @(StandartLibrary.Lang.Resources.Transportation_6881): <input id="CostTransportation" type="text" size="10" class="form-control input-sm" />
+                                @(StandartLibrary.Lang.Resources.REMAN_Refund_6882) <input id="CostReman" type="text" size="10" class="form-control input-sm" />
+                                @(StandartLibrary.Lang.Resources.Cost_of_preliminary_quotation_6883) <input id="CostSignedQuotation" type="text" size="10" disabled class="form-control input-sm" />
+                                @StandartLibrary.Lang.Resources.The_storage_cost_of_a_new_site_5550 <input id="CostRelativeOfTheNewNode" type="text" size="10" class="form-control input-sm" />
+                                @(StandartLibrary.Lang.Resources.Currency_selection_without_VAT_6884)
+                                <div class="row" style="margin-bottom:40px;">
+                                    @foreach (var curr in appSetting.Content.AvailableCurrencyList)
+                                    {
+                                        <div class="col-md-@(12/appSetting.Content.AvailableCurrencyList.Count)">
+                                            <div class="chk1" style="margin-left:20px">@curr.Key</div>
+                                            <div class="chk2"><input type="radio" name="currencyType" value="@curr.Value" id="currencyType@(curr.Value)" onclick="$('#currencyTypeValue').val($(this).val())" class="form-control input-md" /></div>
+                                            <div class="chk3"></div>
+                                        </div>
+                                    }
+                                    <input type="hidden" name="currencyTypeValue" id="currencyTypeValue" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2" style="display:@displayQuotation; padding-left:10px;padding-top:10px">
+                        <div style="width:100%;margin-top:5px;display:none;">
+                            <div class="chk1">Запастные части на складах РК</div>
+                            <div class="chk2"><input style="margin:0px" type="checkbox" id="SparePartsInWarehousesRK" class="form-control input-sm" /></div>
+                            <div class="chk3"></div>
+                        </div>
+                        <div class="boxGroup" style="display:@displayQuotation" id="deliveryMethodBox">
+                            <div style="text-align:center;width:100%;font-weight:bold;margin-bottom:20px;display:inline;">
+                                @(StandartLibrary.Lang.Resources.Order_Method_6914) :
+                            </div>
+                            <div style="margin-bottom:40px;display:inline;display:none;">
+                                <div class="chk1">@(StandartLibrary.Lang.Resources.Not_specified_5528)</div>
+                                <div class="chk2"><input type="radio" name="deliveryMethod" id="deliveryMethod0" checked class="form-control input-sm" /></div>
+                                <div class="chk3"></div>
+                            </div>
+                            <div style="margin-bottom:40px;display:inline;">
+                                <div class="chk1">ТК</div>
+                                <div class="chk2"><input type="radio" name="deliveryMethod" id="deliveryMethod1" class="form-control input-sm" /></div>
+                                <div class="chk3"></div>
+                            </div>
+                            <div style="float:left;">
+                                <div class="chk1">АК</div>
+                                <div class="chk2"><input type="radio" name="deliveryMethod" value="2" id="deliveryMethod2" class="form-control input-sm" /></div>
+                                <div class="chk3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2" style="padding-left:10px;padding-top:10px" id="existsRestorationWorkdiv">
+                        <div class="boxGroup">
+                            <div style="margin-bottom:40px;">
+                                <div class="chk1" style="font-weight:bold;">@(StandartLibrary.Lang.Resources.There_are_restoration_work_5529)</div>
+                                <div class="chk2"><input style="margin:0px;" type="checkbox" id="existsRestorationWork" class="form-control input-sm" /></div>
+                                <div class="chk3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="padding-left:10px;padding-top:10px">
+                        <div class="boxGroup">
+                            <div style="font-weight:bold;margin-bottom:20px;">
+                                <div>@(StandartLibrary.Lang.Resources.There_is_5530)</div>
+
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="existsSpareParts1" name="existsSpareParts">
+                                    <label class="custom-control-label" for="defaultUnchecked">@(StandartLibrary.Lang.Resources.Yes_5728)</label>
+                                    @*</div>
+                                        <div class="custom-control custom-radio">*@
+                                    <input type="radio" class="custom-control-input" id="existsSpareParts0" name="existsSpareParts">
+                                    <label class="custom-control-label" for="defaultUnchecked">@(StandartLibrary.Lang.Resources.No_5687)</label>
+                                </div>
+
+                                @*<div class="chk2">@(StandartLibrary.Lang.Resources.Yes_5728)</div>*@
+                                @*<div class="chk3">
+                                        @(StandartLibrary.Lang.Resources.Yes_5728) <input style="margin:0px" type="radio" name="existsSpareParts" id="existsSpareParts1" class="form-control input-sm" checked />
+                                    </div>*@
+                                @*<div class="chk4">@(StandartLibrary.Lang.Resources.No_5687)</div>*@
+                                @*<div class="chk5">
+                                        @(StandartLibrary.Lang.Resources.No_5687)<input style="margin:0px" type="radio" name="existsSpareParts" id="existsSpareParts0" class="form-control input-sm" />
+                                    </div>*@
+                                <div class="chk6"></div>
+                            </div>
+                            <div style="font-weight:bold;">
+                                <div class="chk1">@(StandartLibrary.Lang.Resources.Spare_parts_will_be_provided_by_the_Customer_5532)</div>
+                                <div class="chk2"><input style="margin:0px" type="checkbox" id="isSparePartsProvideTheCustomer" class="form-control input-sm" /></div>
+                                <div class="chk3"></div>
+                            </div>
+                            <div style="display:@displayQuotation; font-weight:bold;margin-bottom:20px;">
+                                <div class="chk1">Reman</div>
+                                <div class="chk2"><input style="margin:0px" type="radio" id="IsReman" class="form-control input-sm" /></div>
+                                <div class="chk3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn dark btn-outline" data-dismiss="modal" aria-hidden="true">@(StandartLibrary.Lang.Resources.Close_5490)</button>
+                <button class="btn dark btn-outline" onclick="return OnAnswerReceivedApproved_complete()">@(StandartLibrary.Lang.Resources.Complete_5491)</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="lessThan10Days">
+
+</div>
+
+<div id="lessThan30Days">
+
+</div>
+
+<div id="moreThan30Days">
+
+</div>
+
+<div class="row" id="templateRow" style="display:none">
+    <div class="col-md-12">
+        <div class="portlet box (box)">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture"></i>(title)
+                    <span id="OnApproval(days)_Count" class="badge badge-success">zzz</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-advance table-hover" style="margin:0px !important;" id="OnApproval(days)_datatableAjax">
+                    <thead>
+                        <tr role="row" class="heading">
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Group_5732)</th>
+                            <th class="th1" style="width:100px">@(StandartLibrary.Lang.Resources.Outfit_5492)&nbsp;#<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.DocType)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Customer_5493)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Division_5494)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Component_5495)<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.Model_5765))<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.Acceptance_date_5766))<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.date_of_5567))<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.Pssr))<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Comments_PSSR_6916)<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.QuotationAmount))<br /><br /></th>
+                            <th style="width:140px"></th>
+                        </tr>
+                        <tr role="row" class="filter">
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="OnApproval(days)_group_id"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" style="width:50px" id="OnApproval(days)_document_id"></select>
+                            </td>
+                            <td></td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="OnApproval(days)_customer_id"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="OnApproval(days)_division"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="OnApproval(days)_smcsComponentDescription"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="OnApproval(days)_model_id"></select>
+                            </td>
+                            <td></td>
+                            <td>
+                                <input type="text" placeholder="@(StandartLibrary.Lang.Resources.from_5535)" value="" class="form-control form-filter input-sm date-picker" id="OnApproval(days)_PreparingQuotation_CompletedDate_Begin" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;margin-right:10px;">
+                                <input type="text" placeholder="@(StandartLibrary.Lang.Resources.by_5536)" value="" class="form-control form-filter input-sm date-picker" id="OnApproval(days)_PreparingQuotation_CompletedDate_End" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;">
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles
+{
+    <style>
+        .boxGroup {
+            border-left: 1px solid gray;
+            padding-left: 10px;
+        }
+    </style>
+}
+
+@section Scripts
+{
+
+
+    <script src="/Scripts/uploadlist.js?v=2" type="text/javascript"></script>
+    <script>
+        Dropzone.autoDiscover = false;
+
+        var ShowAnswerReceivedDialog_documentId = 0;
+        var ShowAnswerReceivedDialog_days = 0;
+        var ShowAnswerReceivedDialog_existsUploaded=false;
+        var myDropzoneSignedQuotation = new Dropzone("#SignedQuotationfile-dropzone", {
+            url: "/AJAX/UploadedSignedQuotation?documentId=0"
+        });
+        myDropzoneSignedQuotation.on("addedfile", function (file) {
+            // alert(this.files[this.files.length-1].fileName);
+            if (this.files[1] != null) {
+                this.removeFile(this.files[0]);
+            }
+        });
+        myDropzoneSignedQuotation.on("success", function (file, responseText) {
+            if (responseText.Status==1) {
+                $("#CostParts").val(responseText.CostParts);
+                $("#CostWork").val(responseText.CostWork);
+                $("#CostRecovery").val(responseText.CostRecovery);
+                $("#CostTransportation").val(responseText.CostTransportation);
+                $("#CostReman").val(responseText.CostReman);
+                $("#CostRelativeOfTheNewNode").val(responseText.CostRelativeOfTheNewNode);
+                checkCost("change");
+            }
+
+            ShowAnswerReceivedDialog_existsUploaded = true;
+            RefreshSignedQuotationUploadsList(ShowAnswerReceivedDialog_documentId);
+        });
+        function OnAnswerReceived(days, documentId, reasonId, groupId) {
+            ShowAnswerReceivedDialog_documentId = documentId;
+            ShowAnswerReceivedDialog_days = days;
+            ShowAnswerReceivedDialog_existsUploaded = false;
+            $("#reasonId").val(reasonId);
+            $("#groupId").val(groupId);
+            $("#modal_AnswerReceivedDialog").modal();
+        }
+
+        var Cancel_Button_Text = '@Html.Raw(StandartLibrary.Lang.Resources.MessageBox_CancelButton)';
+        var OK_Button_Text = '@Html.Raw(StandartLibrary.Lang.Resources.MessageBox_OkButton)';
+
+        function OnAnswerReceivedDenial() {
+            //if (confirm('@Html.Raw(StandartLibrary.Lang.Resources.Proposal_Deny_Confirm_Text)')){
+            swal({
+                title: Confirmation,
+                text: "@Html.Raw(StandartLibrary.Lang.Resources.Proposal_Deny_Confirm_Text)",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: OK_Button_Text,
+                cancelButtonText: Cancel_Button_Text,
+                closeOnConfirm: true
+
+            }, function (result) {
+                if (result) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/CustomerApproval/Ajax_ReceivedDenial",
+                        data: { documentId: ShowAnswerReceivedDialog_documentId },
+                        success: function (data) {
+                            OnApproval_GetTable(ShowAnswerReceivedDialog_days);
+
+                        },
+                        error: myErrorFunction
+                    });
+                }
+            });
+            //}
+        }
+        function OnAnswerReceivedUpdateQuotation() {
+            $.ajax({
+                type: "POST",
+                url: "/CustomerApproval/Ajax_ReceivedUpdate",
+                data: { documentId: ShowAnswerReceivedDialog_documentId},
+                success: function (data) {
+                    OnApproval_GetTable(ShowAnswerReceivedDialog_days);
+                },
+                error: myErrorFunction
+            });
+        }
+        function RemovedFile2(uploadId) {
+            if (confirm("@StandartLibrary.Lang.Resources.Are_you_sure_you_want_to_delete_5517")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/AJAX/RemoveUpload",
+                    data: { uploadId: uploadId },
+                    success: function (data) {
+                        RefreshQuotationUploadsList(ShowUploadQuotationdDialog_documentId);
+                    },
+                    error: myErrorFunction
+                });
+            }
+        }
+    var IsNotApplicable = false;
+        function RefreshSignedQuotationUploadsList(documentId) {
+            $.ajax({
+                type: "POST",
+                url: "/AJAX/GetUploadsList",
+                data: { documentId: documentId, typeId: 24 },
+                success: function (data) {
+                    IsNotApplicable = data.indexOf("NotApplicable") > -1;
+                    if (data.length > 40) {
+                        ShowAnswerReceivedDialog_existsUploaded = true;
+                        data = data.replace(new RegExp('RemovedFile', 'g'), 'RemovedFile2');
+                        data = data.replace(new RegExp('NotApplicable', 'g'), '@(StandartLibrary.Lang.Resources.Not_applicable_5474)');
+                        //$("#btnNotApplicable").hide();
+                    }
+                    else {
+                        //$("#btnNotApplicable").show();
+                    }
+                    $('#SignedQuotationUploadsList').html(data);
+                },
+                error: myErrorFunction
+            });
+        }
+
+        function OnAnswerReceivedApproved() {
+            let reasonId = $("#reasonId").val();
+            let groupId = $("#groupId").val();
+
+            myDropzoneSignedQuotation.options.url = "/AJAX/UploadedSignedQuotation?documentId=" + ShowAnswerReceivedDialog_documentId;
+            RefreshSignedQuotationUploadsList(ShowAnswerReceivedDialog_documentId);
+
+            if (reasonId && reasonId == 11 && groupId && groupId == 7)
+                $("#existsRestorationWorkdiv").hide();
+            else
+                $("#existsRestorationWorkdiv").show();
+            $("#modal_AnswerReceivedApprovedDialog").modal();
+            $('#CostWork, #CostParts, #CostWork, #CostRecovery, #CostTransportation, #CostReman, #CostRelativeOfTheNewNode').val('0');
+
+            $("#currencyType@(appSetting.Content.AvailableCurrencyList[appSetting.Content.DefaultCurrency])").click();
+
+            $("#deliveryMethod0").prop('checked', true);
+            $("#deliveryMethod1").prop('checked', false);
+            $("#deliveryMethod2").prop('checked', false);
+
+            //$("#existsRestorationWork").prop('checked', false);
+
+            $("#isSparePartsProvideTheCustomer").prop('checked', false);
+            $("#IsSparePartsInWarehousesRK").prop('checked', false);
+            $("#IsReman").prop('checked', false);
+
+            $.ajax({
+            type: "POST",
+            url: "/AJAX/GetCounterItem",
+            data: {
+                documentId: ShowAnswerReceivedDialog_documentId,
+            },
+            success: function (data) {
+                    $('#CostParts').val(data.PreparingQuotation_CostParts!=null?data.PreparingQuotation_CostParts:0);
+                    $('#CostWork').val(data.PreparingQuotation_CostWork!=null?data.PreparingQuotation_CostWork:0);
+                    $('#CostRecovery').val(data.PreparingQuotation_CostRecovery!=null?data.PreparingQuotation_CostRecovery:0);
+                    $('#CostTransportation').val(data.PreparingQuotation_CostTransportation!=null?data.PreparingQuotation_CostTransportation:0);
+                    $('#CostReman').val(data.PreparingQuotation_CostReman!=null?data.PreparingQuotation_CostReman:0);
+                    $('#CostRelativeOfTheNewNode').val(data.PreparingQuotation_CostRelativeOfTheNewNode != null ? data.PreparingQuotation_CostRelativeOfTheNewNode : 0);
+
+                    //$("#existsSpareParts1").prop('checked', false);
+                    //$("#existsSpareParts0").prop('checked', true);
+
+                    if (!data.PreparingQuotation_IsNotSpareParts) {
+                        $("#existsSpareParts1").prop("checked", true);
+                    }
+                    else {
+                       $("#existsSpareParts0").prop("checked", true);
+                    }
+
+                    checkCost("change");
+            },
+            error: myErrorFunction
+            });
+        }
+        function OnAnswerReceivedApproved_complete() {
+            if (!ShowAnswerReceivedDialog_existsUploaded) {
+                        Warning("@(StandartLibrary.Lang.Resources.StockSignedApproval)");
+                        return false;
+            }
+
+
+            if (IsNotApplicable) {
+
+            }
+            $.ajax({
+                type: "POST",
+                url: "/CustomerApproval/Ajax_AnswerReceivedApproved",
+                data: {
+                    documentId: ShowAnswerReceivedDialog_documentId,
+                    CostParts:$("#CostParts").val(),
+                    CostWork:$("#CostWork").val(),
+                    CostRecovery:$("#CostRecovery").val(),
+                    CostTransportation:$("#CostTransportation").val(),
+                    CostReman:$("#CostReman").val(),
+                    CostSignedQuotation: $("#CostSignedQuotation").val(),
+                    CostRelativeOfTheNewNode: $("#CostRelativeOfTheNewNode").val(),
+                    CurrencyType: $("#currencyType1").prop('checked') ? 1 : 2,
+                    deliveryMethodId: $("#deliveryMethod0").prop('checked')?0:($("#deliveryMethod1").prop('checked')?1:2),
+                    existsRestorationWork: $("#existsRestorationWork").prop('checked') ? true : false,
+                    existsSpareParts: $("#existsSpareParts1").prop('checked') ? true : false,
+                    isSparePartsProvideTheCustomer: $("#isSparePartsProvideTheCustomer").prop('checked') ? true : false,
+                    IsSparePartsInWarehousesRK: $("#SparePartsInWarehousesRK").prop('checked') ? true : false,
+                    IsReman:$("#IsReman").prop('checked') ? true : false,
+                },
+                success: function (data) {
+                   if (data.status == "ok") {
+                        OnApproval_GetTable(ShowAnswerReceivedDialog_days);
+                        $("#modal_AnswerReceivedApprovedDialog").modal('toggle');
+                    }
+                    else {
+                        Warning("@(StandartLibrary.Lang.Resources.Approval_Error_6917)");
+                    }
+                },
+                error: myErrorFunction
+            });
+        }
+    </script>
+
+    <script>
+
+        function CreateDataTable(days, duration, box,title, appendTo) {
+
+            var tableStr = $('div#templateRow div').html().replaceAll('(days)', days);
+
+            tableStr = tableStr.replace('(box)', box);
+
+            tableStr = tableStr.replace('(title)', title);
+
+            $(tableStr).wrap("<div class='row'></div>").appendTo(appendTo);
+
+            OnApproval_searchResult[days] = { searchId: "" };
+
+            SetSelect2("OnApproval" + days + "_document_id", "", "", "/AJAX/GetDocumentNumber", 3, true, false, OnApproval_searchResult[days.toString()]);
+            SetSelect2("OnApproval" + days + "_customer_id", "", "", "/AJAX/GetCustomer", 3, true, false, OnApproval_searchResult[days.toString()]);
+            SetSelect2("OnApproval" + days + "_smcsComponentDescription", "", "", "/AJAX/GetSmcsCode", 3, true, false, OnApproval_searchResult[days.toString()]);
+            SetSelect2("OnApproval" + days + "_model_id", "", "", "/AJAX/GetModel", 3, true, false, OnApproval_searchResult[days.toString()]);
+            SetSelect2("OnApproval" + days + "_division", "", "", "/AJAX/GetDivision", 1, true, false, OnApproval_searchResult[days.toString()]);
+            SetSelect2("OnApproval" + days + "_group_id", "", "", "/AJAX/GetGroup", 2, true, false, OnApproval_searchResult[days.toString()]);
+
+            OnApproval_GetTable(days, duration);
+        }
+
+        //OnApproval - В процессе
+        var OnApproval_searchResult = new Object();
+        function OnApproval_GetTable(days,duration) {
+
+            $("#OnApproval" + days + "_datatableAjax").dataTable().fnDestroy();
+            // Metronic.blockUI('body');
+            var gridOnApproval = new Datatable();
+
+            gridOnApproval.init({
+                src: $("#OnApproval" + days + "_datatableAjax"),
+                onSuccess: function (grid) {
+                    // execute some code after table records loaded
+                },
+                onError: function (grid) {
+
+                    // execute some code on network or other general error
+                },
+                onDataLoad: function (grid) {
+                    // execute some code on ajax data load
+                },
+                loadingMessage: 'Loading...',
+                dataTable: {
+                    "bSort": false,
+                    "ordering": false,
+                    "bStateSave": false, // save datatable state(pagination, sort, etc) in cookie.
+                    "pageLength": 10, // default record count per page
+                    "timeout": 100000,
+                    "language": JSON.parse('@(@Html.Raw(HttpUtility.JavaScriptStringEncode(StandartLibrary.Lang.Resources.JqueryDataTableLanguage)))'),
+                    "ajax": {
+                        "url": "/CustomerApproval/Ajax_OnApproval_GetList", // ajax source
+                        "data": {
+                            days: days,
+                            duration: duration,
+                            document_id: $("#OnApproval" + days + "_document_id").val(),
+                            division: $("#OnApproval" + days + "_division").val(),
+                            customer_id: $("#OnApproval" + days + "_customer_id").val(),
+                            smcsCode: $("#OnApproval" + days + "_smcsComponentDescription").val(),
+                            model_id: $("#OnApproval" + days + "_model_id").val(),
+                            PreparingQuotation_CompletedDate_Begin: $("#OnApproval" + days + "_PreparingQuotation_CompletedDate_Begin").val(),
+                            PreparingQuotation_CompletedDate_End: $("#OnApproval" + days + "_PreparingQuotation_CompletedDate_End").val(),
+                            group_id: $("#OnApproval" + days + "_group_id").val()
+                        }
+                    },
+                    "columns": [
+                        {
+                            "data": "GroupName",
+                            "mRender": function (data, type, full) {
+                                return full.GroupName;
+                            }
+                        },
+                        {
+                            "data": "DocumentId",
+                            "mRender": function (data, type, full) {
+                                return   full.DocumentNumber;
+                            }
+                        },
+                        {
+                            "data": "DocumentType",
+                            "mRender": function (data, type, full) {
+                                return full.DocumentType;
+                            }
+                        },
+
+                        {
+                            "data": "CustomerName",
+                            "mRender": function (data, type, full) {
+                                return "<span class='OnApprovalCustomerName_" + full.DocumentId+ "'>" +  full.CustomerName + "</span>";
+                            }
+                        },
+                        {
+                            "data": "SegmentText",
+                            "mRender": function (data, type, full) {
+                                return full.Division;
+                            }
+                        },
+                        {
+                            "data": "smcsComponentDescription",
+                            "mRender": function (data, type, full) {
+                                return full.smcsComponentDescription;
+                            }
+                        },
+                        {
+                            "data": "ModelName",
+                            "mRender": function (data, type, full) {
+                                return full.ModelName;
+                            }
+                        },
+                        {
+                            "data": "ReceptionDate",
+                            "mRender": function (data, type, full) {
+                                return full.ReceptionDate != null ? convertJsonDate(full.ReceptionDate) : "";
+                            }
+                        },
+                        {
+                            "data": "PreparingQuotation_CompletedDate",
+                            "mRender": function (data, type, full) {
+                                return full.PreparingQuotation_CompletedDate != null ? convertJsonDate(full.PreparingQuotation_CompletedDate) : "";
+                            }
+                        },
+                        {
+                            "data": "PssrName",
+                            "mRender": function (data, type, full) {
+                                return full.PssrName ;
+                            }
+                        },
+                        {
+                            "data": "CommentPSSR",
+                            "mRender": function (data, type, full) {
+                                return '<span class="EditComment_' + full.DocumentId + '">' + full.CommentPSSR + '</span> <a href="javascript:;" class="btn btn-xs default fa fa-edit EditComment"  documentId="' + full.DocumentId + '"></a>';
+                            }
+                        },
+                        {
+                            "data": "QuotationAmount",
+                            "mRender": function (data, type, full) {
+                                return (full.QuotationAmount != null ? full.QuotationAmount : "") +" "+ (full.QuotationCurrency != null ? full.QuotationCurrency : "");
+                            }
+                        },
+                        {
+                            "data": "",
+                            "mRender": function (data, type, full) {
+                                
+                                var btn = '';
+
+                                if (!full.IsZsrt) {
+                                    btn += '<a href="javascript:;" cdoms_perm="@StandartLibrary.Models.Enums.PermissionEnum.COUNTER_CABINET_RW" class="btn btn-xs default  OnApproval_btnStop_' + days + '"  id="btnStop_' + full.DocumentId + '" documentId="' + full.DocumentId + '" reasonId="' + full.ArrivalReasonId + '" groupId="' + full.GroupId + '">@(StandartLibrary.Lang.Resources.Answer_received_5521)</a>';
+                                }
+                                return btn;
+                            }
+                        }
+                    ],
+                    "order": [[1, "asc"]],
+                    "fnInitComplete": function (oSettings, json) {
+
+                        OnApproval_searchResult[json.days.toString()].searchId = json.searchId;
+
+                        $("#OnApproval" + json.days + "_Count").html(json.recordsTotal);
+
+                        //$("#OnApproval" + json.days + "_datatableAjax_paginate,#OnApproval" + json.days + "_datatableAjax_length,#OnApproval" + json.days + "_datatableAjax_info").hide();
+
+                        $(".OnApproval_btnStop_" + json.days).click(function () {
+                            OnAnswerReceived(json.days, $(this).attr("documentId"), $(this).attr("reasonId"), $(this).attr("groupId"));
+                        });
+
+                        $('input.date-picker').each(function () {
+                            $(this).datepicker({ rtl: Metronic.isRTL(), orientation: "left", autoclose: true });
+                        });
+
+                        $('#OnApproval' + json.days + '_PreparingQuotation_CompletedDate_Begin, #OnApproval' + json.days + '_PreparingQuotation_CompletedDate_End').change(function () {
+                            delay(function () { OnApproval_GetTable(json.days, json.duration); }, 500);
+                        });
+
+                        $('#OnApproval' + json.days + '_document_id, #OnApproval' + json.days + '_customer_id, #OnApproval' + json.days + '_division, #OnApproval' + json.days + '_model_id, #OnApproval' + json.days + '_smcsComponentDescription, #OnApproval' + json.days+ '_group_id, #OnApproval' + json.days +  '_Comment').change(function () {
+                            delay(function () { OnApproval_GetTable(json.days,json.duration); }, 500);
+                        });
+
+
+                        cdomsPermissionCheck();
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script>
+
+        jQuery(document).ready(function () {
+
+            CreateDataTable(0, 10, 'green-jungle', '@Html.Raw(StandartLibrary.Lang.Resources.On_approval_of_days_6915)', 'div#lessThan10Days');
+            CreateDataTable(10, 20, 'yellow-casablanca', '@Html.Raw(StandartLibrary.Lang.Resources.On_approval_of_days_20)','div#lessThan30Days');
+            CreateDataTable(30, 10000, 'red-pink', '@Html.Raw(StandartLibrary.Lang.Resources.On_approval_of_days_30)','div#moreThan30Days');
+
+            $('#CostParts, #CostWork, #CostRecovery, #CostTransportation, #CostReman').blur(function () { checkCost("blur") });
+            $('#CostParts, #CostWork, #CostRecovery, #CostTransportation, #CostReman').change(function () { checkCost("change") });
+
+             $('#modal_AnswerReceivedApprovedDialog').on('shown.bs.modal', function () {
+                 $.ajax({
+                    type: "POST",
+                    url: "/CustomerApproval/CheckMsFormDocument",
+                    data: { DocumentId: ShowAnswerReceivedDialog_documentId},
+                    success: function (data) {
+                        if (data == "true") {
+                            $("#existsRestorationWork").prop('checked',true)
+                        }
+                        else {
+                            $("#existsRestorationWork").prop('checked',false)
+                        }
+                },
+            });
+            })
+        });
+
+        var costBeginChange = false;
+        function checkCost(mode) {
+            var bAlert = true;
+            if (mode == "change") {
+                costBeginChange = true;
+                bAlert = false;
+            }
+            var bCheck = true;
+            if (!$.isNumeric($("#CostParts").val().replace(new RegExp(',', 'g'), '.'))) {
+                if (bAlert) {
+                    if (costBeginChange) Warning("@Html.Raw(StandartLibrary.Lang.Resources.Field_Cost_of_spare_parts_should_be_a_number_7001.Replace("\"","'"))");
+                    costBeginChange = false;
+                    $("#CostParts").focus();
+                }
+                bCheck = false;
+            }
+            else if (!$.isNumeric($("#CostWork").val().replace(new RegExp(',', 'g'), '.'))) {
+                if (bAlert) {
+                    if (costBeginChange) Warning("@Html.Raw(StandartLibrary.Lang.Resources.Field_Work_must_be_a_number_7002.Replace("\"","'"))");
+                    costBeginChange = false;
+                    $("#CostWork").focus();
+                }
+                bCheck = false;
+            }
+            else if (!$.isNumeric($("#CostRecovery").val().replace(new RegExp(',', 'g'), '.'))) {
+                if (bAlert) {
+                    if (costBeginChange) Warning("@Html.Raw(StandartLibrary.Lang.Resources.The_Restore_field_must_be_a_number_7003.Replace("\"","'"))");
+                    costBeginChange = false;
+                    $("#CostRecovery").focus();
+                }
+                bCheck = false;
+            }
+            else if (!$.isNumeric($("#CostTransportation").val().replace(new RegExp(',', 'g'), '.'))) {
+                if (bAlert) {
+                    if (costBeginChange) Warning("@Html.Raw(StandartLibrary.Lang.Resources.The_Transportation_field_must_be_a_number_7004.Replace("\"","'"))");
+                    costBeginChange = false;
+                    $("#CostTransportation").focus();
+                }
+                bCheck = false;
+            }
+            else if (!$.isNumeric($("#CostReman").val().replace(new RegExp(',', 'g'), '.'))) {
+                if (bAlert) {
+                    if (costBeginChange) Warning("@Html.Raw(StandartLibrary.Lang.Resources.Field_REMAN_must_be_a_number_7005.Replace("\"","'"))");
+                    costBeginChange = false;
+                    $("#CostReman").focus();
+                }
+                bCheck = false;
+            }
+
+            $("#CostSignedQuotation").val(
+                 ($("#CostParts").val().length>0?convertToFloat($("#CostParts").val()):0)
+                + ($("#CostWork").val().length>0?convertToFloat($("#CostWork").val()):0)
+                + ($("#CostRecovery").val().length>0?convertToFloat($("#CostRecovery").val()):0)
+                + ($("#CostTransportation").val().length>0?convertToFloat($("#CostTransportation").val()):0)
+                - ($("#CostReman").val().length > 0 ? convertToFloat($("#CostReman").val()) : 0)
+            );
+        }
+
+        function notApplicable() {
+            $("#btnNotApplicable").hide();
+            $.ajax({
+                type: "POST",
+                url: "/AJAX/UploadNotApplicable",
+                data: { documentId: ShowAnswerReceivedDialog_documentId, typeId:24 },
+                success: function (data) {
+                    if (data.status == "ok") {
+                        $('#CostParts').val('0');
+                        $('#CostWork').val('0');
+                        $('#CostRecovery').val('0');
+                        $('#CostTransportation').val('0');
+                        $('#CostReman').val('0');
+                        $('#CostRelativeOfTheNewNode').val('0');
+                        $('#CostSignedQuotation').val('0');
+                        RefreshSignedQuotationUploadsList(ShowAnswerReceivedDialog_documentId);
+                    }
+                },
+                error: myErrorFunction
+            });
+        }
+
+        $("body").on("click", ".EditComment", function (event) {
+
+            var el = $(this);
+            var documentId = el.attr("documentId");
+
+            OpenCommentModal("/CustomerApproval/Ajax_SaveCommentPSSR", documentId);
+
+        });
+
+        $("body").on("click", "#EditDialogComment_btnSave", function (event) {
+            SaveCommentModal();
+        });
+
+    </script>
+}

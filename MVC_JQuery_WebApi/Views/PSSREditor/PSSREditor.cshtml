@@ -1,0 +1,139 @@
+﻿@using StandartLibrary.Models.EntityModels.Counter
+@{
+    ViewBag.Title = (@StandartLibrary.Lang.Resources.MailDefinition);
+    var model = (PssrEditorIndexModel)Model;
+}
+
+<div class="row form-body">
+    <table class="table">
+        <tr>
+            <th>@(StandartLibrary.Lang.Resources.Customer_5493)</th>
+            <th>@(StandartLibrary.Lang.Resources.Division_5494)</th>
+            <th>Email</th>
+            <th><button class="btn green" onclick="Add()" cdoms_perm="@StandartLibrary.Models.Enums.PermissionEnum.COUNTER_MAILING_CABINET_RW">+@(StandartLibrary.Lang.Resources.Add_5553)</button></th>
+        </tr>
+        @foreach (var item in model.List)
+        {
+        <tr>
+            <td id="CustomerName@(item.Id)">@item.CustomerName</td>
+            <td id="Division@(item.Id)">@item.Division</td>
+            <td>@item.Emails</td>
+            <td>
+                <button class="btn green" onclick="Email(@item.CustomerId)" cdoms_perm="@StandartLibrary.Models.Enums.PermissionEnum.COUNTER_MAILING_CABINET_RW">Email</button>
+                @if (item.Id > 0)
+                    {
+                <button class="btn green" cdoms_perm="@StandartLibrary.Models.Enums.PermissionEnum.COUNTER_MAILING_CABINET_RW" onclick="Change(@item.Id)">@(StandartLibrary.Lang.Resources.Edit_5573)</button>
+                <button class="btn green" cdoms_perm="@StandartLibrary.Models.Enums.PermissionEnum.COUNTER_MAILING_CABINET_RW" onclick="Delete(@item.Id)">@(StandartLibrary.Lang.Resources.Delete_5574)</button>
+                    }
+            </td>
+        </tr>
+        }
+    </table>
+</div>
+
+<div id="modalDialog" class="modal fade" role="dialog" aria-hidden="true" style="display:none;">
+    <div class="modal-dialog" style="width:400px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">@(StandartLibrary.Lang.Resources.Add_customer_5578)</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <form action="#" class="form-horizontal">
+                        @(StandartLibrary.Lang.Resources.Customer_5493):<br />
+                        <span id="dialogCustomerLabel" style="display:none;width:300px;font-weight:bold;"></span>
+                        <div id="dialogCustomerListBox">
+                            <select id="dialogCustomerList" class="form-control" style="width:300px;display:none;"></select>
+                        </div>
+                        <br />
+                        @(StandartLibrary.Lang.Resources.Division_5494):<br />
+                        <input id="dialogDivision" class="form-control" style="width:100px;" />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn dark btn-outline" data-dismiss="modal" aria-hidden="true">@(StandartLibrary.Lang.Resources.Close_5490)</button>
+                <button id="btnSave" class="btn green" data-dismiss="modal" cdoms_perm="@StandartLibrary.Models.Enums.PermissionEnum.COUNTER_MAILING_CABINET_RW">@(StandartLibrary.Lang.Resources.Save_5576)</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        Dropzone.autoDiscover = false;
+
+        jQuery(document).ready(function () {
+            SetSelect2("dialogCustomerList", "", "", "/AJAX/GetCustomerAll", 3, true, false, null);
+        });
+
+        function Add() {
+            $("#dialogCustomerList").val("");
+            $("#dialogCustomerListBox").show();
+            $("#dialogCustomerLabel").hide();
+            $("#dialogDivision").val("");
+            $('#modalDialog').modal();
+            $("#btnSave").unbind("click");
+            $("#btnSave").click(function () {
+                var customerId = $('#dialogCustomerList').val();
+                var division = $('#dialogDivision').val();
+                $.ajax({
+                    url: '/PSSREditor/AjaxAddCustomer',
+                    type: 'POST',
+                    contentType: 'application/json;',
+                    data: JSON.stringify({ customerId: customerId, division: division}),
+                    success: function (data) {
+                        window.location.reload();
+                    }
+                });
+            });
+        }
+        function Delete(id) {
+            if (confirm("@(StandartLibrary.Lang.Resources.Are_you_sure_you_want_to_delete_5517)"))
+            {
+                $.ajax({
+                    url: '/PSSREditor/AjaxDeleteCustomer',
+                    type: 'POST',
+                    contentType: 'application/json;',
+                    data: JSON.stringify({ id: id }),
+                    success: function (data) {
+                        window.location.reload();
+                    }
+                });
+            }
+        }
+        function Change(id)
+        {
+            $("#dialogCustomerLabel").text($("#CustomerName" + id).text());
+            $("#dialogCustomerLabel").show();
+            $("#dialogCustomerListBox").hide();
+
+            $('#dialogDivision').val($("#Division" + id).text());
+            $('#modalDialog').modal();
+
+            $("#btnSave").unbind("click");
+            $("#btnSave").click(function () {
+                division = $('#dialogDivision').val();
+
+                $.ajax({
+                    url: '/PSSREditor/AjaxEditCustomer',
+                    type: 'POST',
+                    contentType: 'application/json;',
+                    data: JSON.stringify({ id: id, division: division }),
+                    success: function (data) {
+                        window.location.reload();
+                    }
+                });
+            });
+        }
+        function Email(customerId) {
+            window.location = "/PSSREditor/Email?customerId=" + customerId;
+        }
+    </script>
+}
+
+@section Styles{
+    <style>
+    </style>
+}

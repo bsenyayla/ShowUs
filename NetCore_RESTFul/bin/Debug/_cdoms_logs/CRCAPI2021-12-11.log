@@ -1,0 +1,16 @@
+21:24:30,006 [4] INFO C:\GitBorusan\Crcapi.Services\Middlewares\RequestResponseLoggingMiddleware.cs - Http Request Information:
+Schema:http Host: localhost:51861 Path: /api/cdoms QueryString:  Request Body: 
+21:24:30,242 [4] INFO root - Http Request Information:
+Schema:http Host: localhost:51861 Path: /api/cdoms QueryString:  Request Body: 
+21:24:35,821 [4] INFO C:\GitBorusan\Crcapi.Services\Middlewares\RequestResponseLoggingMiddleware.cs - Http Response Information:
+Schema:http Host: localhost:51861 Path: /api/cdoms QueryString:  Response Body: 
+21:24:35,823 [4] INFO root - Http Response Information:
+Schema:http Host: localhost:51861 Path: /api/cdoms QueryString:  Response Body: 
+21:24:40,214 [21] INFO C:\GitBorusan\Crcapi.Services\Middlewares\RequestResponseLoggingMiddleware.cs - Http Request Information:
+Schema:http Host: localhost:51861 Path: /favicon.ico QueryString:  Request Body: 
+21:24:40,217 [21] INFO root - Http Request Information:
+Schema:http Host: localhost:51861 Path: /favicon.ico QueryString:  Request Body: 
+21:24:44,404 [21] INFO C:\GitBorusan\Crcapi.Services\Middlewares\RequestResponseLoggingMiddleware.cs - Http Response Information:
+Schema:http Host: localhost:51861 Path: /favicon.ico QueryString:  Response Body: 
+21:24:44,407 [21] INFO root - Http Response Information:
+Schema:http Host: localhost:51861 Path: /favicon.ico QueryString:  Response Body: 

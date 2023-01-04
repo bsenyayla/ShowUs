@@ -1,0 +1,585 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="LangTest" xml:space="preserve">
+    <value>Lang Test</value>
+  </data>
+  <data name="ДобрыйДень" xml:space="preserve">
+    <value>Greetings!</value>
+  </data>
+  <data name="ВоВложенииКотировкиИОтчетПоРемонту" xml:space="preserve">
+    <value>In the attachment quotes and repair report!</value>
+  </data>
+  <data name="ДоставкаЗапасныхЧастей" xml:space="preserve">
+    <value>Delivery of spare parts!</value>
+  </data>
+  <data name="ЗавершениеКотировки" xml:space="preserve">
+    <value>Completion of the quote!</value>
+  </data>
+  <data name="Авиа" xml:space="preserve">
+    <value>Avia</value>
+  </data>
+  <data name="Трак" xml:space="preserve">
+    <value>Trak!</value>
+  </data>
+  <data name="ПрошуПодписатьКотировку" xml:space="preserve">
+    <value>Please sign a quote !!</value>
+  </data>
+  <data name="Спасибо" xml:space="preserve">
+    <value>Thank you</value>
+  </data>
+  <data name="СУважением" xml:space="preserve">
+    <value>Sincerely your,</value>
+  </data>
+  <data name="Сегмент" xml:space="preserve">
+    <value>Segment</value>
+  </data>
+  <data name="Котировка" xml:space="preserve">
+    <value>Quotation</value>
+  </data>
+  <data name="Неприменим" xml:space="preserve">
+    <value>unapplicable</value>
+  </data>
+  <data name="Наряд" xml:space="preserve">
+    <value>Attire</value>
+  </data>
+  <data name="ВремяОжиданияНачалаПодготовкиДефектовки" xml:space="preserve">
+    <value>Waiting time for the beginning of the preparation of the defect!</value>
+  </data>
+  <data name="ДатаНачалаДефектовки" xml:space="preserve">
+    <value>The start date of the defect!</value>
+  </data>
+  <data name="ОбщееВремяРаботыНадДефектовкой" xml:space="preserve">
+    <value>Total time working on defektovkoj!</value>
+  </data>
+  <data name="ОсновноеВремяРаботыНадДефектовкой" xml:space="preserve">
+    <value>The main time of work on the defect!</value>
+  </data>
+  <data name="ВремяПаузРаботыНадДефектовкой" xml:space="preserve">
+    <value>Time to pause work on the defect!</value>
+  </data>
+  <data name="ПричиныПауз" xml:space="preserve">
+    <value>Reasons for pauses!</value>
+  </data>
+  <data name="ДатаЗагрузкиAdditionalWorkДокумента" xml:space="preserve">
+    <value>Upload Additional document work!</value>
+  </data>
+  <data name="ДатаНачалаОтчета" xml:space="preserve">
+    <value>The start date of the report!</value>
+  </data>
+  <data name="ДатаЗавершенияОтчета" xml:space="preserve">
+    <value>Date Report Completed:</value>
+  </data>
+  <data name="ОбщееВремяРаботыНадОтчетом" xml:space="preserve">
+    <value>Total time on the report!</value>
+  </data>
+  <data name="ВозвратНаПеределкуДефектовки" xml:space="preserve">
+    <value>Return to the reworking of defects!</value>
+  </data>
+  <data name="ПричинаПеределкиДефектовки" xml:space="preserve">
+    <value>The reason for the defect rework!</value>
+  </data>
+  <data name="ПринятыеНаряды" xml:space="preserve">
+    <value>Accepted outfits!</value>
+  </data>
+  <data name="ОткрытьВExcel" xml:space="preserve">
+    <value>Open in Excel!</value>
+  </data>
+  <data name="Комментарии" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="ЗЧВНаличииНаСкладе" xml:space="preserve">
+    <value>S / h in stock!</value>
+  </data>
+  <data name="УсловияДоставки" xml:space="preserve">
+    <value>Delivery terms</value>
+  </data>
+  <data name="ПолучательЗаказчик" xml:space="preserve">
+    <value>Recipient Customer :!</value>
+  </data>
+  <data name="ПолучательEmail" xml:space="preserve">
+    <value>Recipient Email :!</value>
+  </data>
+  <data name="ПредварительнаяСтоимостьРемонта" xml:space="preserve">
+    <value>Estimated repair cost :!</value>
+  </data>
+  <data name="СтоимостьЗЧ" xml:space="preserve">
+    <value>Cost of spare part:!</value>
+  </data>
+  <data name="Работа" xml:space="preserve">
+    <value>Job:!</value>
+  </data>
+  <data name="Восстановление" xml:space="preserve">
+    <value>Recovery</value>
+  </data>
+  <data name="Транспортировка" xml:space="preserve">
+    <value>Transportation</value>
+  </data>
+  <data name="REMANВозврат" xml:space="preserve">
+    <value>REMAN Refund :!</value>
+  </data>
+  <data name="СтоимостьПредварительнойКотировки" xml:space="preserve">
+    <value>Cost of preliminary quotation :!</value>
+  </data>
+  <data name="ВыборВалютыБезНДС" xml:space="preserve">
+    <value>Currency selection: (without VAT)!</value>
+  </data>
+  <data name="Закрыть" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Завершить" xml:space="preserve">
+    <value>Complete</value>
+  </data>
+  <data name="Заказчик" xml:space="preserve">
+    <value>The Customer</value>
+  </data>
+  <data name="Дивизион" xml:space="preserve">
+    <value>Division</value>
+  </data>
+  <data name="Компонент" xml:space="preserve">
+    <value>Component</value>
+  </data>
+  <data name="Модель" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Дата" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="ДатаПоступленияНаКотировку" xml:space="preserve">
+    <value>date &lt;br /&gt; income &lt;br /&gt; for a quote!</value>
+  </data>
+  <data name="МодельМашины" xml:space="preserve">
+    <value>Model &lt;br /&gt; cars!</value>
+  </data>
+  <data name="ДатаНачалаКотировки" xml:space="preserve">
+    <value>date &lt;br /&gt; beginning &lt;br /&gt; quotes!</value>
+  </data>
+  <data name="ДатаОкончанияКотировки" xml:space="preserve">
+    <value>date &lt;br /&gt; graduation &lt;br /&gt; quotes!</value>
+  </data>
+  <data name="ОбщееКоличествоДнейПодготовкиКотировки" xml:space="preserve">
+    <value>Total amount &lt;br /&gt; days of preparation &lt;br /&gt; quotes!</value>
+  </data>
+  <data name="ФактическоеВремяПодготовкиКотировки" xml:space="preserve">
+    <value>Actual &lt;br /&gt; preparation time &lt;br /&gt; quotes!</value>
+  </data>
+  <data name="ОдобреноОтказ" xml:space="preserve">
+    <value>Approved \ Denial!</value>
+  </data>
+  <data name="СтоимостьПредварительногоРемонта" xml:space="preserve">
+    <value>Cost &lt;br /&gt; preliminary &lt;br /&gt; repair!</value>
+  </data>
+  <data name="СтоимостьОдобренногоРемонта" xml:space="preserve">
+    <value>Cost &lt;br /&gt; approved &lt;br /&gt; repair!</value>
+  </data>
+  <data name="ОбщееКолВоДнейОжиданияОдобренияОтказа" xml:space="preserve">
+    <value>Total qty &lt;br /&gt; days of waiting &lt;br /&gt; approval \ rejection!</value>
+  </data>
+  <data name="ДатаBrОдобренияОтказа" xml:space="preserve">
+    <value>date &lt;br /&gt; approval \ rejection!</value>
+  </data>
+  <data name="ДатаЗаказа" xml:space="preserve">
+    <value>date &lt;br /&gt; order!</value>
+  </data>
+  <data name="МетодДоставки" xml:space="preserve">
+    <value>Method &lt;br /&gt; delivery!</value>
+  </data>
+  <data name="ДатаПриходаЗЧ" xml:space="preserve">
+    <value>date &lt;br /&gt; arrival of SP!</value>
+  </data>
+  <data name="ФактическоеВремяДоставкиЗЧ" xml:space="preserve">
+    <value>Actual &lt;br /&gt; time &lt;br /&gt; delivery of spare parts!</value>
+  </data>
+  <data name="СуммаКотировки" xml:space="preserve">
+    <value>Amount quotes!</value>
+  </data>
+  <data name="REMAN" xml:space="preserve">
+    <value>REMAN!</value>
+  </data>
+  <data name="ПолеСтоимостьЗЧДолжноБытьЧислом" xml:space="preserve">
+    <value>Field \ Cost of spare parts \ must be a number!</value>
+  </data>
+  <data name="ПолеРаботаДолжноБытьЧислом" xml:space="preserve">
+    <value>Field \ Work \ must be a number!</value>
+  </data>
+  <data name="ПолеВосстановлениеДолжноБытьЧислом" xml:space="preserve">
+    <value>Field \ Recovery \ must be a number!</value>
+  </data>
+  <data name="ПолеТранспортировкаДолжноБытьЧислом" xml:space="preserve">
+    <value>Field \ Transportation \ must be a number!</value>
+  </data>
+  <data name="ПолеREMANДолжноБытьЧислом" xml:space="preserve">
+    <value>Field \ REMAN \ must be a number!</value>
+  </data>
+  <data name="ОшибкаВвода" xml:space="preserve">
+    <value>Input Error!!</value>
+  </data>
+  <data name="ЗагрузитеКотировку" xml:space="preserve">
+    <value>Download quote!</value>
+  </data>
+  <data name="Are You Sure You Want To Delete" xml:space="preserve">
+    <value>Are you sure want to delete</value>
+  </data>
+  <data name="ИзменитьКотировку" xml:space="preserve">
+    <value>Change the quote!</value>
+  </data>
+  <data name="ОтветПолучен" xml:space="preserve">
+    <value>Answer has been created successfully.</value>
+  </data>
+  <data name="Отказ" xml:space="preserve">
+    <value>Refusal</value>
+  </data>
+  <data name="ОбновлениеКотировки" xml:space="preserve">
+    <value>Update quotes!</value>
+  </data>
+  <data name="Одобрен" xml:space="preserve">
+    <value>Approved by</value>
+  </data>
+  <data name="Одобрение" xml:space="preserve">
+    <value>Approval</value>
+  </data>
+  <data name="ЗагрузитьПодписаннуюКотировку" xml:space="preserve">
+    <value>Download a signed quote!</value>
+  </data>
+  <data name="ОкончательнаяСтоимостьРемонта" xml:space="preserve">
+    <value>Final cost of repair :!</value>
+  </data>
+  <data name="МетодЗаказа" xml:space="preserve">
+    <value>Checkout method</value>
+  </data>
+  <data name="CounterNotSpecified" xml:space="preserve">
+    <value>Not Specified</value>
+  </data>
+  <data name="ЗапчастиПредоставитЗаказчик" xml:space="preserve">
+    <value>Spare parts will be provided by the Customer!</value>
+  </data>
+  <data name="НетЗЧ" xml:space="preserve">
+    <value>No spare part!</value>
+  </data>
+  <data name="ЕстьВосстановительныеРаботы" xml:space="preserve">
+    <value>Rehabilitation  works</value>
+  </data>
+  <data name="БазаКотировок" xml:space="preserve">
+    <value>Base quotes!</value>
+  </data>
+  <data name="ЕстьЗЧ" xml:space="preserve">
+    <value>There is a spare part!</value>
+  </data>
+  <data name="НаОдобрении0Дней" xml:space="preserve">
+    <value>On approval of {0} days!</value>
+  </data>
+  <data name="КомментарииPSSR" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="ЗагрузитеПодписаннуюКотировку" xml:space="preserve">
+    <value>Download a signed quote !!</value>
+  </data>
+  <data name="ОшибкаОдобрения" xml:space="preserve">
+    <value>Approval Error!</value>
+  </data>
+  <data name="НетДанных" xml:space="preserve">
+    <value>N.A.</value>
+  </data>
+  <data name="Заказано" xml:space="preserve">
+    <value>Order by</value>
+  </data>
+  <data name="ВсеЗЧВНаличии" xml:space="preserve">
+    <value>All spare parts in stock!</value>
+  </data>
+  <data name="ОжидаемЗЧ" xml:space="preserve">
+    <value>See you then.”</value>
+  </data>
+  <data name="МожноЗагружатьТолькоXLSXФормат" xml:space="preserve">
+    <value>Only XLSX format can be downloaded!</value>
+  </data>
+  <data name="ЗагрузкаЛиста" xml:space="preserve">
+    <value>Loading sheet!</value>
+  </data>
+  <data name="ОжидающиеЗаказа" xml:space="preserve">
+    <value>Awaiting order!</value>
+  </data>
+  <data name="ДатаОдобрения" xml:space="preserve">
+    <value>Date Approvals!</value>
+  </data>
+  <data name="ОжидающиеЗапчастей" xml:space="preserve">
+    <value>Awaiting spare parts!</value>
+  </data>
+  <data name="Машины" xml:space="preserve">
+    <value>machine</value>
+  </data>
+  <data name="Заказа" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ФайлЗагружен" xml:space="preserve">
+    <value>File is loaded</value>
+  </data>
+  <data name="НеНачатые" xml:space="preserve">
+    <value>Not Started!</value>
+  </data>
+  <data name="ПроектныеРасходы" xml:space="preserve">
+    <value>Project expenditures</value>
+  </data>
+  <data name="Дефектовка" xml:space="preserve">
+    <value>Troubleshooting!</value>
+  </data>
+  <data name="Отчет" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="ДатаПоступления" xml:space="preserve">
+    <value>date &lt;br /&gt; receipts!</value>
+  </data>
+  <data name="ВПроцессе" xml:space="preserve">
+    <value>On-going</value>
+  </data>
+  <data name="ЗавершитьИПеренестиВРазделЗавершенные" xml:space="preserve">
+    <value>Finish and move to \ &amp;#39;Completed \&amp;#39;!</value>
+  </data>
+  <data name="ВозвратНаОбнов" xml:space="preserve">
+    <value>Return to update.!</value>
+  </data>
+  <data name="ВозвратВКабинетУчетчикаНаОбновление" xml:space="preserve">
+    <value>Return to the account office for an update!</value>
+  </data>
+  <data name="Запустить" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="ПричинаПаузы" xml:space="preserve">
+    <value>Reason for pause :!</value>
+  </data>
+  <data name="ПричинаВозвратаНаОбновление" xml:space="preserve">
+    <value>Reason for returning to update :!</value>
+  </data>
+  <data name="ПереместитьВРазделВПроцессе" xml:space="preserve">
+    <value>Move to \ &amp;#39;In progress \!</value>
+  </data>
+  <data name="ОтправитьНаОбработкуВСервисныйИнженер" xml:space="preserve">
+    <value>Submit for processing to the Service Engineer!</value>
+  </data>
+  <data name="Основной" xml:space="preserve">
+    <value>Main</value>
+  </data>
+  <data name="Изменить" xml:space="preserve">
+    <value>Modify</value>
+  </data>
+  <data name="Удалить" xml:space="preserve">
+    <value>delete now!</value>
+  </data>
+  <data name="ДобавлениеEmail" xml:space="preserve">
+    <value>Adding email!</value>
+  </data>
+  <data name="Тип" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Сохранить" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="PSSRАдресаРассылкиДля" xml:space="preserve">
+    <value>PSSR - Mailing Addresses for!</value>
+  </data>
+  <data name="Копия" xml:space="preserve">
+    <value>Duplicate</value>
+  </data>
+  <data name="Добавить" xml:space="preserve">
+    <value>Increase!!!</value>
+  </data>
+  <data name="PSSRЗаказчики" xml:space="preserve">
+    <value>PSSR - Customers!</value>
+  </data>
+  <data name="ДобавлениеЗаказчика" xml:space="preserve">
+    <value>Adding a customer!</value>
+  </data>
+  <data name="ПодготовкаОтчета" xml:space="preserve">
+    <value>Preparation of report</value>
+  </data>
+  <data name="ДатаЗагрузки" xml:space="preserve">
+    <value>Date of loading</value>
+  </data>
+  <data name="ВозвратНаПеределкуДефектовкиYesOrNo" xml:space="preserve">
+    <value>Return to rework &lt;br /&gt; troubleshooting &lt;br /&gt; (yes or no)!</value>
+  </data>
+  <data name="Документа" xml:space="preserve">
+    <value>&amp;#x0D;</value>
+  </data>
+  <data name="ПоискНаряда" xml:space="preserve">
+    <value>Search outfit!</value>
+  </data>
+  <data name="НомерНаряда" xml:space="preserve">
+    <value>Order number :!</value>
+  </data>
+  <data name="ОжидающиеКорректировки" xml:space="preserve">
+    <value>Pending adjustments!</value>
+  </data>
+  <data name="НаОдобрении10Дней" xml:space="preserve">
+    <value>On approval 10 days!</value>
+  </data>
+  <data name="НаОдобрении20Дней" xml:space="preserve">
+    <value>On approval of 20 days!</value>
+  </data>
+  <data name="НаОдобрении30Дней" xml:space="preserve">
+    <value>Approval 30 days!</value>
+  </data>
+  <data name="Редактировать" xml:space="preserve">
+    <value>Edit!</value>
+  </data>
+  <data name="ИдетПоиск" xml:space="preserve">
+    <value>Searching...</value>
+  </data>
+  <data name="НарядОтсутствуетВКабинетеКаунтера" xml:space="preserve">
+    <value>The outfit is not in Counter&amp;#39;s office !!</value>
+  </data>
+  <data name="ОтменитьОтказИПереместитьВCustomerApproval" xml:space="preserve">
+    <value>Cancel rejection and move to Customer Approval!</value>
+  </data>
+  <data name="Назад" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="ВведитеВашеСообщениеСюда" xml:space="preserve">
+    <value>Enter your message here.</value>
+  </data>
+  <data name="Отправить" xml:space="preserve">
+    <value>Submit!</value>
+  </data>
+  <data name="Загрузка" xml:space="preserve">
+    <value>Loading</value>
+  </data>
+  <data name="КомментарииКНаряду" xml:space="preserve">
+    <value>Comments on the outfit!</value>
+  </data>
+  <data name="Котировки" xml:space="preserve">
+    <value>Quotations</value>
+  </data>
+  <data name="Поиск" xml:space="preserve">
+    <value>Search!</value>
+  </data>
+  <data name="СвязатьсяСРазработчиками" xml:space="preserve">
+    <value>Contact the developers!</value>
+  </data>
+  <data name="ПроблемныеНаряды" xml:space="preserve">
+    <value>Problem outfits!</value>
+  </data>
+  <data name="Привет" xml:space="preserve">
+    <value>Hi!</value>
+  </data>
+  <data name="Учетчик" xml:space="preserve">
+    <value>Accountant</value>
+  </data>
+  <data name="TimeSpanFormat" xml:space="preserve">
+    <value>d'd 'h'h 'm'm 's's'</value>
+  </data>
+</root>

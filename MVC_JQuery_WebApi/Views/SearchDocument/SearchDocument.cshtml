@@ -1,0 +1,84 @@
+﻿@using SharedCRCMS.Service
+@using SharedCRCMS.Models;
+@{
+    ViewBag.Title = (@StandartLibrary.Lang.Resources.Outfit_Search_5593);
+
+    var documentId = (int)ViewBag.document_id;
+    var documentNumber = (string)ViewBag.document_number;
+}
+<div class="row form-body" style="padding:40px">
+    <div style="width:350px;">
+        <div style="float:left;">@(StandartLibrary.Lang.Resources.Order_Number_5594) </div>
+        <div style="float:left"><select class="form-control" id="searchDocumentText" style="width:200px;margin:0px;"></select></div>
+        <div style="float:right"><a href="#" id="searchDocumentBtn" class="btn default fa fa-search"></a></div>
+    </div>
+    <div style="clear:both;"></div>
+    <div id="result" style="margin-top:20px;border:1px solid gray; display:none;padding:10px;">
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+
+        jQuery(document).ready(function () {
+            SetSelect2("searchDocumentText", "", "", "/AJAX/GetDocumentNumber", 3, true, false);
+            $("#searchDocumentText").change(function () {
+                var docId = $("#searchDocumentText").val();
+                if (docId.length > 0)
+                    Search(docId);
+            });
+            $("#searchDocumentBtn").click(function () {
+                var docId = $("#searchDocumentText").val();
+                if (docId.length > 0)
+                    Search(docId);
+            });
+            @if (documentId > 0)
+            {
+                <text>Search(@(documentId))</text>
+            }
+        });
+        function Search(currentDocumentId) {
+            var testItems = [];
+            testItems[testItems.length] = {counterexists:false, "test":"/PreparingQuotation/Ajax_NotStarted_GetList", "tabName":"PreparingQuotation", "partName":"@(StandartLibrary.Lang.Resources.Not_started_5551)", "link":"/PreparingQuotation/#NotStarted", "params":{"document_id":currentDocumentId,"length":10, "start":0, "draw":0} };
+            testItems[testItems.length] = {counterexists:true, "test":"/PreparingQuotation/Ajax_InProcess_GetList", "tabName":"PreparingQuotation", "partName":"@(StandartLibrary.Lang.Resources.During_5557)", "link":"/PreparingQuotation/#InProcess", "params":{"document_id":currentDocumentId,"length":10, "start":0, "draw":0}  };
+            testItems[testItems.length] = {counterexists:true, "test":"/PreparingQuotation/Ajax_Wait_GetList", "tabName":"PreparingQuotation", "partName":"@(StandartLibrary.Lang.Resources.Pending_adjustments_5559)", "link":"/PreparingQuotation/#Wait" , "params":{"document_id":currentDocumentId,"length":10, "start":0, "draw":0} };
+            testItems[testItems.length] = {counterexists:true, "test":"/CustomerApproval/Ajax_OnApproval_GetList", "tabName":"CustomerApproval", "partName":"@(StandartLibrary.Lang.Resources.On_approval_days_5595)", "link":"/CustomerApproval/#OnApproval10", "params":{"document_id":currentDocumentId, "days":10,"length":10, "start":0, "draw":0}  };
+            testItems[testItems.length] = {counterexists:true, "test":"/CustomerApproval/Ajax_OnApproval_GetList", "tabName":"CustomerApproval", "partName":"@(StandartLibrary.Lang.Resources.Approval_days_5596)", "link":"/CustomerApproval/#OnApproval20", "params":{"document_id":currentDocumentId, "days":20,"length":10, "start":0, "draw":0}  };
+            testItems[testItems.length] = {counterexists:true, "test":"/CustomerApproval/Ajax_OnApproval_GetList", "tabName":"CustomerApproval", "partName":"@(StandartLibrary.Lang.Resources.Approval_days_5597)", "link":"/CustomerApproval/#OnApproval30", "params":{"document_id":currentDocumentId, "days":30,"length":10, "start":0, "draw":0}  };
+            testItems[testItems.length] = {counterexists:true, "test":"/InPartsOrdering/Ajax_AwaitingParts_GetList", "tabName":"InPartsOrdering", "partName":"@(StandartLibrary.Lang.Resources.Pending_order_5543)", "link":"/InPartsOrdering/#AwaitingParts", "params":{"document_id":currentDocumentId,"length":10, "start":0, "draw":0}  };
+            testItems[testItems.length] = {counterexists:true, "test":"/InPartsOrdering/Ajax_AwatingOrder_GetList", "tabName":"InPartsOrdering", "partName":"@(StandartLibrary.Lang.Resources.Pending_Parts_5545)", "link":"/InPartsOrdering/#AwatingOrder", "params":{"document_id":currentDocumentId,"length":10, "start":0, "draw":0}  };
+            testItems[testItems.length] = {counterexists:true, "test":"/BaseOfQuotations/Ajax_GetList", "tabName":"@(StandartLibrary.Lang.Resources.Base_of_quotes_5469)", "partName":"", "link":"/BaseOfQuotations/", "params":{"document_id":currentDocumentId,"length":10, "start":0, "draw":0}   };
+            testItems[testItems.length] = {counterexists:true, "test":"/SearchDocument/Ajax_SearchHZ", "tabName":"Скрытые", "partName":"", "link":"/SearchDocument/", "params":{"document_id":currentDocumentId,"length":10, "start":0, "draw":0}   };
+
+            $("#result").html("<span style='font-weight:bold;'>@(StandartLibrary.Lang.Resources.Searching_5598)</span>");
+            var foundCount = 0;
+            for (var i = 0; i < testItems.length; i++) {
+                $.ajax({
+                    type: "POST",
+                    async:false,
+                    url: testItems[i].test,
+                    data: testItems[i].params,
+                    success: function (data) {
+                        if (data.recordsTotal != null && data.recordsTotal > 0) {
+                            if (foundCount == 0)
+                                $("#result").html("");
+                            if (foundCount > 0)
+                                $("#result").append("<hr>");
+
+                            $("#result").append("<span style='font-weight:bold;'>@(StandartLibrary.Lang.Resources.Tab) :</span> " + testItems[i].tabName
+                                + (testItems[i].partName.length > 0 ? ("<br />" + "<span style='font-weight:bold;'> @(StandartLibrary.Lang.Resources.Section):</span> " + testItems[i].partName) : "")
+                                + "<br /><span style='font-weight:bold;'><a href='" + testItems[i].link + "'>@(StandartLibrary.Lang.Resources.GoToPage) </a></span>"
+                                + (testItems[i].counterexists?("<span style='font-weight:bold;padding-left:30px'><a style='display:none' href='/SearchDocument/Edit?document_id=" + currentDocumentId + "'>@(StandartLibrary.Lang.Resources.Edit_5599)</a></span>"):""));
+                            foundCount++;
+                        }
+                    },
+                    error: myErrorFunction
+                });
+            }
+
+            $("#result").show();
+            if (foundCount == 0)
+                $("#result").html("<span style='font-weight:bold;'>@(StandartLibrary.Lang.Resources.The_outfit_is_absent_in_Counter_s_office_5600)</span>");
+        }
+    </script>
+}

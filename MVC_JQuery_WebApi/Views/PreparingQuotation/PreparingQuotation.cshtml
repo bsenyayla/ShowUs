@@ -1,0 +1,1603 @@
+﻿@using SharedCRCMS.Service
+@using StandartLibrary.Models.EntityModels.Counter
+@{
+    ViewBag.Title = @StandartLibrary.Lang.Resources.PreparingQuotation;
+    var appSetting = SharedCRCMS.Service.AppSettingService.AppSetting;
+    var showProjectCosts = appSetting.Content.ShowProjectCosts;
+
+    var showQuotationHiddenAreas = appSetting.Content.ShowQuotationHiddenAreas;
+    var disableChangeComponent = appSetting.Content.DisableChangeComponent;
+
+    var displayQuotation = showQuotationHiddenAreas ? "block" : "none";
+    var disabled = disableChangeComponent ? "disabled" : "";
+}
+
+@{ UploadQuotationDialogModel uploadQuotationDialogModel = new UploadQuotationDialogModel
+    {
+        ShowQuotationHiddenAreas = showQuotationHiddenAreas,
+        DisableChangeComponent = disableChangeComponent,
+        DisplayQuotation = displayQuotation,
+        Disabled = disabled,
+        AppSetting = appSetting,
+    };}
+
+@{
+    Html.RenderPartial("UploadQuotationDialog", uploadQuotationDialogModel);
+}
+
+<style>
+    .btnGreen {
+        background-color: #28a745 !important;
+        border-color: #1c7430 !important;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture"></i>@(StandartLibrary.Lang.Resources.Not_started_5551)
+                </div>
+                <div class="tools">
+                    @if (showProjectCosts)
+                    {
+                        @(StandartLibrary.Lang.Resources.Project_costs_6924)
+                        <select id="ProjectExpensesDocumentId" class="form-control form-filter input-sm" style="width: 150px; margin:0px; display:initial;"></select>
+                        <button id="ProjectExpensesAdd" class="btn btn-sm grey-salsa">@(StandartLibrary.Lang.Resources.Add_5553)</button>
+                    }
+                    <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-advance table-hover" style="margin:0px !important;" id="NotStarted_datatableAjax">
+                    <thead>
+                        <tr role="row" class="heading">
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Group_5732)</th>
+                            <th class="th1" style="width:100px">@(StandartLibrary.Lang.Resources.Outfit_5492)&nbsp;#<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Customer_5493)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Division_5494)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Component_5495)<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.Model_5765))<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.Pricing))<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Troubleshooting_5554)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Additional_6925)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Report_5468)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Comments_5475)<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.date_of_5567))<br /><br /></th>
+                            <th style="width:140px"></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.OperationStatus)<br /><br /></th>
+                        </tr>
+                        <tr role="row" class="filter">
+
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="NotStarted_group_id"></select>
+                            </td>
+
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" style="width: 100px" id="NotStarted_document_id"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="NotStarted_customer_id"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="NotStarted_division"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="NotStarted_smcsComponentDescription"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" style="width: 100px " id="NotStarted_model_id"></select>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <input type="text" placeholder="@(StandartLibrary.Lang.Resources.from_5535)" value="" class="form-control form-filter input-sm date-picker" id="NotStarted_ReceiptDate_Begin" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;margin-right:10px;">
+                                <input type="text" placeholder="@(StandartLibrary.Lang.Resources.by_5536)" value="" class="form-control form-filter input-sm date-picker" id="NotStarted_ReceiptDate_End" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;">
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green-jungle">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture"></i>@(StandartLibrary.Lang.Resources.During_5557)
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-advance table-hover" style="margin:0px !important;" id="InProcess_datatableAjax">
+                    <thead>
+                        <tr role="row" class="heading">
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Group_5732)</th>
+                            <th class="th1" style="width:100px">@(StandartLibrary.Lang.Resources.Outfit_5492)&nbsp;#<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Customer_5493)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Division_5494)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Component_5495)<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.Model_5765))<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.Pricing))<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Troubleshooting_5554)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Additional_6926)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Report_5468)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Comments_5475)<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.date_of_5567))<br /><br /></th>
+                            <th style="width:140px"></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.OperationStatus)<br /><br /></th>
+                        </tr>
+                        <tr role="row" class="filter">
+
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="InProcess_group_id"></select>
+                            </td>
+
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" style="width:50px" id="InProcess_document_id"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="InProcess_customer_id"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="InProcess_division"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="InProcess_smcsComponentDescription"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="InProcess_model_id"></select>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <input type="text" placeholder="@(StandartLibrary.Lang.Resources.from_5535)" value="" class="form-control form-filter input-sm date-picker" id="InProcess_PreparingQuotation_StartDate_Begin" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;margin-right:10px;">
+                                <input type="text" placeholder="@(StandartLibrary.Lang.Resources.by_5536)" value="" class="form-control form-filter input-sm date-picker" id="InProcess_PreparingQuotation_StartDate_End" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;">
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box grey-salt">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture"></i>@(StandartLibrary.Lang.Resources.Pending_adjustments_5559)
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-advance table-hover" style="margin:0px !important;" id="Wait_datatableAjax">
+                    <thead>
+                        <tr role="row" class="heading">
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Group_5732)</th>
+                            <th class="th1" style="width:100px">@(StandartLibrary.Lang.Resources.Outfit_5492)&nbsp;#<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Customer_5493)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Division_5494)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Component_5495)<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.Model_5765))<br /><br /> </th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.Pricing))<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Troubleshooting_5554)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Additional_6926)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Report_5468)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Comments_5475)<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.date_of_5567))<br /><br /></th>
+                            <th width="9%"></th>
+                        </tr>
+                        <tr role="row" class="filter">
+
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="Wait_group_id"></select>
+                            </td>
+
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="Wait_document_id"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="Wait_customer_id"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="Wait_division"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="Wait_smcsComponentDescription"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="Wait_model_id"></select>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <input type="text" placeholder="@(StandartLibrary.Lang.Resources.from_5535)" value="" class="form-control form-filter input-sm date-picker" id="Wait_ReceiptDate_Begin" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;margin-right:10px;">
+                                <input type="text" placeholder="@(StandartLibrary.Lang.Resources.by_5536)" value="" class="form-control form-filter input-sm date-picker" id="Wait_ReceiptDate_End" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;">
+                            </td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles
+{
+    <style>
+        .CustomerNameItem {
+            border-bottom: 1px solid gray;
+            margin-bottom: 3px;
+        }
+
+        .NotStarted_btnStop .NotStarted_btnPause {
+            cursor: pointer;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+
+        .NotStarted_btnStop .NotStarted_btnPause {
+            cursor: pointer;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+    </style>
+}
+
+@section Scripts
+{
+    <script src="/Scripts/uploadlist.js?v=2" type="text/javascript"></script>
+    <script>
+
+        Dropzone.autoDiscover = false;
+
+        var ShowUploadQuotationdDialog_documentId = 0;
+        var ShowUploadQuotationdDialog_existsUploaded = false;
+        var myDropzoneQuotationTruck = new Dropzone("#Quotationfile-dropzoneTruck,#Quotationfile-dropzoneAvia",
+            {
+                url: "/AJAX/UploadedQuotation?documentId=0" /*,
+        acceptedFiles: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" */
+            });
+        myDropzoneQuotationTruck.on("addedfile",
+            function(file) {
+                // alert(this.files[this.files.length-1].fileName);
+                if (this.files[1] != null) {
+                    this.removeFile(this.files[0]);
+                }
+            });
+
+        myDropzoneQuotationTruck.on("complete", function (response) {
+            $(".dz-preview").fadeOut('slow');
+            $('.dz-message').css('display', 'block');
+        });
+        myDropzoneQuotationTruck.on("success",
+            function(file, responseText) {
+                $("#CostParts").val(responseText.CostParts);
+                $("#CostWork").val(responseText.CostWork);
+                $("#CostRecovery").val(responseText.CostRecovery);
+                $("#CostTransportation").val(responseText.CostTransportation);
+                $("#CostReman").val(responseText.CostReman);
+                $("#CostRelativeOfTheNewNode").val(responseText.CostRelativeOfTheNewNode);
+                checkCost("change");
+
+                ShowUploadQuotationdDialog_existsUploaded = true;
+                RefreshQuotationUploadsList(ShowUploadQuotationdDialog_documentId);
+            });
+
+        var myDropzoneQuotationAvia = new Dropzone("#Quotationfile-dropzoneAvia",
+            {
+                url: "/AJAX/UploadedQuotation?documentId=0" /*,
+        acceptedFiles: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" */
+            });
+
+        myDropzoneQuotationAvia.on("addedfile",
+            function(file) {
+                // alert(this.files[this.files.length-1].fileName);
+                if (this.files[1] != null) {
+                    this.removeFile(this.files[0]);
+                }
+            });
+        myDropzoneQuotationAvia.on("success",
+            function(file, responseText) {
+                ShowUploadQuotationdDialog_existsUploaded = true;
+                RefreshQuotationUploadsList(ShowUploadQuotationdDialog_documentId);
+            });
+
+        function viewUserList() {
+            $('#modal_UploadQuotationDialog_EmailNameList').hide();
+            if ($('#modal_UploadQuotationDialog_EmailNameList').children()) {
+                if ($('#modal_UploadQuotationDialog_EmailNameList').children().length > 0) {
+                    $('#modal_UploadQuotationDialog_EmailNameList').show();
+                } else {
+                    $('#modal_UploadQuotationDialog_EmailNameList').hide();
+                }
+            }
+        }
+
+        viewUserList();
+
+        function RemovedFile2(uploadId) {
+            if (confirm("@(StandartLibrary.Lang.Resources.Are_you_sure_you_want_to_delete_5517)")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/AJAX/RemoveUpload",
+                    data: { uploadId: uploadId },
+                    success: function(data) {
+                        RefreshQuotationUploadsList(ShowUploadQuotationdDialog_documentId);
+                    },
+                    error: myErrorFunction
+                });
+            }
+        }
+
+        function RefreshQuotationUploadsList(documentId) {
+
+            $.ajax({
+                type: "POST",
+                url: "/AJAX/GetUploadsList",
+                data: { documentId: documentId, typeId: 17 },
+                success: function(data) {
+                    if (data.length > 40) {
+                        ShowUploadQuotationdDialog_existsUploaded = true;
+                        data = data.replace(new RegExp('RemovedFile', 'g'), 'RemovedFile2');
+                        data = data.replace(new RegExp('NotApplicable', 'g'),
+                            '@(StandartLibrary.Lang.Resources.Not_applicable_5474)');
+                        $("#btnNotApplicable").hide();
+                    } else {
+                        $("#btnNotApplicable").show();
+                    }
+                    $('#QuotationUploadsList').html(data);
+                },
+                error: myErrorFunction
+            });
+        }
+
+        function Add_UploadQuotationDialog_CustomerName() {
+            var customerName = $("#modal_UploadQuotationDialog_CustomerNameAddText").val();
+            $("#modal_UploadQuotationDialog_CustomerNameList").html(
+                $("#modal_UploadQuotationDialog_CustomerNameList").html() +
+                "<div  class=\"CustomerNameItem\">" +
+                customerName +
+                "</div>");
+            $("#modal_UploadQuotationDialog_CustomerNameAddText").val(null).trigger('change');
+        }
+
+        function Add_UploadQuotationDialog_EmailName() {
+            var EmailName = $("#modal_UploadQuotationDialog_EmailNameAddText").val();
+            $("#modal_UploadQuotationDialog_EmailNameList").html(
+                $("#modal_UploadQuotationDialog_EmailNameList").html() +
+                "<div  class=\"EmailNameItem\">" +
+                EmailName +
+                "</div>");
+            $("#modal_UploadQuotationDialog_EmailNameAddText").val(null).trigger('change');
+            viewUserList();
+        }
+
+        function InProcess_btnStop(documentId) {
+            ShowUploadQuotationdDialog_documentId = documentId;
+            ShowUploadQuotationdDialog_existsUploaded = false;
+            $("#SparePartsInStock").prop('checked', false);
+            $("#SparePartsInWarehousesRK").prop('checked', false);
+            $("#isSparePartsProvideTheCustomer").prop('checked', false);
+
+            $("#DeliveryTermsAviaDays").prop('disabled', false);
+            myDropzoneQuotationTruck.options.url = "/AJAX/UploadedQuotation?quotationType=1&documentId=" +
+                ShowUploadQuotationdDialog_documentId;
+            myDropzoneQuotationAvia.options.url = "/AJAX/UploadedQuotation?quotationType=2&documentId=" +
+                ShowUploadQuotationdDialog_documentId;
+            RefreshQuotationUploadsList(ShowUploadQuotationdDialog_documentId);
+
+            $("#modal_UploadQuotationDialog_CustomerNameList").html("<div class=\"CustomerNameItem\">" +
+                $(".InProcessCustomerName_" + ShowUploadQuotationdDialog_documentId).text() +
+                "</div>");
+            $("#modal_UploadQuotationDialog_EmailNameList").html("");
+            $("#modal_UploadQuotationDialog_Comment")
+                .html($(".EditComment_" + ShowUploadQuotationdDialog_documentId).text());
+            $(
+                    '#CostWork, #CostParts, #CostWork, #CostRecovery, #CostTransportation, #CostReman, #CostRelativeOfTheNewNode')
+                .val('0');
+            $("#currencyType@(appSetting.Content.AvailableCurrencyList[appSetting.Content.DefaultCurrency])").click();
+            $("#NotSpareParts").prop("checked", false);
+            $("#SparePartsInStock").prop("checked", false);
+            $("#SparePartsInWarehousesRK").prop("checked", false);
+            $("#isSparePartsProvideTheCustomer").prop("checked", false);
+            $("#woPssr").prop("checked", false);
+
+            $("#DeliveryTermsAviaDays").prop('disabled', false);
+            $("#DeliveryTermsTruckDays").val("");
+            $("#DeliveryTermsAviaDays").val("");
+            $("#modal_UploadQuotationDialog").modal();
+
+            $('.trStopPssr').hide();
+            $.ajax({
+                url: '/AJAX/GetWOPssr',
+                type: 'POST',
+                contentType: 'application/json;',
+                data: JSON.stringify({ DocumentId: documentId }),
+                success: function(data) {
+                    if (data != null) {
+                        //$("#WOPssr").val(data.PssrEmail);
+                        $("#WOPssr").html(data.PssrEmail);
+                        if (data.PssrEmail === undefined || data.PssrEmail === null) {
+                            $("#woPssr").prop("checked", false);
+                        } else {
+                            $("#woPssr").prop("checked", true);
+                        }
+                    } else {
+                        Warning('pssr data is null!');
+                    }
+                    $('.trStopPssr').show();
+                }
+            });
+        }
+
+        function NoSparePartCheck() {
+            var isChecked = $('#NotSpareParts').is(':checked');
+
+            $("#SparePartsInStock").prop("disabled", isChecked);
+            $("#SparePartsInWarehousesRK").prop("disabled", isChecked);
+            $("#isSparePartsProvideTheCustomer").prop("disabled", isChecked);
+
+            $("#SparePartsInStock").prop("checked", false);
+            $("#SparePartsInWarehousesRK").prop("checked", false);
+            $("#isSparePartsProvideTheCustomer").prop("checked", false);
+        }
+
+        function UploadQuotationDialog_complete() {
+            var customerNameItems = [];
+            $('div[class="CustomerNameItem"]').each(function(index, item) {
+                customerNameItems[customerNameItems.length] = $(item).html();
+            });
+            var emailNameItems = [];
+            $('div[class="EmailNameItem"]').each(function(index, item) {
+                emailNameItems[emailNameItems.length] = $(item).html();
+            });
+            if (!ShowUploadQuotationdDialog_existsUploaded) {
+                Warning("@(StandartLibrary.Lang.Resources.Download_quote_6909)");
+                return false;
+            }
+
+            //if (($("#DeliveryTermsTruckDays").val().length == 0 || (!$("#SparePartsInWarehousesRK").is(":checked") && $("#DeliveryTermsAviaDays").val().length == 0))
+            //  && !$("#SparePartsInStock").is(":checked") && !$("#NotSpareParts").is(":checked")) {
+            //alert("@(StandartLibrary.Lang.Resources.Indicate_the_delivery_time)");
+            //return false;
+            //}
+
+            var pssrValue = '';
+            if ($("#woPssr").prop("checked")) {
+                pssrValue = $("#WOPssr").html();
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/PreparingQuotation/Ajax_Stop",
+                data: {
+                    documentId: ShowUploadQuotationdDialog_documentId,
+                    IsNotSpareParts: $("#NotSpareParts").is(":checked"),
+                    IsSparePartsInStock: $("#SparePartsInStock").is(":checked"),
+                    IsSparePartsInWarehousesRK: $("#SparePartsInWarehousesRK").is(":checked"),
+                    DeliveryTermsTruckDays: $("#DeliveryTermsTruckDays").val(),
+                    DeliveryTermsAviaDays: $("#DeliveryTermsAviaDays").val(),
+                    CostParts: $("#CostParts").val(),
+                    CostWork: $("#CostWork").val(),
+                    CostRecovery: $("#CostRecovery").val(),
+                    CostTransportation: $("#CostTransportation").val(),
+                    CostReman: $("#CostReman").val(),
+                    CostPreQuotation: $("#CostPreQuotation").val(),
+                    CostRelativeOfTheNewNode: $("#CostRelativeOfTheNewNode").val(),
+                    CurrencyType: $("#currencyTypeValue").val(),
+                    Comment: $("#modal_UploadQuotationDialog_Comment").val(),
+                    Customers: customerNameItems,
+                    //WOpssr: $("#WOPssr").val(),
+                    WOpssr: pssrValue,
+                    Emails: emailNameItems,
+                    isSparePartsProvideTheCustomer: $("#isSparePartsProvideTheCustomer").is(":checked"),
+                },
+                success: function(data) {
+                    if (data.status == "ok") {
+                        $("#modal_UploadQuotationDialog").modal('toggle');
+                        InProcess_GetTable();
+                    }
+                },
+                error: myErrorFunction
+            });
+        }
+
+        //Не начатые - NotStarted
+        var NotStarted_searchResult = { searchId: "" }
+
+        function NotStarted_GetTable() {
+            $("#NotStarted_datatableAjax").dataTable().fnDestroy();
+            // Metronic.blockUI('body');
+            var gridNotStarted = new Datatable();
+
+            gridNotStarted.init({
+                src: $("#NotStarted_datatableAjax"),
+                onSuccess: function(grid) {
+                    // execute some code after table records loaded
+                },
+                onError: function(grid) {
+
+                    // execute some code on network or other general error
+                },
+                onDataLoad: function(grid) {
+                    // execute some code on ajax data load
+                },
+                loadingMessage: 'Loading...',
+                dataTable: {
+                    "bSort": false,
+                    "ordering": false,
+                    "bStateSave": false, // save datatable state(pagination, sort, etc) in cookie.
+                    "pageLength": 10, // default record count per page
+                    "timeout": 100000,
+                    "language": JSON.parse('@(@Html.Raw(HttpUtility.JavaScriptStringEncode(StandartLibrary.Lang.Resources.JqueryDataTableLanguage)))'),
+                    "ajax": {
+                        "url": "/PreparingQuotation/Ajax_NotStarted_GetList", // ajax source
+                        "data": {
+                            document_id: $("#NotStarted_document_id").val(),
+                            division: $("#NotStarted_division").val(),
+                            customer_id: $("#NotStarted_customer_id").val(),
+                            smcsCode: $("#NotStarted_smcsComponentDescription").val(),
+                            model_id: $("#NotStarted_model_id").val(),
+                            ReceiptDate_Begin: $("#NotStarted_ReceiptDate_Begin").val(),
+                            ReceiptDate_End: $("#NotStarted_ReceiptDate_End").val(),
+                            group_id: $("#NotStarted_group_id").val()
+                        }
+                    },
+                    "columns": [
+                        {
+                            "data": "GroupName",
+                            "mRender": function (data, type, full) {
+                                return full.GroupName;
+                            }
+                        },
+
+                        {
+                            "data": "DocumentId",
+                            "mRender": function(data, type, full) {
+                                if (full.IsProjectExpenses)
+                                    return "<div class='bg-yellow-gold  bg-font-yellow-gold'>" +
+                                        full.DocumentNumber +
+                                        "</div>";
+                                else
+                                    return full.DocumentNumber;
+                            }
+                        },
+                        {
+                            "data": "CustomerName",
+                            "mRender": function(data, type, full) {
+                                return full.CustomerName;
+                            }
+                        },
+                        {
+                            "data": "SegmentText",
+                            "mRender": function(data, type, full) {
+                                return full.Division;
+                            }
+                        },
+                        {
+                            "data": "smcsComponentDescription",
+                            "mRender": function(data, type, full) {
+                                return full.smcsComponentDescription;
+                            }
+                        },
+                        {
+                            "data": "ModelName",
+                            "mRender": function(data, type, full) {
+                                return full.ModelName;
+                            }
+                        },
+                        {
+                            "data": "UploadPricing",
+                            "mRender": function (data, type, full) {
+                                return GetDivUpload(99, full, true, false);
+                            }
+                        },
+                        {
+                            "data": "UploadDefectList",
+                            "mRender": function (data, type, full) {
+                                return GetDivUpload(1, full, true, false);
+                            }
+                        },
+                        {
+                            "data": "UploadMachineShopForm",
+                            "mRender": function(data, type, full) {
+                                return GetDivUpload(6, full, true, false);
+                            }
+                        },
+                        {
+                            "data": "UploadTechnicalReport",
+                            "mRender": function(data, type, full) {
+                                return GetDivUpload(2, full, true, false);
+                            }
+                        },
+                        {
+                            "data": "Comment",
+                            "mRender": function(data, type, full) {
+                                return '<span class="EditComment_' +
+                                    full.DocumentId +
+                                    '">' +
+                                    full.Comment +
+                                    '</span> <a href="javascript:;"  class="btn btn-xs default fa fa-edit EditComment"  documentId="' +
+                                    full.DocumentId +
+                                    '"></a>';
+                            }
+                        },
+                        {
+                            "data": "ReceiptDate",
+                            "mRender": function(data, type, full) {
+                                return full.ReceiptDate != null ? convertJsonDate(full.ReceiptDate) : "";
+                            }
+                        },
+                        {
+                            "data": "",
+                            "mRender": function (data, type, full) {
+
+                                    var btn = '';
+                                if (!full.IsZsrt) {
+                                    btn +=
+                                        '<a href="javascript:;" title="@(StandartLibrary.Lang.Resources.Start_6074)"  cdoms_perm="@StandartLibrary.Models.Enums.PermissionEnum.COUNTER_CABINET_RW" class="btn btn-xs default fa fa-play NotStarted_btnStart" id="NotStarted_btnStart_' +
+                                        full.DocumentId +
+                                        '"  documentId="' +
+                                        full.DocumentId +
+                                        '"></a>';
+                                }
+
+                                return btn;
+                            }
+                        },
+                        {
+                            "data": "Quotation_Accepted_Description",
+                            "mRender": function (data, type, full) {
+
+                       var table = ('<table>' +
+                                    '<tr>' +
+                                    '<td>' + '<span id="sbadge_' + full.DocumentId + '" class="' + (full.Quotation_IsAccepted == null ? 'badge bg-yellow' : full.Quotation_IsAccepted == true ? 'badge bg-green' : 'badge bg-red') + '">' + '<span id="operationStatus_' + full.DocumentId + '">' + full.Quotation_Accepted_Description + '</span>' + ' <i id="ifa_' + full.DocumentId + '" class="' + (full.Quotation_IsAccepted == null ? 'fa fa-spinner' : full.Quotation_IsAccepted == true ? 'fa fa-check' : 'fa fa-close') + '"></i></span>' + '</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td id="operationDate_' + full.DocumentId + '" >' + full.Quotation_Operation_Date + '</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td id="operationUser_' + full.DocumentId + '" >' + full.Quotation_Operation_User + '</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td id="operationDescription_' + full.DocumentId + '" >' + full.Quotation_Operation_Description + '</td>' +
+                                    '</tr>' +
+                                    '<tr id="trPreparingQuotation_' + full.DocumentId + '" style="' + (full.Quotation_IsAccepted == null || (full.Quotation_IsAccepted != null && full.Quotation_IsAccepted == true) ? 'display:none' : '')+'">' +
+                           '<td>' + '<a href="javascript:;" title="@(StandartLibrary.Lang.Resources.SendConfirmation)"  cdoms_perm="@StandartLibrary.Models.Enums.PermissionEnum.SERVICE_ENGINEER_RW" class="btn btn-success NotStarted_PreparingQuotation_btnAcceptance btnGreen ' + (full.Quotation_IsAccepted != null && full.Quotation_IsAccepted == true ? 'disabled' : '') + '" id="NotStarted_PreparingQuotation_btnAcceptance_' + full.DocumentId + '" cdoms_perm="SERVICE_ENGINEER_RW" documentId="' + full.DocumentId + '">@(StandartLibrary.Lang.Resources.SendConfirmation)</a>'+ '</td>' +
+                                    '</tr>' +
+                                    '</table>');
+
+                                return table;
+                            }
+                        },
+                    ],
+                    "order": [[1, "asc"]],
+                    "fnInitComplete": function(oSettings, json) {
+
+                        NotStarted_searchResult.searchId = json.searchId;
+
+                        $('#NotStarted_ReceiptDate_Begin, #NotStarted_ReceiptDate_End').change(function() {
+                            delay(function() { NotStarted_GetTable(); }, 500);
+                        });
+
+                        $('#NotStarted_document_id, #NotStarted_customer_id, #NotStarted_division, #NotStarted_model_id, #NotStarted_smcsComponentDescription,#NotStarted_group_id,  #NotStarted_Comment') .change(function() {
+                                delay(function() { NotStarted_GetTable(); }, 500);
+                        });
+
+                        SetEventUploadItemClick('@(appSetting.ProjectUrl.WorkOrderHistoryPath)');
+
+                        cdomsPermissionCheck();
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script>
+        //InProcess - В процессе
+        var InProcess_searchResult = { searchId: "" }
+
+        function InProcess_GetTable() {
+            $("#InProcess_datatableAjax").dataTable().fnDestroy();
+            // Metronic.blockUI('body');
+            var gridInProcess = new Datatable();
+
+            gridInProcess.init({
+                src: $("#InProcess_datatableAjax"),
+                onSuccess: function(grid) {
+                    // execute some code after table records loaded
+                },
+                onError: function(grid) {
+
+                    // execute some code on network or other general error
+                },
+                onDataLoad: function(grid) {
+                    // execute some code on ajax data load
+                },
+                loadingMessage: 'Loading...',
+                dataTable: {
+                    "bSort": false,
+                    "ordering": false,
+                    "bStateSave": false, // save datatable state(pagination, sort, etc) in cookie.
+                    "pageLength": 10, // default record count per page
+                    "timeout": 100000,
+                    "language": JSON.parse('@(@Html.Raw(HttpUtility.JavaScriptStringEncode(StandartLibrary.Lang.Resources.JqueryDataTableLanguage)))'),
+                    "ajax": {
+                        "url": "/PreparingQuotation/Ajax_InProcess_GetList", // ajax source
+                        "data": {
+                            document_id: $("#InProcess_document_id").val(),
+                            division: $("#InProcess_division").val(),
+                            customer_id: $("#InProcess_customer_id").val(),
+                            smcsCode: $("#InProcess_smcsComponentDescription").val(),
+                            model_id: $("#InProcess_model_id").val(),
+                            PreparingQuotation_StartDate_Begin:
+                                $("#InProcess_PreparingQuotation_StartDate_Begin").val(),
+                            PreparingQuotation_StartDate_End: $("#InProcess_PreparingQuotation_StartDate_End").val(),
+                           group_id: $("#InProcess_group_id").val()
+                        }
+                    },
+                    "columns": [
+                        {
+                            "data": "GroupName",
+                            "mRender": function (data, type, full) {
+                                return full.GroupName;
+                            }
+                        },
+                        {
+                            "data": "DocumentId",
+                            "mRender": function(data, type, full) {
+                                return full.DocumentNumber;
+                            }
+                        },
+                        {
+                            "data": "CustomerName",
+                            "mRender": function(data, type, full) {
+                                return "<span class='InProcessCustomerName_" +
+                                    full.DocumentId +
+                                    "'>" +
+                                    full.CustomerName +
+                                    "</span>";
+                            }
+                        },
+                        {
+                            "data": "SegmentText",
+                            "mRender": function(data, type, full) {
+                                return full.Division;
+                            }
+                        },
+                        {
+                            "data": "smcsComponentDescription",
+                            "mRender": function(data, type, full) {
+                                return full.smcsComponentDescription;
+                            }
+                        },
+                        {
+                            "data": "ModelName",
+                            "mRender": function(data, type, full) {
+                                return full.ModelName;
+                            }
+                        },
+                        {
+                            "data": "UploadPricing",
+                            "mRender": function (data, type, full) {
+                                return GetDivUpload(99, full, true, false);
+                            }
+                        },
+                        {
+                            "data": "UploadDefectList",
+                            "mRender": function(data, type, full) {
+                                return GetDivUpload(1, full, true, false);
+                            }
+                        },
+                        {
+                            "data": "UploadMachineShopForm",
+                            "mRender": function(data, type, full) {
+                                return GetDivUpload(6, full, true, false);
+                            }
+                        },
+                        {
+                            "data": "UploadTechnicalReport",
+                            "mRender": function(data, type, full) {
+                                return GetDivUpload(2, full, true, false);
+                            }
+                        },
+                        {
+                            "data": "Comment",
+                            "mRender": function(data, type, full) {
+                                return '<span class="EditComment_' +
+                                    full.DocumentId +
+                                    '">' +
+                                    full.Comment +
+                                    '</span> <a href="javascript:;" class="btn btn-xs default fa fa-edit EditComment"  documentId="' +
+                                    full.DocumentId +
+                                    '"></a>';
+                            }
+                        },
+                        {
+                            "data": "PreparingQuotation_StartDate",
+                            "mRender": function(data, type, full) {
+                                return full.PreparingQuotation_StartDate != null
+                                    ? convertJsonDate(full.PreparingQuotation_StartDate)
+                                    : "";
+                            }
+                        },
+                        {
+                            "data": "",
+                            "mRender": function (data, type, full) {
+                                    var btn = '';
+                                if (!full.IsZsrt) {
+                                    btn +=
+                                        '<a href="javascript:;" title="@(StandartLibrary.Lang.Resources.Start_6074)"  cdoms_perm="@StandartLibrary.Models.Enums.PermissionEnum.COUNTER_CABINET_RW" class="btn btn-xs default fa fa-play InProcess_btnStart ' +
+                                        (full.StateId == 1 ? 'btnCur' : '') +
+                                        ' ' +
+                                        (full.StateId == 1 ? 'disabled' : '') +
+                                        '" id="InProcess_btnStart_' +
+                                        full.DocumentId +
+                                        '"  documentId="' +
+                                        full.DocumentId +
+                                        '"></a>';
+                                    btn += '<a href="javascript:;"' +
+                                        (full.StateId == 2
+                                            ? 'title="@(StandartLibrary.Lang.Resources.Pause_6111)' +
+                                            full.PauseDescription +
+                                            '"'
+                                            : '') +
+                                        '  cdoms_perm="@StandartLibrary.Models.Enums.PermissionEnum.COUNTER_CABINET_RW" class="btn btn-xs default fa fa-pause InProcess_btnPause ' +
+                                        (full.StateId == 2 ? 'btnCur' : '') +
+                                        ' ' +
+                                        (full.StateId == 2 || full.StateId == 3 ? 'disabled2' : '') +
+                                        '" id="InProcess_btnPause_' +
+                                        full.DocumentId +
+                                        '" documentId="' +
+                                        full.DocumentId +
+                                        '"></a>';
+                                    btn +=
+                                        '<a href="javascript:;" title="@(StandartLibrary.Lang.Resources.Stop_6112)"  cdoms_perm="@StandartLibrary.Models.Enums.PermissionEnum.COUNTER_CABINET_RW" class="btn btn-xs default fa fa-stop InProcess_btnStop ' +
+                                        (full.StateId == 3 ? 'btnCur' : '') +
+                                        ' ' +
+                                        (full.StateId == 3 || full.StateId == 2 ? 'disabled' : '') +
+                                        '"  id="InProcess_btnStop_' +
+                                        full.DocumentId +
+                                        '" documentId="' +
+                                        full.DocumentId +
+                                        '"></a>';
+                                    btn +=
+                                        '<a href="javascript:;" title="@(StandartLibrary.Lang.Resources.Return_to_the_account_of_the_accountant_for_updating_6928)"  cdoms_perm="@StandartLibrary.Models.Enums.PermissionEnum.COUNTER_CABINET_RW" class="btn btn-xs default InProcess_btnReturnToUpdate ' +
+                                        (full.StateId == 3 ? 'btnCur' : '') +
+                                        ' ' +
+                                        (full.StateId == 3 || full.StateId == 2 ? 'disabled' : '') +
+                                        '"  id="InProcess_btnReturnToUpdate_' +
+                                        full.DocumentId +
+                                        '" documentId="' +
+                                        full.DocumentId +
+                                        '">@(StandartLibrary.Lang.Resources.Return_to_updates_6929)</a>';
+                                }
+                                    return btn;
+                            }
+                        },
+                                                {
+                            "data": "Quotation_Accepted_Description",
+                            "mRender": function (data, type, full) {
+
+                                var table = ('<table>' +
+                                    '<tr>' +
+                                    (full.Quotation_Accepted_Description == '' ? '<td></td>' :
+                                    '<td>' + '<span id="sbadge_' + full.DocumentId + '" class="' + (full.Quotation_IsAccepted == null ? 'badge bg-yellow' : full.Quotation_IsAccepted == true ? 'badge bg-green' : 'badge bg-red') + '">' + '<span id="operationStatus_' + full.DocumentId + '">' + full.Quotation_Accepted_Description + '</span>' + ' <i id="ifa_' + full.DocumentId + '" class="' + (full.Quotation_IsAccepted == null ? 'fa fa-spinner' : full.Quotation_IsAccepted == true ? 'fa fa-check' : 'fa fa-close') + '"></i></span>' + '</td>' ) +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td id="operationDate_' + full.DocumentId + '" >' + full.Quotation_Operation_Date + '</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td id="operationUser_' + full.DocumentId + '" >' + full.Quotation_Operation_User + '</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td id="operationDescription_' + full.DocumentId + '" >' + full.Quotation_Operation_Description + '</td>' +
+                                    '</tr>' +
+                                    '<tr id="trPreparingQuotation_' + full.DocumentId + '" style="' + (full.Quotation_IsAccepted == null || (full.Quotation_IsAccepted != null && full.Quotation_IsAccepted == true) ? 'display:none' : '')+'">' +
+                                    '<td>' + '<a href="javascript:;" title="@(StandartLibrary.Lang.Resources.SendConfirmation)"  cdoms_perm="@StandartLibrary.Models.Enums.PermissionEnum.SERVICE_ENGINEER_RW" class="btn btn-success InProcess_PreparingQuotation_btnAcceptance btnGreen ' + (full.Quotation_IsAccepted != null && full.Quotation_IsAccepted == true ? 'disabled' : '') + '" id="InProcess_PreparingQuotation_btnAcceptance_' + full.DocumentId + '" cdoms_perm="SERVICE_ENGINEER_RW" documentId="' + full.DocumentId + '">@(StandartLibrary.Lang.Resources.SendConfirmation)</a>'+ '</td>' +
+                                    '</tr>' +
+                                    '</table>');
+
+                                return table;
+                            }
+                        },
+                    ],
+                    "order": [[1, "asc"]],
+                    "fnInitComplete": function(oSettings, json) {
+
+                        InProcess_searchResult.searchId = json.searchId;
+
+                        $('#InProcess_PreparingQuotation_StartDate_Begin, #InProcess_PreparingQuotation_StartDate_End').change(function() {
+                                delay(function() { InProcess_GetTable(); }, 500);
+                        });
+
+                        $('#InProcess_document_id, #InProcess_customer_id, #InProcess_division, #InProcess_model_id, #InProcess_smcsComponentDescription,#InProcess_group_id, #InProcess_Comment').change(function() {
+                                delay(function() { InProcess_GetTable(); }, 500);
+                        });
+
+                        SetEventUploadItemClick('@(appSetting.ProjectUrl.WorkOrderHistoryPath)');
+
+                        cdomsPermissionCheck();
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script>
+        //Ожидающие обновления от Сервисного инженера
+        var Wait_searchResult = { searchId: "" };
+
+        function Wait_GetTable() {
+            $("#Wait_datatableAjax").dataTable().fnDestroy();
+            // Metronic.blockUI('body');
+            var gridWait = new Datatable();
+
+            gridWait.init({
+                src: $("#Wait_datatableAjax"),
+                onSuccess: function(grid) {
+                    // execute some code after table records loaded
+                },
+                onError: function(grid) {
+
+                    // execute some code on network or other general error
+                },
+                onDataLoad: function(grid) {
+                    // execute some code on ajax data load
+                },
+                loadingMessage: 'Loading...',
+                dataTable: {
+                    "bSort": false,
+                    "ordering": false,
+                    "bStateSave": false, // save datatable state(pagination, sort, etc) in cookie.
+                    "pageLength": 10, // default record count per page
+                    "timeout": 100000,
+                    "language": JSON.parse('@(@Html.Raw(HttpUtility.JavaScriptStringEncode(StandartLibrary.Lang.Resources.JqueryDataTableLanguage)))'),
+                    "ajax": {
+                        "url": "/PreparingQuotation/Ajax_Wait_GetList", // ajax source
+                        "data": {
+                            document_id: $("#Wait_document_id").val(),
+                            division: $("#Wait_division").val(),
+                            customer_id: $("#Wait_customer_id").val(),
+                            smcsCode: $("#Wait_smcsComponentDescription").val(),
+                            model_id: $("#Wait_model_id").val(),
+                            ReceiptDate_Begin: $("#Wait_ReceiptDate_Begin").val(),
+                            ReceiptDate_End: $("#Wait_ReceiptDate_End").val(),
+                           group_id: $("#Wait_group_id").val()
+                        }
+                    },
+                    "columns": [
+                        {
+                            "data": "GroupName",
+                            "mRender": function (data, type, full) {
+                                return full.GroupName;
+                            }
+                        },
+                        {
+                            "data": "DocumentId",
+                            "mRender": function(data, type, full) {
+                                return full.DocumentNumber;
+                            }
+                        },
+                        {
+                            "data": "CustomerName",
+                            "mRender": function(data, type, full) {
+                                return full.CustomerName;
+                            }
+                        },
+                        {
+                            "data": "SegmentText",
+                            "mRender": function(data, type, full) {
+                                return full.Division;
+                            }
+                        },
+                        {
+                            "data": "smcsComponentDescription",
+                            "mRender": function(data, type, full) {
+                                return full.smcsComponentDescription;
+                            }
+                        },
+                        {
+                            "data": "ModelName",
+                            "mRender": function(data, type, full) {
+                                return full.ModelName;
+                            }
+                        },
+                        {
+                            "data": "UploadPricing",
+                            "mRender": function (data, type, full) {
+                                return GetDivUpload(99, full, true, false);
+                            }
+                        },
+                        {
+                            "data": "UploadDefectList",
+                            "mRender": function(data, type, full) {
+                                return GetDivUpload(1, full, true, false);
+                            }
+                        },
+                        {
+                            "data": "UploadMachineShopForm",
+                            "mRender": function(data, type, full) {
+                                return GetDivUpload(6, full, true, false);
+                            }
+                        },
+                        {
+                            "data": "UploadTechnicalReport",
+                            "mRender": function(data, type, full) {
+                                return GetDivUpload(2, full, true, false);
+                            }
+                        },
+                        {
+                            "data": "Comment",
+                            "mRender": function(data, type, full) {
+                                return '<span class="EditComment_' +
+                                    full.DocumentId +
+                                    '">' +
+                                    full.Comment +
+                                    '</span> <a href="javascript:;"  class="btn btn-xs default fa fa-edit EditComment"  documentId="' +
+                                    full.DocumentId +
+                                    '"></a>';
+                            }
+                        },
+                        {
+                            "data": "ReceiptDate",
+                            "mRender": function(data, type, full) {
+                                return full.ReceiptDate != null ? convertJsonDate(full.ReceiptDate) : "";
+                            }
+                        },
+                        {
+                            "data": "",
+                            "mRender": function (data, type, full) {
+                                    var btn = '';
+
+                                if (!full.IsZsrt) {
+                                    btn +=
+                                        '<a href="javascript:;"  cdoms_perm="@StandartLibrary.Models.Enums.PermissionEnum.COUNTER_CABINET_RW" title="@(StandartLibrary.Lang.Resources.Start_6074)" class="btn btn-xs default fa fa-play Wait_btnStart" id="Wait_btnStart_' +
+                                        full.DocumentId +
+                                        '"  documentId="' +
+                                        full.DocumentId +
+                                        '"></a>';
+                                }
+                                    return btn;
+                            }
+                        }
+                    ],
+                    "order": [[1, "asc"]],
+                    "fnInitComplete": function (oSettings, json) {
+
+                        Wait_searchResult.searchId = json.searchId;
+
+                        $('#Wait_ReceiptDate_Begin, #Wait_ReceiptDate_End').change(function() {
+                            delay(function() { Wait_GetTable(); }, 500);
+                        });
+
+                        $('#Wait_document_id, #Wait_customer_id, #Wait_division, #Wait_model_id, #Wait_smcsComponentDescription, #Wait_group_id, #Wait_Comment').change(function() {
+                                delay(function() { Wait_GetTable(); }, 500);
+                        });
+
+                        SetEventUploadItemClick('@(appSetting.ProjectUrl.WorkOrderHistoryPath)');
+
+                        cdomsPermissionCheck();
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script>
+
+        jQuery(document).ready(function () {
+            if (jQuery().datepicker) {
+                $('.date-picker').datepicker({ rtl: Metronic.isRTL(), orientation: "left", autoclose: true });
+            }
+
+            NotStarted_GetTable();
+
+            //В процессе
+            InProcess_GetTable();
+
+            //Ожидающие корректировки
+            Wait_GetTable();
+
+            $("#SparePartsInWarehousesRK").click(function() {
+                if ($("#SparePartsInWarehousesRK").is(":checked"))
+                    $("#DeliveryTermsAviaDays").prop('disabled', true);
+                else
+                    $("#DeliveryTermsAviaDays").prop('disabled', false);
+            });
+            SetSelect2("ProjectExpensesDocumentId",
+                "",
+                "",
+                "/AJAX/GetDocumentNumber_ProjectExpenses",
+                3,
+                true,
+                false,
+                null);
+
+
+            SetSelect2("NotStarted_document_id",
+                "",
+                "",
+                "/AJAX/GetDocumentNumber",
+                3,
+                true,
+                false,
+                NotStarted_searchResult);
+            SetSelect2("NotStarted_customer_id", "", "", "/AJAX/GetCustomer", 3, true, false, NotStarted_searchResult);
+            SetSelect2("NotStarted_smcsComponentDescription",
+                "",
+                "",
+                "/AJAX/GetSmcsCode",
+                3,
+                true,
+                false,
+                NotStarted_searchResult);
+            SetSelect2("NotStarted_model_id", "", "", "/AJAX/GetModel", 3, true, false, NotStarted_searchResult);
+            SetSelect2("NotStarted_division", "", "", "/AJAX/GetDivision", 1, true, false, NotStarted_searchResult);
+            SetSelect2("NotStarted_group_id", "", "", "/AJAX/GetGroup", 2, true, false, NotStarted_searchResult);
+
+            SetSelect2("Wait_document_id", "", "", "/AJAX/GetDocumentNumber", 3, true, false, Wait_searchResult);
+            SetSelect2("Wait_customer_id", "", "", "/AJAX/GetCustomer", 3, true, false, Wait_searchResult);
+            SetSelect2("Wait_smcsComponentDescription", "", "", "/AJAX/GetSmcsCode", 3, true, false, Wait_searchResult);
+            SetSelect2("Wait_model_id", "", "", "/AJAX/GetModel", 3, true, false, Wait_searchResult);
+            SetSelect2("Wait_division", "", "", "/AJAX/GetDivision", 1, true, false, Wait_searchResult);
+            SetSelect2("Wait_group_id", "", "", "/AJAX/GetGroup", 2, true, false, Wait_searchResult);
+
+            SetSelect2("InProcess_document_id",
+                "",
+                "",
+                "/AJAX/GetDocumentNumber",
+                3,
+                true,
+                false,
+                InProcess_searchResult);
+            SetSelect2("InProcess_customer_id", "", "", "/AJAX/GetCustomer", 3, true, false, InProcess_searchResult);
+            SetSelect2("InProcess_smcsComponentDescription",
+                "",
+                "",
+                "/AJAX/GetSmcsCode",
+                3,
+                true,
+                false,
+                InProcess_searchResult);
+            SetSelect2("InProcess_model_id", "", "", "/AJAX/GetModel", 3, true, false, InProcess_searchResult);
+            SetSelect2("InProcess_division", "", "", "/AJAX/GetDivision", 1, true, false, InProcess_searchResult);
+            SetSelect2("InProcess_group_id", "", "", "/AJAX/GetGroup", 2, true, false, InProcess_searchResult);
+
+            //Не начатые
+
+            $('#CostParts, #CostWork, #CostRecovery, #CostTransportation, #CostReman, #CostRelativeOfTheNewNode')
+                .blur(function() { checkCost("blur") });
+            $('#CostParts, #CostWork, #CostRecovery, #CostTransportation, #CostReman, #CostRelativeOfTheNewNode')
+                .change(function() { checkCost("change") });
+
+            SetSelect2("modal_UploadQuotationDialog_CustomerNameAddText",
+                "",
+                "",
+                "/AJAX/GetCustomerPSSR",
+                3,
+                true,
+                false,
+                InProcess_searchResult);
+            SetSelect2("modal_UploadQuotationDialog_EmailNameAddText",
+                "",
+                "",
+                "/AJAX/GetEmailPSSR",
+                3,
+                true,
+                false,
+                InProcess_searchResult);
+
+            $("#SparePartsInStock").change(function() {
+                var isSparePartsInStock = $("#SparePartsInStock").is(":checked");
+                $("#DeliveryTermsTruckDays").prop('disabled', isSparePartsInStock);
+                $("#DeliveryTermsAviaDays").prop('disabled', isSparePartsInStock);
+
+            });
+        });
+        var costBeginChange = false;
+
+        function checkCost(mode) {
+            var bAlert = true;
+            if (mode == "change") {
+                costBeginChange = true;
+                bAlert = false;
+            }
+            var bCheck = true;
+            if (!$.isNumeric($("#CostParts").val().replace(new RegExp(',', 'g'), '.'))) {
+                if (bAlert) {
+                    if (costBeginChange)
+                        Warning(
+                            "@Html.Raw(StandartLibrary.Lang.Resources.Field_Cost_of_spare_parts_should_be_a_number_7001.Replace("\"", "'"))");
+                    costBeginChange = false;
+                    $("#CostParts").focus();
+                }
+                bCheck = false;
+            } else if (!$.isNumeric($("#CostWork").val().replace(new RegExp(',', 'g'), '.'))) {
+                if (bAlert) {
+                    if (costBeginChange)
+                        Warning(
+                            "@Html.Raw(StandartLibrary.Lang.Resources.Field_Work_must_be_a_number_7002.Replace("\"", "'"))");
+                    costBeginChange = false;
+                    $("#CostWork").focus();
+                }
+                bCheck = false;
+            } else if (!$.isNumeric($("#CostRecovery").val().replace(new RegExp(',', 'g'), '.'))) {
+                if (bAlert) {
+                    if (costBeginChange)
+                        Warning(
+                            "@Html.Raw(StandartLibrary.Lang.Resources.The_Restore_field_must_be_a_number_7003.Replace("\"", "'"))");
+                    costBeginChange = false;
+                    $("#CostRecovery").focus();
+                }
+                bCheck = false;
+            } else if (!$.isNumeric($("#CostTransportation").val().replace(new RegExp(',', 'g'), '.'))) {
+                if (bAlert) {
+                    if (costBeginChange)
+                        Warning(
+                            "@Html.Raw(StandartLibrary.Lang.Resources.The_Transportation_field_must_be_a_number_7004.Replace("\"", "'"))");
+                    costBeginChange = false;
+                    $("#CostTransportation").focus();
+                }
+                bCheck = false;
+            } else if (!$.isNumeric($("#CostReman").val().replace(new RegExp(',', 'g'), '.'))) {
+                if (bAlert) {
+                    if (costBeginChange)
+                        Warning(
+                            "@Html.Raw(StandartLibrary.Lang.Resources.Field_REMAN_must_be_a_number_7005.Replace("\"", "'"))");
+                    costBeginChange = false;
+                    $("#CostReman").focus();
+                }
+                bCheck = false;
+            }
+
+            if (bCheck) {
+                $("#CostPreQuotation").val(
+                    ($("#CostParts").val().length > 0 ? convertToFloat($("#CostParts").val()) : 0) +
+                    ($("#CostWork").val().length > 0 ? convertToFloat($("#CostWork").val()) : 0) +
+                    ($("#CostRecovery").val().length > 0 ? convertToFloat($("#CostRecovery").val()) : 0) +
+                    ($("#CostTransportation").val().length > 0 ? convertToFloat($("#CostTransportation").val()) : 0) -
+                    ($("#CostReman").val().length > 0 ? convertToFloat($("#CostReman").val()) : 0)
+                );
+            } else {
+                $("#CostPreQuotation").val("@(StandartLibrary.Lang.Resources.Input_Error_5520)");
+            }
+        }
+
+        function notApplicable() {
+            $("#btnNotApplicable").hide();
+            $.ajax({
+                type: "POST",
+                url: "/AJAX/UploadNotApplicable",
+                data: { documentId: ShowUploadQuotationdDialog_documentId, typeId: 17 },
+                success: function(data) {
+                    if (data.status == "ok") {
+                        RefreshQuotationUploadsList(ShowUploadQuotationdDialog_documentId);
+                    }
+                },
+                error: myErrorFunction
+            });
+        }
+    </script>
+
+    <script>
+
+        $("body").on("click", ".NotStarted_btnStart", function (event) {
+
+            var el = $(this);
+            var documentId = el.attr("documentId");
+
+            $.ajax({
+                type: "POST",
+                url: "/PreparingQuotation/Ajax_Start",
+                data: { documentId: documentId },
+                success: function (data) {
+                    if (data.status == "ok") {
+                        el.addClass("disabled", "disabled");
+                        InProcess_GetTable();
+                        NotStarted_GetTable();
+                    }
+                },
+                error: myErrorFunction
+            });
+
+        });
+
+        $("body").on("click", ".NotStarted_PreparingQuotation_btnAcceptance", function (event) {
+
+            var el = $(this);
+            var documentId = el.attr("documentId");
+
+            swal({
+                title: SendConfirmation,
+                type: "input",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                confirmButtonText: OK_Button_Text,
+                cancelButtonText: Cancel_Button_Text,
+                inputPlaceholder: '@Html.Raw(StandartLibrary.Lang.Resources.Comments_5475)',
+                showLoaderOnConfirm: true
+            }, function (inputValue) {
+
+                if (inputValue === false) {
+                    return false;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/PreparingQuotation/QuotationControl_Approval",
+                    data: {
+                        documentId: documentId,
+                        isAccepted: true,
+                        comment: inputValue
+                    },
+                    success: function (data) {
+                        if (data.status == "ok") {
+
+                            el.addClass("disabled");
+
+                            $("#operationDescription_" + documentId).html(inputValue);
+                            $("#operationStatus_" + documentId).html(data.operationStatus);
+                            $("#operationDate_" + documentId).html(data.operationDate);
+                            $("#operationUser_" + documentId).html(data.operationUser);
+
+                            $("#sbadge_" + documentId).removeClass('badge bg-red');
+                            $("#sbadge_" + documentId).addClass('badge bg-yellow');
+                            $("#ifa_" + documentId).removeClass('fa fa-close');
+                            $("#ifa_" + documentId).addClass('fa fa-spinner');
+
+                            $("#trPreparingQuotation_" + documentId).css("display", "none");
+
+                            let resultString = "@Html.Raw(StandartLibrary.Lang.Resources.QuotationControl_Acceptance_Reject)";
+
+                            resultString = resultString.replace('{0}', data.documentNumber);
+                            resultString = resultString.replace('{1}', "@Html.Raw(StandartLibrary.Lang.Resources.SentforApproval)");
+
+                            swal(resultString, "", "success");
+                        }
+                    },
+                    error: myErrorFunction
+                });
+             });
+
+        });
+
+        $("body").on("click", ".InProcess_btnStart", function (event) {
+
+            var el = $(this);
+            var documentId = el.attr("documentId");
+
+            $.ajax({
+                type: "POST",
+                url: "/PreparingQuotation/Ajax_Start",
+                data: { documentId: documentId },
+                success: function (data) {
+                    if (data.status == "ok") {
+                        el.addClass("btnCur");
+                        el.addClass("disabled");
+                        $("#InProcess_btnPause_" + documentId).removeClass("btnCur");
+                        $("#InProcess_btnPause_" + documentId).removeClass("disabled2");
+                        $("#InProcess_btnStop_" + documentId).removeClass("btnCur");
+                        $("#InProcess_btnStop_" + documentId).removeClass("disabled");
+                    }
+                },
+                error: myErrorFunction
+            });
+
+        });
+
+        $("body").on("click", ".InProcess_btnPause", function (event) {
+
+            if ($(this).hasClass("disabled2")) {
+                return;
+            }
+            var description = prompt("@Counter.Lang.Resources.ПричинаПаузы", "");
+            if (description != null) {
+                var el = $(this);
+                var documentId = el.attr("documentId");
+                $.ajax({
+                    type: "POST",
+                    url: "/PreparingQuotation/Ajax_Pause",
+                    data: { documentId: documentId, description: description },
+                    success: function(data) {
+                        if (data.status == "ok") {
+                            el.addClass("btnCur");
+                            el.addClass("disabled");
+                            $("#InProcess_btnStart_" + documentId).removeClass("btnCur");
+                            $("#InProcess_btnStart_" + documentId).removeClass("disabled");
+                            $("#InProcess_btnStop_" + documentId).addClass("disabled");
+                        }
+                    },
+                    error: myErrorFunction
+                });
+            }
+        });
+
+        $("body").on("click", ".InProcess_btnStop", function (event) {
+            InProcess_btnStop($(this).attr("documentId"));
+        });
+
+        $("body").on("click", ".InProcess_btnReturnToUpdate", function (event) {
+
+            var description = prompt("@(StandartLibrary.Lang.Resources.Reason_for_returning_to_update_6930)", "");
+
+            if (description != null) {
+                var el = $(this);
+                var documentId = el.attr("documentId");
+                $.ajax({
+                    type: "POST",
+                    url: "/PreparingQuotation/Ajax_ReturnToUpdate",
+                    data: { documentId: documentId, description: description },
+                    success: function(data) {
+                        if (data.status == "ok") {
+                            InProcess_GetTable();
+                            Wait_GetTable();
+                        }
+                    },
+                    error: myErrorFunction
+                });
+            }
+        });
+
+        $("body").on("click", ".InProcess_PreparingQuotation_btnAcceptance", function (event) {
+
+             var el = $(this);
+             var documentId = el.attr("documentId");
+
+             swal({
+                 title: SendConfirmation,
+                 type: "input",
+                 showCancelButton: true,
+                 closeOnConfirm: false,
+                 confirmButtonText: OK_Button_Text,
+                 cancelButtonText: Cancel_Button_Text,
+                 inputPlaceholder: '@Html.Raw(StandartLibrary.Lang.Resources.Comments_5475)',
+                 showLoaderOnConfirm: true
+             }, function (inputValue) {
+
+                     if (inputValue === false) {
+                         return false;
+                     }
+
+                     $.ajax({
+                         type: "POST",
+                         url: "/PreparingQuotation/QuotationControl_Approval",
+                         data: {
+                             documentId: documentId,
+                             isAccepted: true,
+                             comment: inputValue
+                         },
+                         success: function (data) {
+                             if (data.status == "ok") {
+
+                                 el.addClass("disabled");
+
+                                 $("#operationDescription_" + documentId).html(inputValue);
+                                 $("#operationStatus_" + documentId).html(data.operationStatus);
+                                 $("#operationDate_" + documentId).html(data.operationDate);
+                                 $("#operationUser_" + documentId).html(data.operationUser);
+
+                                 $("#sbadge_" + documentId).removeClass('badge bg-red');
+                                 $("#sbadge_" + documentId).addClass('badge bg-yellow');
+
+                                 $("#ifa_" + documentId).removeClass('fa fa-close');
+                                 $("#ifa_" + documentId).addClass('fa fa-spinner');
+
+                                 $("#trPreparingQuotation_" + documentId).css("display", "none");
+
+                                 let resultString = "@Html.Raw(StandartLibrary.Lang.Resources.QuotationControl_Acceptance_Reject)";
+
+                                 resultString = resultString.replace('{0}', data.documentNumber);
+                                 resultString = resultString.replace('{1}', "@Html.Raw(StandartLibrary.Lang.Resources.SentforApproval)");
+
+                                 swal(resultString, "", "success");
+                             }
+                         },
+                         error: myErrorFunction
+                     });
+            });
+
+        });
+
+        $("body").on("click", ".Wait_btnStart", function (event) {
+
+            var el = $(this);
+            var documentId = el.attr("documentId");
+
+            $.ajax({
+                type: "POST",
+                url: "/PreparingQuotation/Ajax_Start",
+                data: { documentId: documentId },
+                success: function (data) {
+                    if (data.status == "ok") {
+                        el.addClass("disabled", "disabled");
+                        InProcess_GetTable();
+                        Wait_GetTable();
+                    }
+                },
+                error: myErrorFunction
+            });
+
+        });
+
+        $("body").on("click", ".EditComment", function (event) {
+
+            var el = $(this);
+            var documentId = el.attr("documentId");
+
+            OpenCommentModal("/PreparingQuotation/Ajax_SaveComment", documentId);
+
+        });
+
+        $("body").on("click", "#EditDialogComment_btnSave", function (event) {
+            SaveCommentModal();
+        });
+
+    </script>
+
+    <style>
+        .pqtable {
+            margin-top: 20px;
+        }
+
+            .pqtable tr td {
+                padding: 3px;
+            }
+
+        .pqdebug {
+            border: dotted #000000;
+        }
+
+        .pgdivdebug {
+            border: dotted #0000FF;
+        }
+    </style>
+    <script type="text/javascript">
+        var pqDebug = 0;
+        $(document).keydown(function (e) {
+            if (e.keyCode === 121) {
+                //F10 key for debug
+                console.log('pqDebug:' + pqDebug);
+                if (pqDebug === 0) {
+                    $('.pqtable,.pqtable tr,.pqtable td').addClass('pqdebug');
+                    $('div').addClass('pgdivdebug');
+                    pqDebug = 1;
+                } else {
+                    $('.pqtable,.pqtable tr,.pqtable td').removeClass('pqdebug');
+                    $('div').removeClass('pgdivdebug');
+                    pqDebug = 0;
+                }
+                e.preventDefault();
+            }
+        });
+    </script>
+}

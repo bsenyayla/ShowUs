@@ -1,0 +1,516 @@
+﻿@using SharedCRCMS.Service
+@{
+    ViewBag.Title = @StandartLibrary.Lang.Resources.In_parts_ordering_5612;
+    var appSetting = SharedCRCMS.Service.AppSettingService.AppSetting;
+    var showQuotationHiddenAreas = appSetting.Content.ShowQuotationHiddenAreas;
+    var displayQuotation = showQuotationHiddenAreas ? "block" : "none";
+}
+<div id="modal_OrderedDialog" class="modal fade" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width:1000px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">@(StandartLibrary.Lang.Resources.Ordered_6918)</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" style="padding-left:10px;padding-top:10px">
+                        <button class="btn green btn-outline" data-dismiss="modal" aria-hidden="true" onclick="OnOrdered_AllPartsInAvalible()">@(StandartLibrary.Lang.Resources.All_spare_parts_in_stock_5539)</button>
+                        <button class="btn green btn-outline" data-dismiss="modal" aria-hidden="true" onclick="OnOrdered_WaitSpareParts()">@(StandartLibrary.Lang.Resources.Expect_6919)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal_UploadPlanDeliveredPartsDate" class="modal fade" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">@(StandartLibrary.Lang.Resources.Sheet_loading_5541)</h4>
+            </div>
+            <div class="modal-body">
+                <form action="#" class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="modal-body" style="text-align: center">
+                                <span style="font-weight:bold">@(StandartLibrary.Lang.Resources.Only_xlsx_format_can_be_downloaded_5542)</span>
+                                <div id="file-dropzone" class="dropzone"></div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn dark btn-outline" data-dismiss="modal" aria-hidden="true">@(StandartLibrary.Lang.Resources.Close_5490)</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green-jungle">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture"></i>@(StandartLibrary.Lang.Resources.Pending_order_5543)
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-advance table-hover" style="margin:0px !important;" id="AwatingOrder_datatableAjax">
+                    <thead>
+                        <tr role="row" class="heading">
+                            <th class="th1" style="width:100px">@(StandartLibrary.Lang.Resources.Outfit_5492)&nbsp;#<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Customer_5493)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Division_5494)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Component_5495)<br /><br /></th>
+                            <th class="th1">@Html.Raw((StandartLibrary.Lang.Resources.Model_5765))<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.Approval_Date_6920))<br /><br /></th>
+                            <th style="display:@displayQuotation" class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.delivery_6903)) <br /><br /></th>
+                            <th style="width:140px"></th>
+                        </tr>
+                        <tr role="row" class="filter">
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" style="width:50px" id="AwatingOrder_document_id"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="AwatingOrder_customer_id"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="AwatingOrder_division"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="AwatingOrder_smcsComponentDescription"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="AwatingOrder_model_id"></select>
+                            </td>
+                            <td>
+                                <input type="text" placeholder="@(StandartLibrary.Lang.Resources.from_5535)" value="" class="form-control form-filter input-sm date-picker" id="AwatingOrder_CustomerApproval_ApprovedDate_Begin" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;margin-right:10px;">
+                                <input type="text" placeholder="@(StandartLibrary.Lang.Resources.by_5536)" value="" class="form-control form-filter input-sm date-picker" id="AwatingOrder_CustomerApproval_ApprovedDate_End" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;">
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="AwatingOrder_CounterDeliveryMethodId"></select>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture"></i>@(StandartLibrary.Lang.Resources.Pending_Parts_5545)
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                @*<button id="btnUploadPlanDeliveredPartsDate" class="btn green" type="button" style="float:right;">@(StandartLibrary.Lang.Resources.Download_arrival_dates_s_h_6921)</button>*@
+                @*<button id="btnUploadPlanDeliveredPartsDateERS" class="btn green" type="button" style="float:right;">@(StandartLibrary.Lang.Resources.Download_arrival_dates_s_h_ERS_6922)</button>*@
+                <table class="table table-striped table-bordered table-advance table-hover" style="margin:0px !important;" id="AwaitingParts_datatableAjax">
+                    <thead>
+                        <tr role="row" class="heading">
+                            <th class="th1" style="width:100px">@(StandartLibrary.Lang.Resources.Outfit_5492)&nbsp;#<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Customer_5493)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Division_5494)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Component_5495)<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.Model_5765))<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.Approval_Date_6920))<br /><br /></th>
+
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.date_of_5567))<br /><br /></th>
+                            <th style="display:@displayQuotation" class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.delivery_6903))<br /><br /></th>
+                            <th style="width:140px"></th>
+                        </tr>
+                        <tr role="row" class="filter">
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" style="width:50px" id="AwaitingParts_document_id"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="AwaitingParts_customer_id"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="AwaitingParts_division"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="AwaitingParts_smcsComponentDescription"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="AwaitingParts_model_id"></select>
+                            </td>
+                            <td>
+                                <input type="text" placeholder="@(StandartLibrary.Lang.Resources.from_5535)" value="" class="form-control form-filter input-sm date-picker" id="AwaitingParts_CustomerApproval_ApprovedDate_Begin" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;margin-right:10px;">
+                                <input type="text" placeholder="@(StandartLibrary.Lang.Resources.by_5536)" value="" class="form-control form-filter input-sm date-picker" id="AwaitingParts_CustomerApproval_ApprovedDate_End" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;">
+                            </td>
+                            <td>
+                                <input type="text" placeholder="@(StandartLibrary.Lang.Resources.from_5535)" value="" class="form-control form-filter input-sm date-picker" id="AwaitingParts_InPartsOrdering_OrderedDate_Begin" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;margin-right:10px;">
+                                <input type="text" placeholder="@(StandartLibrary.Lang.Resources.by_5536)" value="" class="form-control form-filter input-sm date-picker" id="AwaitingParts_InPartsOrdering_OrderedDate_End" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;">
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="AwaitingParts_CounterDeliveryMethodId"></select>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles
+{
+
+}
+
+@section Scripts
+{
+    <script src="/Scripts/uploadlist.js?v=2" type="text/javascript"></script>
+    <script>
+        var ShowOrderedDialog_documentId = 0;
+
+        function OnAwatingOrderOrdered(documentId) {
+            ShowOrderedDialog_documentId = documentId;
+            $("#modal_OrderedDialog").modal();
+        }
+        function OnOrdered_AllPartsInAvalible() {
+            $.ajax({
+                type: "POST",
+                url: "/InPartsOrdering/Ajax_Ordered_AllPartsInAvalible",
+                data: { documentId: ShowOrderedDialog_documentId },
+                success: function (data) {
+                    AwatingOrder_GetTable();
+                    AwaitingParts_GetTable();
+                },
+                error: myErrorFunction
+            });
+        }
+        function OnOrdered_WaitSpareParts() {
+            $.ajax({
+                type: "POST",
+                url: "/InPartsOrdering/Ajax_Ordered_WaitSpareParts",
+                data: { documentId: ShowOrderedDialog_documentId },
+                success: function (data) {
+                    AwatingOrder_GetTable();
+                },
+                error: myErrorFunction
+            });
+        }
+        function OnAwaitingParts_AllPartsInAvalible(documentId) {
+            $.ajax({
+                type: "POST",
+                url: "/InPartsOrdering/Ajax_AwaitingParts_AllPartsInAvalible",
+                data: { documentId: documentId },
+                success: function (data) {
+                    AwatingOrder_GetTable();
+                    AwaitingParts_GetTable();
+                },
+                error: myErrorFunction
+            });
+        }
+    </script>
+
+    <script>
+        var AwatingOrder_searchResult = { searchId: "" };
+        function AwatingOrder_GetTable() {
+            $("#AwatingOrder_datatableAjax").dataTable().fnDestroy();
+            var gridOnApproval = new Datatable();
+            gridOnApproval.init({
+                src: $("#AwatingOrder_datatableAjax"),
+                onSuccess: function (grid) {
+                    // execute some code after table records loaded
+                },
+                onError: function (grid) {
+                    // execute some code on network or other general error
+                },
+                onDataLoad: function (grid) {
+                    // execute some code on ajax data load
+                },
+                loadingMessage: 'Loading...',
+                dataTable: {
+                    "bSort": false,
+                    "bStateSave": false, // save datatable state(pagination, sort, etc) in cookie.
+                    "ordering": false,
+                    "pageLength": 10, // default record count per page
+                    "timeout": 100000,
+                    "ajax": {
+                        "url": "/InPartsOrdering/Ajax_AwatingOrder_GetList", // ajax source
+                        "data": {
+                            document_id: $("#AwatingOrder_document_id").val(),
+                            division: $("#AwatingOrder_division").val(),
+                            customer_id: $("#AwatingOrder_customer_id").val(),
+                            smcsCode: $("#AwatingOrder_smcsComponentDescription").val(),
+                            model_id: $("#AwatingOrder_model_id").val(),
+                            CustomerApproval_ApprovedDate_Begin: $("#AwatingOrder_CustomerApproval_ApprovedDate_Begin").val(),
+                            CustomerApproval_ApprovedDate_End: $("#AwatingOrder_CustomerApproval_ApprovedDate_End").val(),
+                            CounterDeliveryMethodId: $("#AwatingOrder_CounterDeliveryMethodId").val()
+                        }
+                    },
+                    "language": { "emptyTable": "@(Html.Raw(StandartLibrary.Lang.Resources.There_is_no_data_5514))" },
+                    "columns": [
+                        {
+                            "data": "DocumentId",
+                            "mRender": function (data, type, full) {
+                                return   full.DocumentNumber;
+                            }
+                        },
+                        {
+                            "data": "CustomerName",
+                            "mRender": function (data, type, full) {
+                                return "<span class='OnApprovalCustomerName_" + full.DocumentId+ "'>" +  full.CustomerName + "</span>";
+                            }
+                        },
+                        {
+                            "data": "SegmentText",
+                            "mRender": function (data, type, full) {
+                                return full.Division;
+                            }
+                        },
+                        {
+                            "data": "smcsComponentDescription",
+                            "mRender": function (data, type, full) {
+                                return full.smcsComponentDescription;
+                            }
+                        },
+                        {
+                            "data": "ModelName",
+                            "mRender": function (data, type, full) {
+                                return full.ModelName;
+                            }
+                        },
+                        {
+                            "data": "CustomerApproval_ApprovedDate",
+                            "mRender": function (data, type, full) {
+                                return full.CustomerApproval_ApprovedDate != null ? convertJsonDate(full.CustomerApproval_ApprovedDate) : "";
+                            }
+                        },
+                        {
+                            "data": "DeliveryMethodName",
+                            "visible": false,
+                            "mRender": function (data, type, full) {
+                                return full.DeliveryMethodName;
+                            }
+                        },
+                        {
+                            "data": "",
+                            "mRender": function (data, type, full) {
+                                var btn = '';
+                                btn += '<a href="javascript:;" class="btn btn-xs default AwatingOrder_btnOrdered"  id="AwatingOrder_btnOrdered_' + full.DocumentId + '" documentId="' + full.DocumentId + '">@(StandartLibrary.Lang.Resources.Ordered_6918)</a>';
+                                return btn;
+                            }
+                        }
+                    ],
+                    "order": [[1, "asc"]],
+                    "fnInitComplete": function (oSettings, json) {
+
+                        AwatingOrder_searchResult.searchId = json.searchId;
+
+                        $("#AwatingOrder_datatableAjax_paginate,#AwatingOrder_datatableAjax_length,#AwatingOrder_datatableAjax_info").hide();
+
+                        $('#AwatingOrder_CustomerApproval_ApprovedDate_Begin, #AwatingOrder_CustomerApproval_ApprovedDate_End').change(function () {
+                            delay(function () { AwatingOrder_GetTable(); }, 500);
+                        });
+
+                        $('#AwatingOrder_document_id, #AwatingOrder_customer_id, #AwatingOrder_division, #AwatingOrder_model_id, #AwatingOrder_smcsComponentDescription, #AwatingOrder_CounterDeliveryMethodId').change(function () {
+                            delay(function () { AwatingOrder_GetTable(); }, 500);
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+    <script>
+        var AwaitingParts_searchResult = { searchId: "" };
+        function AwaitingParts_GetTable() {
+            $("#AwaitingParts_datatableAjax").dataTable().fnDestroy();
+            var gridOnApproval = new Datatable();
+            gridOnApproval.init({
+                src: $("#AwaitingParts_datatableAjax"),
+                onSuccess: function (grid) {
+                    // execute some code after table records loaded
+                },
+                onError: function (grid) {
+                    // execute some code on network or other general error
+                },
+                onDataLoad: function (grid) {
+                    // execute some code on ajax data load
+                },
+                loadingMessage: 'Loading...',
+                dataTable: {
+                    "bSort": false,
+                    "bStateSave": false, // save datatable state(pagination, sort, etc) in cookie.
+                    "ordering": false,
+                    "pageLength": 10,// default record count per page
+                    "timeout": 100000,
+                    "ajax": {
+                        "url": "/InPartsOrdering/Ajax_AwaitingParts_GetList", // ajax source
+                        "data": {
+                            document_id: $("#AwaitingParts_document_id").val(),
+                            division: $("#AwaitingParts_division").val(),
+                            customer_id: $("#AwaitingParts_customer_id").val(),
+                            smcsCode: $("#AwaitingParts_smcsComponentDescription").val(),
+                            model_id: $("#AwaitingParts_model_id").val(),
+                            CustomerApproval_ApprovedDate_Begin: $("#AwaitingParts_CustomerApproval_ApprovedDate_Begin").val(),
+                            CustomerApproval_ApprovedDate_End: $("#AwaitingParts_CustomerApproval_ApprovedDate_End").val(),
+                            InPartsOrdering_OrderedDate_Begin: $("#AwaitingParts_InPartsOrdering_OrderedDate_Begin").val(),
+                            InPartsOrdering_OrderedDate_End: $("#AwaitingParts_InPartsOrdering_OrderedDate_End").val(),
+                            CounterDeliveryMethodId: $("#AwaitingParts_CounterDeliveryMethodId").val()
+                        }
+                    },
+                    "language": { "emptyTable": "@(Html.Raw(StandartLibrary.Lang.Resources.There_is_no_data_5514))" },
+                    "columns": [
+                        {
+                            "data": "DocumentId",
+                            "mRender": function (data, type, full) {
+                                return full.DocumentNumber;
+                            }
+                        },
+                        {
+                            "data": "CustomerName",
+                            "mRender": function (data, type, full) {
+                                return "<span class='OnApprovalCustomerName_" + full.DocumentId + "'>" + full.CustomerName + "</span>";
+                            }
+                        },
+                        {
+                            "data": "SegmentText",
+                            "mRender": function (data, type, full) {
+                                return full.Division;
+                            }
+                        },
+                        {
+                            "data": "smcsComponentDescription",
+                            "mRender": function (data, type, full) {
+                                return full.smcsComponentDescription;
+                            }
+                        },
+                        {
+                            "data": "ModelName",
+                            "mRender": function (data, type, full) {
+                                return full.ModelName;
+                            }
+                        },
+                        {
+                            "data": "CustomerApproval_ApprovedDate",
+                            "mRender": function (data, type, full) {
+                                return full.CustomerApproval_ApprovedDate != null ? convertJsonDate(full.CustomerApproval_ApprovedDate) : "";
+                            }
+                        },
+                        {
+                            "data": "InPartsOrdering_OrderedDate",
+                            "mRender": function (data, type, full) {
+                                return full.InPartsOrdering_OrderedDate != null ? convertJsonDate(full.InPartsOrdering_OrderedDate) : "";
+                            }
+                        },
+                        {
+                            "data": "DeliveryMethodName",
+                            "visible": false,
+                            "mRender": function (data, type, full) {
+                                return full.DeliveryMethodName;
+
+                            }
+                        },
+                        {
+                            "data": "",
+                            "mRender": function (data, type, full) {
+                                var btn = '';
+                                btn += '<a href="javascript:;" class="btn btn-xs default AwaitingParts_btnAllPartsInAvalible"  id="AwaitingParts_btnAllPartsInAvalible_' + full.DocumentId + '" documentId="' + full.DocumentId + '">@(StandartLibrary.Lang.Resources.All_spare_parts_in_stock_5539)</a>';
+                                return btn;
+                            }
+                        }
+                    ],
+                    "order": [[1, "asc"]],
+                    "fnInitComplete": function (oSettings, json) {
+
+                        AwaitingParts_searchResult.searchId = json.searchId;
+
+                        $("#AwaitingParts_datatableAjax_paginate,#AwaitingParts_datatableAjax_length,#AwaitingParts_datatableAjax_info").hide();
+
+                        $('#AwaitingParts_CustomerApproval_ApprovedDate_Begin, #AwaitingParts_CustomerApproval_ApprovedDate_End,#AwaitingParts_InPartsOrdering_OrderedDate_Begin, #AwaitingParts_InPartsOrdering_OrderedDate_End').change(function () {
+                            delay(function () { AwaitingParts_GetTable(); }, 500);
+                        });
+
+                        $('#AwaitingParts_document_id, #AwaitingParts_customer_id, #AwaitingParts_division, #AwaitingParts_model_id, #AwaitingParts_smcsComponentDescription, #AwaitingParts_CounterDeliveryMethodId').change(function () {
+                            delay(function () { AwaitingParts_GetTable(); }, 500);
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script>
+        Dropzone.autoDiscover = false;
+
+        var myDropzone = new Dropzone("#file-dropzone", { url: "/InPartsOrdering/UploadPlanDeliveredPartsDate", acceptedFiles: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+
+        // Now that the DOM is fully loaded, create the dropzone, and setup the
+        // event listeners
+        myDropzone.on("addedfile", function (file) {
+            if (this.files[1] != null) {
+                this.removeFile(this.files[0]);
+            }
+        });
+        myDropzone.on("success", function (file, responseText) {
+            if (responseText.Status == 0) {
+                Warning("@(StandartLibrary.Lang.Resources.File_downloaded_6923)");
+                //$("#DocumentNumber").val(responseText.DocumentNumber)
+                //$("#PartsListId").val(responseText.PartsListId);
+            }
+            else
+                Warning(responseText.Description);
+        });
+
+        jQuery(document).ready(function () {
+            $("#btnUploadPlanDeliveredPartsDate").click(function () {
+                myDropzone.removeAllFiles(true);
+                myDropzone.options.url = '/InPartsOrdering/UploadPlanDeliveredPartsDate?type=1';
+                $('#modal_UploadPlanDeliveredPartsDate').modal();
+            });
+            $("#btnUploadPlanDeliveredPartsDateERS").click(function () {
+                myDropzone.removeAllFiles(true);
+                myDropzone.options.url = '/InPartsOrdering/UploadPlanDeliveredPartsDate?type=2';
+                $('#modal_UploadPlanDeliveredPartsDate').modal();
+            });
+
+            if (jQuery().datepicker) { $('.date-picker').datepicker({ rtl: Metronic.isRTL(), orientation: "left", autoclose: true }); }
+
+            SetSelect2("AwatingOrder_document_id", "", "", "/AJAX/GetDocumentNumber", 3, true, false, AwatingOrder_searchResult);
+            SetSelect2("AwatingOrder_customer_id", "", "", "/AJAX/GetCustomer", 3, true, false, AwatingOrder_searchResult);
+            SetSelect2("AwatingOrder_smcsComponentDescription", "", "", "/AJAX/GetSmcsCode", 3, true, false, AwatingOrder_searchResult);
+            SetSelect2("AwatingOrder_model_id", "", "", "/AJAX/GetModel", 3, true, false, AwatingOrder_searchResult);
+            SetSelect2("AwatingOrder_CounterDeliveryMethodId", "", "", "/AJAX/GetCounterDeliveryMethod", 1, true, false, AwatingOrder_searchResult);
+
+            SetSelect2("AwaitingParts_document_id", "", "", "/AJAX/GetDocumentNumber", 3, true, false, AwaitingParts_searchResult);
+            SetSelect2("AwaitingParts_customer_id", "", "", "/AJAX/GetCustomer", 3, true, false, AwaitingParts_searchResult);
+            SetSelect2("AwaitingParts_smcsComponentDescription", "", "", "/AJAX/GetSmcsCode", 3, true, false, AwaitingParts_searchResult);
+            SetSelect2("AwaitingParts_model_id", "", "", "/AJAX/GetModel", 3, true, false, AwaitingParts_searchResult);
+            SetSelect2("AwaitingParts_CounterDeliveryMethodId", "", "", "/AJAX/GetCounterDeliveryMethod", 1, true, false, AwaitingParts_searchResult);
+
+            AwatingOrder_GetTable();
+            AwaitingParts_GetTable();
+        });
+    </script>
+
+    <script>
+
+        $("body").on("click", ".AwatingOrder_btnOrdered", function (event) {
+            OnAwatingOrderOrdered($(this).attr("documentId"));
+        });
+
+        $("body").on("click", ".AwaitingParts_btnAllPartsInAvalible", function (event) {
+            OnAwaitingParts_AllPartsInAvalible($(this).attr("documentId"));
+        });
+
+    </script>
+}

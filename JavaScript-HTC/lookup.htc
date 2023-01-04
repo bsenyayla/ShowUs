@@ -1,0 +1,40 @@
+<PUBLIC:COMPONENT URN="www.idb.com.tr" >
+  <PUBLIC:ATTACH EVENT="onkeydown" ONEVENT="LookUpKeyDown()" />
+  <PUBLIC:ATTACH EVENT="onblur" ONEVENT="LookUpBlur()" />
+   
+   <script Language="JavaScript" src="/script/utils.js"></script>	
+   <script Language="JavaScript" src="/script/lookup.js"></script>		
+ 
+   <SCRIPT Language="JavaScript">
+     
+     var openStay = 1;
+     var checkClose = 2;		
+
+     function LookUpBlur ()
+     { 
+	if (! window.document.all["lookupFrame"] && this.getAttribute("required")=="true") 
+	  if (this.value) checkHKValidity (this, checkClose);
+     }	
+
+     function LookUpKeyDown ()
+     {  
+       if (event.keyCode == 117) { checkHKValidity (this, openStay); event.returnValue=false; event.cancelBubble=true; }
+		
+     }	
+
+     function checkHKValidity (lookup, lookUpstyle)
+     {
+       	var dt= lookup.getBoundingClientRect().bottom + document.body.scrollTop;
+        var dl= lookup.getBoundingClientRect().left + document.body.scrollLeft;
+
+	kv = clearChar (lookup.value, ".");
+	kv = clearChar (kv, ",");
+
+	lookup.setAttribute ("lookUpstyle", lookUpstyle);
+
+       	url = "/isapi/navigator.dll/lookup?LOOKUP=" + getAttribute ("lookUpInfo") + "&KEYFIELDS=" + getAttribute ("lookUpFields") + "&KEYVALUES=" + kv + "&SEEK=1";	
+	showLookUp (url, lookup, dt, dl, 400, 200);
+     }	
+ 
+   </SCRIPT>
+</PUBLIC:COMPONENT>

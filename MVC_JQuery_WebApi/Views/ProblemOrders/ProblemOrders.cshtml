@@ -1,0 +1,247 @@
+﻿@using SharedCRCMS.Service
+@{
+    ViewBag.Title = @StandartLibrary.Lang.Resources.Problem_outfits_5632;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture"></i>@(StandartLibrary.Lang.Resources.Problem_outfits_5632)
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-advance table-hover" style="margin:0px !important;" id="ProblemOrders_datatableAjax">
+                    <thead>
+                        <tr role="row" class="heading">
+                            <th class="th1" style="width:100px">@(StandartLibrary.Lang.Resources.Outfit_5492)&nbsp;#<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Customer_5493)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Division_5494)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Component_5495)<br /><br /></th>
+                            <th class="th1">@Html.Raw((@StandartLibrary.Lang.Resources.Model_5765))<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Troubleshooting_5554)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Additional_6925)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.Report_5468)<br /><br /></th>
+                            <th class="th1">@(StandartLibrary.Lang.Resources.date_of_5567)<br /><br /></th>
+                            <th style="width:140px"></th>
+                        </tr>
+                        <tr role="row" class="filter">
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" style="width: 100px" id="ProblemOrders_document_id"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="ProblemOrders_customer_id"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="ProblemOrders_division"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" id="ProblemOrders_smcsComponentDescription"></select>
+                            </td>
+                            <td>
+                                <select type="text" class="form-control form-filter input-sm" style="width: 100px" id="ProblemOrders_model_id"></select>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <input type="text" placeholder="@(StandartLibrary.Lang.Resources.from_5535)" value="" class="form-control form-filter input-sm date-picker" id="ProblemOrders_ReceiptDate_Begin" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;margin-right:10px;">
+                                <input type="text" placeholder="@(StandartLibrary.Lang.Resources.by_5536)" value="" class="form-control form-filter input-sm date-picker" id="ProblemOrders_ReceiptDate_End" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;">
+                            </td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles
+{
+
+    <style>
+        .CustomerNameItem {
+            border-bottom: 1px solid gray;
+            margin-bottom: 3px;
+        }
+
+        #ProblemOrders_datatableAjax_wrapper > .row {
+            display: none;
+        }
+    </style>
+}
+
+@section Scripts
+{
+    <script src="/Scripts/uploadlist.js?v=2" type="text/javascript"></script>
+    <script>
+        //Не начатые - ProblemOrders
+        var ProblemOrders_searchResult = { searchId: "" }
+        function ProblemOrders_GetTable() {
+            $("#ProblemOrders_datatableAjax").dataTable().fnDestroy();
+            // Metronic.blockUI('body');
+            var gridProblemOrders = new Datatable();
+
+            gridProblemOrders.init({
+                src: $("#ProblemOrders_datatableAjax"),
+                onSuccess: function (grid) {
+                    // execute some code after table records loaded
+                },
+                onError: function (grid) {
+
+                    // execute some code on network or other general error
+                },
+                onDataLoad: function (grid) {
+                    // execute some code on ajax data load
+                },
+                loadingMessage: 'Loading...',
+                dataTable: {
+                    "bSort": false,
+                    "bStateSave": false, // save datatable state(pagination, sort, etc) in cookie.
+                    "lengthMenu": [[10, 20, 50, 100, 150, -1], [10, 20, 50, 100, 150, "All"]],
+                    "pageLength": 10, // default record count per page
+                    "timeout": 100000,
+                    "ordering": false,
+                    "ajax": {
+                        "url": "/ProblemOrders/Ajax_ProblemOrders_GetList", // ajax source
+                        "data": {
+                            document_id: $("#ProblemOrders_document_id").val(),
+                            division: $("#ProblemOrders_division").val(),
+                            customer_id: $("#ProblemOrders_customer_id").val(),
+                            smcsCode: $("#ProblemOrders_smcsComponentDescription").val(),
+                            model_id: $("#ProblemOrders_model_id").val(),
+                            ReceiptDate_Begin: $("#ProblemOrders_ReceiptDate_Begin").val(),
+                            ReceiptDate_End: $("#ProblemOrders_ReceiptDate_End").val()
+                        }
+                    },
+                    "language": { "emptyTable": "@(Html.Raw(StandartLibrary.Lang.Resources.There_is_no_data_5514))" },
+                    "columns": [
+                        {
+                            "data": "DocumentId",
+                            "mRender": function (data, type, full) {
+                                if (full.IsProjectExpenses)
+                                    return "<div class='bg-yellow-gold  bg-font-yellow-gold'>" + full.DocumentNumber + "</div>";
+                                else
+                                    return full.DocumentNumber;
+                            }
+                        },
+                        {
+                            "data": "CustomerName",
+                            "mRender": function (data, type, full) {
+                                return full.CustomerName;
+                            }
+                        },
+                        {
+                            "data": "Division",
+                            "mRender": function (data, type, full) {
+                                return full.Division != null ? full.Division : "";
+                            }
+                        },
+                        {
+                            "data": "smcsComponentDescription",
+                            "mRender": function (data, type, full) {
+                                return full.smcsComponentDescription;
+                            }
+                        },
+                        {
+                            "data": "ModelName",
+                            "mRender": function (data, type, full) {
+                                return full.ModelName;
+                            }
+                        },
+                        {
+                            "data": "UploadDefectList",
+                            "mRender": function (data, type, full) {
+                                return GetDivUpload(1, full, false, true);
+                            }
+                        },
+                        {
+                            "data": "UploadMachineShopForm",
+                            "mRender": function (data, type, full) {
+                                return GetDivUpload(6, full, false, true);
+                            }
+                        },
+                        {
+                            "data": "UploadTechnicalReport",
+                            "mRender": function (data, type, full) {
+                                return GetDivUpload(2, full, false, true);
+                            }
+                        },
+
+                        {
+                            "data": "ReceiptDate",
+                            "mRender": function (data, type, full) {
+                                return full.ReceiptDate != null ? convertJsonDate(full.ReceiptDate) : "";
+                            }
+                        },
+                        {
+                            "data": "",
+                            "mRender": function (data, type, full) {
+                                var btn = '';
+                                btn += '<a href="javascript:;" title="@(StandartLibrary.Lang.Resources.Start_6074)" class="btn btn-xs default fa fa-play ProblemOrders_btnStart" id="ProblemOrders_btnStart_' + full.DocumentId + '"  documentId="' + full.DocumentId + '"></a>';
+                                return btn;
+                            }
+                        }
+                    ],
+                    "order": [[1, "asc"]],
+                    "fnInitComplete": function (oSettings, json) {
+
+                        ProblemOrders_searchResult.searchId = json.searchId;
+
+                        $("#ProblemOrders_datatableAjax_paginate,#ProblemOrders_datatableAjax_length,#ProblemOrders_datatableAjax_info").hide();
+
+                        $('#ProblemOrders_ReceiptDate_Begin, #ProblemOrders_ReceiptDate_End').change(function () {
+                            delay(function () { ProblemOrders_GetTable(); }, 500);
+                        });
+
+                        $('#ProblemOrders_document_id, #ProblemOrders_customer_id, #ProblemOrders_division, #ProblemOrders_model_id, #ProblemOrders_smcsComponentDescription, #ProblemOrders_Comment').change(function () {
+                            delay(function () { ProblemOrders_GetTable(); }, 500);
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script>
+        jQuery(document).ready(function () {
+            if (jQuery().datepicker) { $('.date-picker').datepicker({ rtl: Metronic.isRTL(), orientation: "left", autoclose: true }); }
+
+            SetSelect2("ProblemOrders_document_id", "", "", "/AJAX/GetDocumentNumber", 3, true, false, ProblemOrders_searchResult);
+            SetSelect2("ProblemOrders_customer_id", "", "", "/AJAX/GetCustomer", 3, true, false, ProblemOrders_searchResult);
+            SetSelect2("ProblemOrders_smcsComponentDescription", "", "", "/AJAX/GetSmcsCode", 3, true, false, ProblemOrders_searchResult);
+            SetSelect2("ProblemOrders_model_id", "", "", "/AJAX/GetModel", 3, true, false, ProblemOrders_searchResult);
+            SetSelect2("ProblemOrders_division", "", "", "/AJAX/GetDivision", 1, true, false, ProblemOrders_searchResult);
+
+            //Не начатые
+            ProblemOrders_GetTable();
+
+        });
+    </script>
+
+    <script>
+
+        $("body").on("click", ".ProblemOrders_btnStart", function (event) {
+
+            var el = $(this);
+            var documentId = el.attr("documentId");
+
+            $.ajax({
+                type: "POST",
+                url: "/ProblemOrders/Ajax_QueueAdd",
+                data: { documentId: documentId },
+                success: function (data) {
+                    if (data.status == "ok") {
+                        el.addClass("disabled", "disabled");
+                        ProblemOrders_GetTable();
+                    }
+                },
+                error: myErrorFunction
+            });
+
+        });
+
+    </script>
+}

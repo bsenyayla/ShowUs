@@ -1,0 +1,483 @@
+﻿@using SharedCRCMS.Service
+@using SharedCRCMS.Models;
+@{
+    ViewBag.Title = (@StandartLibrary.Lang.Resources.Outfit_Search_5593);
+
+    var documentId = (int)ViewBag.document_id;
+    var documentNumber = (string)ViewBag.document_number;
+    var counterItem = (Counter_List)ViewBag.counterItem;
+}
+<div class="row form-body" style="padding:40px">
+    <div style="width:350px;">
+        @(StandartLibrary.Lang.Resources.Order_Number_5601): @(documentNumber)
+    </div>
+    <br />
+    <div style="width:50%;float:left">
+        <div>
+            @(StandartLibrary.Lang.Resources.Approved_Quotes_5602):
+            <div id="QuotationUploadsList" style="width:100%;max-height:100px;overflow:auto"></div>
+            <div>
+                @(StandartLibrary.Lang.Resources.Truck_5472):
+                <div id="Quotationfile-dropzoneTruck" class="dropzone" style="margin-top:0px;margin-bottom:10px;width:100%;min-height:50px;height:50px;padding:0px;"></div>
+            </div>
+            <div style="display:none">
+                @(StandartLibrary.Lang.Resources.Air_5473):
+                <div id="Quotationfile-dropzoneAvia" class="dropzone" style="margin-top:0px;margin-bottom:10px;width:100%;min-height:50px;height:50px;padding:0px;"></div>
+            </div>
+            <a id="btnNotApplicable" class="btn yellow" href="#" onclick="notApplicable(); return false;">@(StandartLibrary.Lang.Resources.Not_applicable_5474)</a>
+            <br /><br />
+            @(StandartLibrary.Lang.Resources.Cost_z_ch_5603): <input type="text" id="CostParts" size="10" class="form-control input-sm" value="@(counterItem.PreparingQuotation_CostParts!=null?counterItem.PreparingQuotation_CostParts.Value.ToString():"")" />
+            @(StandartLibrary.Lang.Resources.Work_5604): <input type="text" id="CostWork" size="10" class="form-control input-sm" value="@(counterItem.PreparingQuotation_CostWork!=null?counterItem.PreparingQuotation_CostWork.Value.ToString():"")" />
+            @(StandartLibrary.Lang.Resources.Recovery_5605): <input id="CostRecovery" type="text" size="10" class="form-control input-sm" value="@(counterItem.PreparingQuotation_CostRecovery!=null?counterItem.PreparingQuotation_CostRecovery.Value.ToString():"")" />
+            @(StandartLibrary.Lang.Resources.Transportation_5606): <input id="CostTransportation" type="text" size="10" class="form-control input-sm" value="@(counterItem.PreparingQuotation_CostTransportation!=null?counterItem.PreparingQuotation_CostTransportation.Value.ToString():"")" />
+            @(StandartLibrary.Lang.Resources.REMAN_return_5607): <input id="CostReman" type="text" size="10" class="form-control input-sm" value="@(counterItem.PreparingQuotation_CostReman!=null?counterItem.PreparingQuotation_CostReman.Value.ToString():"")" />
+            @(StandartLibrary.Lang.Resources.Cost_of_preliminary_quotation_5608): <input id="CostPreQuotation" type="text" size="10" disabled class="form-control input-sm" value="@(counterItem.PreparingQuotation_CostPreQuotation!=null?counterItem.PreparingQuotation_CostPreQuotation.Value.ToString():"")" />
+            @(StandartLibrary.Lang.Resources.The_storage_cost_of_a_new_site_5550) <input id="CostRelativeOfTheNewNode" type="text" size="10" disabled class="form-control input-sm" value="@(counterItem.PreparingQuotation_CostRelativeOfTheNewNode!=null?counterItem.PreparingQuotation_CostRelativeOfTheNewNode.Value.ToString():"")" />
+        </div>
+
+        <div style="margin-top:30px;">
+            <div style="text-align:center;width:100%;font-weight:bold;">
+                @(StandartLibrary.Lang.Resources.Signed_Quotes_5609)
+            </div>
+            <div id="SignedQuotationUploadsList" style="width:100%;max-height:200px;overflow:auto"></div>
+            <div id="SignedQuotationfile-dropzone" class="dropzone" style="margin-top:20px;margin-bottom:20px;width:100%;min-height:100px;"></div>
+            <a id="btnNotApplicable" class="btn yellow" href="#" onclick="notApplicable(); return false;">@(StandartLibrary.Lang.Resources.Not_applicable_5474)</a>
+            <br /><br />
+            @(StandartLibrary.Lang.Resources.Cost_z_ch_5603): <input style="margin:0px" type="text" id="SignedCostParts" size="10" class="form-control input-sm" value="@(counterItem.CustomerApproval_CostParts!=null?counterItem.CustomerApproval_CostParts.Value.ToString():"")" />
+            @(StandartLibrary.Lang.Resources.Work_5604): <input type="text" id="SignedCostWork" size="10" class="form-control input-sm" value="@(counterItem.CustomerApproval_CostWork!=null?counterItem.CustomerApproval_CostWork.Value.ToString():"")" />
+            @(StandartLibrary.Lang.Resources.Recovery_5605): <input id="SignedCostRecovery" type="text" size="10" class="form-control input-sm" value="@(counterItem.CustomerApproval_CostRecovery!=null?counterItem.CustomerApproval_CostRecovery.Value.ToString():"")" />
+            @(StandartLibrary.Lang.Resources.Transportation_5606): <input id="SignedCostTransportation" type="text" size="10" class="form-control input-sm" value="@(counterItem.CustomerApproval_CostTransportation!=null?counterItem.CustomerApproval_CostTransportation.Value.ToString():"")" />
+            @(StandartLibrary.Lang.Resources.REMAN_return_5607): <input id="SignedCostReman" type="text" size="10" class="form-control input-sm" value="@(counterItem.CustomerApproval_CostReman!=null?counterItem.CustomerApproval_CostReman.Value.ToString():"")" />
+            @(StandartLibrary.Lang.Resources.Amount_of_signed_quote_5610): <input id="SignedCostSignedQuotation" type="text" size="10" disabled class="form-control input-sm" value="@(counterItem.CustomerApproval_CostSignedQuotation!=null?counterItem.CustomerApproval_CostSignedQuotation.Value.ToString():"")" />
+            @(StandartLibrary.Lang.Resources.The_storage_cost_of_a_new_site_5550) <input id="SignedCostRelativeOfTheNewNode" type="text" size="10" class="form-control input-sm" value="@(counterItem.CustomerApproval_CostRelativeOfTheNewNode!=null?counterItem.CustomerApproval_CostRelativeOfTheNewNode.Value.ToString():"")" />
+        </div>
+    </div>
+    <div style="width:50%;float:right;padding-left:30px">
+        <div style="width:50%;float:left;padding-left:30px;border-left:1px solid gray;">
+            <div class="boxGroup">
+                <div style="text-align:center;width:100%;font-weight:bold;margin-bottom:20px;">
+                    @(StandartLibrary.Lang.Resources.Availability_of_spare_parts_5611):
+                </div>
+                <div style="font-weight:bold;margin-bottom:20px;">
+                    <div class="chk1">@(StandartLibrary.Lang.Resources.There_is_5530)</div>
+                    <div class="chk2"><input style="margin:0px" type="radio" name="existsSpareParts" id="existsSpareParts1" class="form-control input-sm" @if (counterItem.CustomerApproval_ExistsSpareParts == true) { <text> checked</text>} /></div>
+                    <div class="chk3"></div>
+                </div>
+                <div style="font-weight:bold;margin-bottom:20px;">
+                    <div class="chk1">@(StandartLibrary.Lang.Resources.No_spare_part_5531)</div>
+                    <div class="chk2"><input style="margin:0px" type="radio" name="existsSpareParts" id="existsSpareParts0" class="form-control input-sm" @if (counterItem.CustomerApproval_ExistsSpareParts != true) { <text> checked</text>} /></div>
+                    <div class="chk3"></div>
+                </div>
+            </div>
+            <br />
+            <div style="font-weight:bold;margin-bottom:20px;">
+                <div class="chk1">@(StandartLibrary.Lang.Resources.Spare_parts_in_the_warehouses_of_the_Republic_of_Kazakhstan_5549)</div>
+                <div class="chk2"><input style="margin:0px" type="checkbox" id="SparePartsInWarehousesRK" class="form-control input-sm" @if (counterItem.SparePartsInWarehousesRK == true) { <text> checked</text>} /></div>
+                <div class="chk3"></div>
+            </div>
+
+            <br /><br />
+            <div class="boxGroup">
+                <div style="text-align:center;width:100%;font-weight:bold;margin-bottom:20px;">
+                    @(StandartLibrary.Lang.Resources.In_parts_ordering_5612):
+                </div>
+                <div>
+                    <div class="chk1">@(StandartLibrary.Lang.Resources.All_spare_parts_in_stock_5539)</div>
+                    <div class="chk2"><input style="margin:0px" type="checkbox" name="existsSpareParts" id="IsAllPartsInAvalible" class="form-control input-sm" @if (counterItem.InPartsOrdering_IsAllPartsInAvalible == true) { <text> checked</text> } /></div>
+                    <div class="chk3"></div>
+                </div>
+
+                <br />
+                <div>
+                    <span>@(StandartLibrary.Lang.Resources.order_date_5613)</span>
+                    <input style="margin:0px;width:150px" type="text" placeholder="@(StandartLibrary.Lang.Resources.dd_mm_yyyy_5614)" value="" class="form-control form-filter input-sm date-picker" id="OrderedDate" data-date-format="dd.mm.yyyy" style="width: 82px; cursor: pointer !important; float:left;margin-right:10px;" value="@if (counterItem.InPartsOrdering_OrderedDate != null) {@counterItem.InPartsOrdering_OrderedDate.Value.ToString("dd.MM.yyyy") } ">
+                </div>
+            </div>
+            <div class="boxGroup">
+
+                <div style="margin-bottom:40px;">
+                    <div class="chk1" style="font-weight:bold;">@(StandartLibrary.Lang.Resources.There_are_restoration_work_5529)</div>
+                    <div class="chk2"><input style="margin:0px;" type="checkbox" id="existsRestorationWork" class="form-control input-sm" @if (counterItem.CustomerApproval_ExistsRestorationWork == true) { <text> checked</text> } /></div>
+                    <div class="chk3"></div>
+                </div>
+                <div style="font-weight:bold;">
+                    <div class="chk1">@(StandartLibrary.Lang.Resources.Spare_parts_will_be_provided_by_the_Customer_5532)</div>
+                    <div class="chk2"><input style="margin:0px" type="checkbox" id="isSparePartsProvideTheCustomer" class="form-control input-sm" @if (counterItem.CustomerApproval_IsSparePartsProvideTheCustomer == true) { <text> checked</text> } /></div>
+                    <div class="chk3"></div>
+                </div>
+            </div>
+            <br />
+            <button class="btn yellow" id="CancelReceivedDenial" style="margin-top:10px; display:none;">@(StandartLibrary.Lang.Resources.Cancel_rejection_and_move_to_Customer_Approval_5615)</button>
+            <button class="btn yellow" id="ReturnOnCustomerApproval" style="margin-top:10px">@(StandartLibrary.Lang.Resources.Return_to_pending_approval_5616)</button><br />
+            <button class="btn yellow" id="ReturnOnAwaitingOrder" style="margin-top:10px">@(StandartLibrary.Lang.Resources.Return_to_pending_order_5617)</button><br />
+            <button class="btn yellow" id="ReturnOnAwaitingParts" style="margin-top:10px">@(StandartLibrary.Lang.Resources.Return_to_spare_parts_expectations_5618)</button>
+        </div>
+
+        <div style="width:50%;float:right;padding-left:30px;border-left:1px solid gray;">
+
+            <div class="boxGroup">
+                <div style="text-align:center;width:100%;font-weight:bold;margin-bottom:20px;">
+                    @(StandartLibrary.Lang.Resources.Order_method_5619):
+                </div>
+                <div style="margin-bottom:40px;">
+                    <div class="chk1">@(StandartLibrary.Lang.Resources.Not_specified_5528)</div>
+                    <div class="chk2"><input style="margin:0px;padding:0px;" type="radio" name="deliveryMethod" id="deliveryMethod0" class="form-control input-sm" @if (counterItem.CustomerApproval_DeliveryMethodId == null || counterItem.CustomerApproval_DeliveryMethodId.Value == 0) { <text> checked</text>} /></div>
+                    <div class="chk3"></div>
+                </div>
+                <div style="margin-bottom:40px;">
+                    <div class="chk1">@(StandartLibrary.Lang.Resources.TC_5620)</div>
+                    <div class="chk2"><input style="margin:0px;padding:0px;" type="radio" name="deliveryMethod" id="deliveryMethod1" class="form-control input-sm" @if (counterItem.CustomerApproval_DeliveryMethodId != null && counterItem.CustomerApproval_DeliveryMethodId.Value == 1) { <text> checked</text>} /></div>
+                    <div class="chk3"></div>
+                </div>
+                <div>
+                    <div class="chk1">@(StandartLibrary.Lang.Resources.AK_5621)</div>
+                    <div class="chk2"><input style="margin:0px;" type="radio" name="deliveryMethod" value="2" id="deliveryMethod2" class="form-control input-sm" @if (counterItem.CustomerApproval_DeliveryMethodId != null && counterItem.CustomerApproval_DeliveryMethodId.Value == 2) { <text> checked</text>} /></div>
+                    <div class="chk3"></div>
+                </div>
+                <br /><br /><br />
+                <div style="text-align:center;width:100%;font-weight:bold;margin-bottom:20px;">
+                    @(StandartLibrary.Lang.Resources.Delivery_terms_5622):
+                </div>
+                <div style="display:none">
+                    <a href="#" onclick="$('#DeliveryTermsTruckDays').val('14-16 @(StandartLibrary.Lang.Resources.days_5623)');$('#DeliveryTermsAviaDays').val('30-35 @(StandartLibrary.Lang.Resources.days_5623)');">@(StandartLibrary.Lang.Resources.Truck_5472) 14-16 @(StandartLibrary.Lang.Resources.days_5623), @(StandartLibrary.Lang.Resources.Air_5473) 30-35 @(StandartLibrary.Lang.Resources.days_5623)</a><br />
+                    <a href="#" onclick="$('#DeliveryTermsTruckDays').val('60-65 @(StandartLibrary.Lang.Resources.days_5623)');$('#DeliveryTermsAviaDays').val('22-25 @(StandartLibrary.Lang.Resources.days_5623)');">@(StandartLibrary.Lang.Resources.Truck_5472) 60-65 @(StandartLibrary.Lang.Resources.days_5623), @(StandartLibrary.Lang.Resources.Air_5473) 22-25 @(StandartLibrary.Lang.Resources.days_5623)</a><br />
+                    <a href="#" onclick="$('#DeliveryTermsTruckDays').val('75-80 @(StandartLibrary.Lang.Resources.days_5623)');$('#DeliveryTermsAviaDays').val('25-30 @(StandartLibrary.Lang.Resources.days_5623)');">@(StandartLibrary.Lang.Resources.Truck_5472) 75-80 @(StandartLibrary.Lang.Resources.days_5623), @(StandartLibrary.Lang.Resources.Air_5473) 25-30 @(StandartLibrary.Lang.Resources.days_5623)</a><br />
+                    @(StandartLibrary.Lang.Resources.Truck_5472): <input id="DeliveryTermsTruckDays" type="text" size="10" class="form-control input-sm" value="@counterItem.PreparingQuotation_DeliveryTermsTruckDays" />
+                    @(StandartLibrary.Lang.Resources.Avia_5479): <input id="DeliveryTermsAviaDays" type="text" size="10" class="form-control input-sm" value="@counterItem.PreparingQuotation_DeliveryTermsAviaDays" />
+                </div>
+                <br /><br />
+                <div>
+                    <div class="chk1" style="font-weight:bold;">@(StandartLibrary.Lang.Resources.Reman_5624)</div>
+                    <div class="chk2"><input style="margin:0px;padding:0px;" type="checkbox" id="IsReman" class="form-control input-sm" @if (counterItem.CustomerApproval_IsReman == true) { <text> checked</text>} /></div>
+                    <div class="chk3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row form-body" style="text-align:center;padding-top:20px; width:100%;">
+    </div>
+    <div class="row form-body" style="text-align:center;padding-top:20px; width:100%;">
+
+        <button class="btn green" onclick="window.location='/SearchDocument/'" style="margin-left:10px">@(StandartLibrary.Lang.Resources.Back_5625)</button>
+        <button class="btn green" id="btnSave" style="margin-left:10px">@(StandartLibrary.Lang.Resources.Save_5576)</button>
+    </div>
+    @section Scripts
+{
+        <script>
+            Dropzone.autoDiscover = false;
+
+     var myDropzoneSignedQuotation = new Dropzone("#SignedQuotationfile-dropzone", {
+            url: "/AJAX/UploadedSignedQuotation?documentId=0"
+        });
+        myDropzoneSignedQuotation.on("addedfile", function (file) {
+            // alert(this.files[this.files.length-1].fileName);
+            if (this.files[1] != null) {
+                this.removeFile(this.files[0]);
+            }
+        });
+        myDropzoneSignedQuotation.on("success", function (file, responseText) {
+            $("#SignedCostParts").val(responseText.CostParts);
+            $("#SignedCostWork").val(responseText.CostWork);
+            $("#SignedCostRecovery").val(responseText.CostRecovery);
+            $("#SignedCostTransportation").val(responseText.CostTransportation);
+            $("#SignedCostReman").val(responseText.CostReman);
+            $("#SignedCostRelativeOfTheNewNode").val(responseText.CostRelativeOfTheNewNode);
+
+            checkCost("change",2);
+
+            RefreshSignedQuotationUploadsList(@documentId);
+        });
+        function RefreshSignedQuotationUploadsList(documentId)
+        {
+            $.ajax({
+                type: "POST",
+                url: "/AJAX/GetUploadsList",
+                data: { documentId: documentId, typeId: 24 },
+                success: function (data) {
+                    if (data.length > 40) {
+                        ShowAnswerReceivedDialog_existsUploaded = true;
+                        data = data.replace(new RegExp('RemovedFile', 'g'), 'RemovedFile2');
+                        data = data.replace(new RegExp('NotApplicable', 'g'), '@(StandartLibrary.Lang.Resources.Not_applicable_5474)');
+                        $("#btnNotApplicable").hide();
+                    }
+                    else {
+                        $("#btnNotApplicable").show();
+                    }
+                    $('#SignedQuotationUploadsList').html(data);
+                },
+                error: myErrorFunction
+            });
+        }
+        /////////////////////////////////////////////////////
+        var myDropzoneQuotationTruck = new Dropzone("#Quotationfile-dropzoneTruck,#Quotationfile-dropzoneAvia", {
+            url: "/AJAX/UploadedQuotation?documentId=0"/*,
+        acceptedFiles: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" */
+        });
+        myDropzoneQuotationTruck.on("addedfile", function (file) {
+            // alert(this.files[this.files.length-1].fileName);
+            if (this.files[1] != null) {
+                this.removeFile(this.files[0]);
+            }
+        });
+        myDropzoneQuotationTruck.on("success", function (file, responseText) {
+            $("#CostParts").val(responseText.CostParts);
+            $("#CostWork").val(responseText.CostWork);
+            $("#CostRecovery").val(responseText.CostRecovery);
+            $("#CostTransportation").val(responseText.CostTransportation);
+            $("#CostReman").val(responseText.CostReman);
+            $("#CostRelativeOfTheNewNode").val(responseText.CostRelativeOfTheNewNode);
+            checkCost("change",1);
+            RefreshQuotationUploadsList(@documentId);
+        });
+
+        var myDropzoneQuotationAvia = new Dropzone("#Quotationfile-dropzoneAvia", {
+            url: "/AJAX/UploadedQuotation?documentId=0"/*,
+        acceptedFiles: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" */
+        });
+        myDropzoneQuotationAvia.on("addedfile", function (file) {
+            // alert(this.files[this.files.length-1].fileName);
+            if (this.files[1] != null) {
+                this.removeFile(this.files[0]);
+            }
+        });
+        myDropzoneQuotationAvia.on("success", function (file, responseText) {
+            $("#CostParts").val(responseText.CostParts);
+            $("#CostWork").val(responseText.CostWork);
+            $("#CostRecovery").val(responseText.CostRecovery);
+            $("#CostTransportation").val(responseText.CostTransportation);
+            $("#CostReman").val(responseText.CostReman);
+            $("#CostRelativeOfTheNewNode").val(responseText.CostRelativeOfTheNewNode);
+            checkCost("change",1);
+            RefreshQuotationUploadsList(@documentId);
+        });
+
+        myDropzoneQuotationTruck.options.url = "/AJAX/UploadedQuotation?quotationType=1&documentId=@documentId";
+        myDropzoneQuotationAvia.options.url = "/AJAX/UploadedQuotation?quotationType=2&documentId=@documentId";
+        function RemovedFile2(uploadId) {
+            if (confirm("@(StandartLibrary.Lang.Resources.Are_you_sure_you_want_to_delete_5517)")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/AJAX/RemoveUpload",
+                    data: { uploadId: uploadId },
+                    success: function (data) {
+                        RefreshQuotationUploadsList(@documentId);
+                        RefreshSignedQuotationUploadsList(@documentId);
+                    },
+                    error: myErrorFunction
+                });
+            }
+        }
+
+        function RefreshQuotationUploadsList(documentId) {
+
+            $.ajax({
+                type: "POST",
+                url: "/AJAX/GetUploadsList",
+                data: { documentId: documentId, typeId: 17 },
+                success: function (data) {
+                    if (data.length > 40) {
+
+                        data = data.replace(new RegExp('RemovedFile', 'g'), 'RemovedFile2');
+                        data = data.replace(new RegExp('NotApplicable', 'g'), '@(StandartLibrary.Lang.Resources.Not_applicable_5474)');
+                        $("#btnNotApplicable").hide();
+                    }
+                    else {
+                        $("#btnNotApplicable").show();
+                    }
+                    $('#QuotationUploadsList').html(data);
+                },
+                error: myErrorFunction
+            });
+        }
+        </script>
+        <script>
+
+        jQuery(document).ready(function () {
+        if (jQuery().datepicker) {
+            $('.date-picker').datepicker({ rtl: Metronic.isRTL(), orientation: "left", autoclose: true });
+            $("#OrderedDate").val('@(counterItem.InPartsOrdering_OrderedDate != null?counterItem.InPartsOrdering_OrderedDate.Value.ToString("dd.MM.yyyy"):"")');
+        }
+        RefreshQuotationUploadsList(@documentId);
+        RefreshSignedQuotationUploadsList(@documentId);
+            $.ajax({
+            type: "POST",
+            url: "/AJAX/GetCounterItem",
+            data: {
+                documentId: @(documentId),
+            },
+            success: function (data) {
+                if (data.CounterStatusId == 6) {
+                    $('#CancelReceivedDenial').show();
+                }
+            },
+            error: myErrorFunction
+            });
+
+            $("#CancelReceivedDenial").click(function () {
+                $.ajax({
+                type: "POST",
+                url: "/SearchDocument/CancelReceivedDenial",
+                data: {
+                    document_id: @(documentId),
+                },
+                success: function (data) {
+                    window.location.reload();
+                },
+                error: myErrorFunction
+                });
+            });
+
+            $("#ReturnOnAwaitingOrder").click(function () {
+                $.ajax({
+                type: "POST",
+                url: "/SearchDocument/ReturnOnAwaitingOrder",
+                data: {
+                    document_id: @(documentId),
+                },
+                success: function (data) {
+                    window.location.reload();
+                },
+                error: myErrorFunction
+                });
+            });
+            $("#ReturnOnAwaitingParts").click(function () {
+                $.ajax({
+                type: "POST",
+                url: "/SearchDocument/ReturnOnAwaitingParts",
+                data: {
+                    document_id: @(documentId),
+                },
+                success: function (data) {
+                    window.location.reload();
+                },
+                error: myErrorFunction
+                });
+            });
+            $("#ReturnOnCustomerApproval").click(function () {
+                $.ajax({
+                type: "POST",
+                url: "/SearchDocument/ReturnOnCustomerApproval",
+                data: {
+                    document_id: @(documentId),
+                },
+                success: function (data) {
+                    window.location.reload();
+                },
+                error: myErrorFunction
+                });
+            });
+
+            $("#btnSave").click(function () {
+                $.ajax({
+                type: "POST",
+                url: "/SearchDocument/Save",
+                data: {
+                    document_id: @(documentId),
+                    existsSpareParts: $("#existsSpareParts1").prop('checked') ? true : false,
+                    deliveryMethodId: $("#deliveryMethod0").prop('checked') ? 0 : ($("#deliveryMethod1").prop('checked') ? 1 : 2),
+                    IsAllPartsInAvalible:$("#IsAllPartsInAvalible").prop('checked') ? true : false,
+                    OrderedDate: $("#OrderedDate").val(),
+                    DeliveryTermsTruckDays:$("#DeliveryTermsTruckDays").val(),
+                    DeliveryTermsAviaDays: $("#DeliveryTermsAviaDays").val(),
+                    SparePartsInWarehousesRK: $("#SparePartsInWarehousesRK").prop('checked') ? true : false,
+                    CostParts: $("#CostParts").val(),
+                    CostWork: $("#CostWork").val(),
+                    CostRecovery: $("#CostRecovery").val(),
+                    CostTransportation: $("#CostTransportation").val(),
+                    CostReman: $("#CostReman").val(),
+                    CostPreQuotation: $("#CostPreQuotation").val(),
+                    CostRelativeOfTheNewNode: $("#CostRelativeOfTheNewNode").val(),
+                    SignedCostParts: $("#SignedCostParts").val(),
+                    SignedCostWork: $("#SignedCostWork").val(),
+                    SignedCostRecovery: $("#SignedCostRecovery").val(),
+                    SignedCostTransportation: $("#SignedCostTransportation").val(),
+                    SignedCostReman: $("#SignedCostReman").val(),
+                    SignedCostSignedQuotation: $("#SignedCostSignedQuotation").val(),
+                    SignedCostRelativeOfTheNewNode: $("#SignedCostRelativeOfTheNewNode").val(),
+                    existsRestorationWork: $("#existsRestorationWork").prop('checked') ? true : false,
+                    isSparePartsProvideTheCustomer: $("#isSparePartsProvideTheCustomer").prop('checked') ? true : false,
+                    IsReman:$("#IsReman").prop('checked') ? true : false,
+                },
+                    success: function (data) {
+                        Success("@(StandartLibrary.Lang.Resources.Saved_5626)");
+                },
+                error: myErrorFunction
+                });
+            });
+
+            $('#CostParts, #CostWork, #CostRecovery, #CostTransportation, #CostReman, #CostRelativeOfTheNewNode').blur(function () { checkCost("blur")});
+            $('#CostParts, #CostWork, #CostRecovery, #CostTransportation, #CostReman, #CostRelativeOfTheNewNode').change(function () { checkCost("change") });
+            $('#SignedCostParts, #SignedCostWork, #SignedCostRecovery, #SignedCostTransportation, #SignedCostReman, #SignedCostRelativeOfTheNewNode').blur(function () { checkCost("blur")});
+            $('#SignedCostParts, #SignedCostWork, #SignedCostRecovery, #SignedCostTransportation, #SignedCostReman, #CSignedostRelativeOfTheNewNode').change(function () { checkCost("change") });
+        });
+        var costBeginChange = false;
+        function checkCost(mode, type)
+        {
+            var preName = "";
+            if (type == 2)
+            preName = "Signed";
+
+            var bAlert = true;
+            if (mode == "change")
+            {
+                costBeginChange = true;
+                bAlert = false;
+            }
+            var bCheck = true;
+            if (!$.isNumeric($("#" + preName + "CostParts").val().replace(new RegExp(',', 'g'), '.'))) {
+                if (bAlert) {
+                    if (costBeginChange) Warning('@Html.Raw(StandartLibrary.Lang.Resources.Field_Cost_of_spare_parts_should_be_a_number_7001.Replace("\"","'"))');
+                    costBeginChange = false;
+                    $("#" + preName + "CostParts").focus();
+                }
+                bCheck = false;
+            }
+            else if (!$.isNumeric($("#" + preName + "CostWork").val().replace(new RegExp(',', 'g'), '.'))) {
+                if (bAlert) {
+                    if (costBeginChange) Warning('@Html.Raw(StandartLibrary.Lang.Resources.Field_Work_must_be_a_number_7002.Replace("\"","'"))');
+                    costBeginChange = false;
+                    $("#" + preName + "CostWork").focus();
+                }
+                bCheck = false;
+            }
+            else if (!$.isNumeric($("#" + preName + "CostRecovery").val().replace(new RegExp(',', 'g'), '.'))) {
+                if (bAlert) {
+                    if (costBeginChange) Warning('@Html.Raw(StandartLibrary.Lang.Resources.The_Restore_field_must_be_a_number_7003.Replace("\"","'"))');
+                    costBeginChange = false;
+                    $("#" + preName + "CostRecovery").focus();
+                }
+                bCheck = false;
+            }
+            else if (!$.isNumeric($("#" + preName + "CostTransportation").val().replace(new RegExp(',', 'g'), '.'))) {
+                if (bAlert) {
+                    if (costBeginChange) Warning('@Html.Raw(StandartLibrary.Lang.Resources.The_Transportation_field_must_be_a_number_7004.Replace("\"","'"))');
+                    costBeginChange = false;
+                    $("#" + preName + "CostTransportation").focus();
+                }
+                bCheck = false;
+            }
+            else if (!$.isNumeric($("#" + preName + "CostReman").val().replace(new RegExp(',', 'g'), '.'))) {
+                if (bAlert)
+                {
+                    if (costBeginChange) Warning('@Html.Raw(StandartLibrary.Lang.Resources.Field_REMAN_must_be_a_number_7005.Replace("\"","'"))');
+                    costBeginChange = false;
+                    $("#" + preName + "CostReman").focus();
+                }
+                bCheck = false;
+            }
+
+            if (bCheck) {
+                $("#" + (type==1?"CostPreQuotation":"SignedCostSignedQuotation")).val(
+                     ($("#" + preName + "CostParts").val().length>0?convertToFloat($("#" + preName + "CostParts").val()):0)
+                    + ($("#" + preName + "CostWork").val().length>0?convertToFloat($("#" + preName + "CostWork").val()):0)
+                    + ($("#" + preName + "CostRecovery").val().length>0?convertToFloat($("#" + preName + "CostRecovery").val()):0)
+                    + ($("#" + preName + "CostTransportation").val().length>0?convertToFloat($("#" + preName + "CostTransportation").val()):0)
+                    - ($("#" + preName + "CostReman").val().length>0?convertToFloat($("#" + preName + "CostReman").val()):0)
+                );
+            }
+            else {
+                $("#" + (type==1?"CostPreQuotation":"SignedCostSignedQuotation")).val(@(StandartLibrary.Lang.Resources.Input_Error_5520)"");
+            }
+        }
+        </script>
+    }

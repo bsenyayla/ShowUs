@@ -1,0 +1,24 @@
+﻿@using SharedCRCMS.Service
+@model System.Web.Mvc.HandleErrorInfo
+@{
+    ViewBag.Title = (@StandartLibrary.Lang.Resources.Forbidden);
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="@System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CDOMS</title>
+    <link rel="stylesheet" type="text/css" href="/assets/styles/style.css" />
+</head>
+<body>
+    <div class="is-forbidden-wrapper">
+        <div class="is-forbidden">
+            <h1>@(StandartLibrary.Lang.Resources.Forbidden)</h1>
+            <h2>@(StandartLibrary.Lang.Resources.Url_is_not_in_the_white_list)</h2>
+        </div>
+    </div>
+</body>
+</html>
