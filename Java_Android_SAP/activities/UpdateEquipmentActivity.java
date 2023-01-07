@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,17 +9,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.borusan.sniper.AppConstants;
-import com.borusan.sniper.adapters.customersearch.FilterableSearchTypeListAdapter;
-import com.borusan.sniper.entity.RecentSearchEntity;
-import com.borusan.sniper.enums.CustomerFilterType;
-import com.borusan.sniper.enums.CustomerSearchType;
-import com.borusan.sniper.requestpojos.CustomerSearchRequest;
-import com.borusan.sniper.responsepojos.customer.EtIndustryCode;
-import com.borusan.sniper.responsepojos.customer.EtPwc;
-import com.borusan.sniper.responsepojos.customer.EtPwcResponse;
-import com.borusan.sniper.singletons.SniperUser;
-import com.borusan.sniper.views.FilterableSearchView;
+import com.san.sniper.AppConstants;
+import com.san.sniper.adapters.customersearch.FilterableSearchTypeListAdapter;
+import com.san.sniper.entity.RecentSearchEntity;
+import com.san.sniper.enums.CustomerFilterType;
+import com.san.sniper.enums.CustomerSearchType;
+import com.san.sniper.requestpojos.CustomerSearchRequest;
+import com.san.sniper.responsepojos.customer.EtIndustryCode;
+import com.san.sniper.responsepojos.customer.EtPwc;
+import com.san.sniper.responsepojos.customer.EtPwcResponse;
+import com.san.sniper.singletons.SniperUser;
+import com.san.sniper.views.FilterableSearchView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
@@ -44,20 +44,20 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.borusan.sniper.DataKeys;
-import com.borusan.sniper.LogConstants;
-import com.borusan.sniper.R;
-import com.borusan.sniper.Utility;
-import com.borusan.sniper.builders.RetrofitBuilder;
-import com.borusan.sniper.interfaces.IBorusanServices;
-import com.borusan.sniper.responsepojos.Equipment;
-import com.borusan.sniper.responsepojos.Fields;
-import com.borusan.sniper.responsepojos.customer.Address;
-import com.borusan.sniper.responsepojos.response.CustomerResponse;
-import com.borusan.sniper.responsepojos.response.EquipmentsResponse;
-import com.borusan.sniper.service.BaseService;
-import com.borusan.sniper.service.CustomerService;
-import com.borusan.sniper.singletons.DataTransfer;
+import com.san.sniper.DataKeys;
+import com.san.sniper.LogConstants;
+import com.san.sniper.R;
+import com.san.sniper.Utility;
+import com.san.sniper.builders.RetrofitBuilder;
+import com.san.sniper.interfaces.IsanServices;
+import com.san.sniper.responsepojos.Equipment;
+import com.san.sniper.responsepojos.Fields;
+import com.san.sniper.responsepojos.customer.Address;
+import com.san.sniper.responsepojos.response.CustomerResponse;
+import com.san.sniper.responsepojos.response.EquipmentsResponse;
+import com.san.sniper.service.BaseService;
+import com.san.sniper.service.CustomerService;
+import com.san.sniper.singletons.DataTransfer;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
@@ -191,7 +191,7 @@ public class UpdateEquipmentActivity extends BaseActivity implements FilterableS
         attachedInfoBuilder.append("Customer:").append(intent.getStringExtra("customerID")).append(", ")
                 .append("Model:").append(equipment.getDisplayModel()).append(", ")
                 .append("SerialNo:").append(equipment.getSerialNumber());
-        Utility.logUsage(LogConstants.Section.CUSTOMER,LogConstants.Activity.OPEN_BORUSAN_EQUIPMENT_DETAIL,attachedInfoBuilder.toString());
+        Utility.logUsage(LogConstants.Section.CUSTOMER,LogConstants.Activity.OPEN_san_EQUIPMENT_DETAIL,attachedInfoBuilder.toString());
 
     }
 
@@ -387,7 +387,7 @@ public class UpdateEquipmentActivity extends BaseActivity implements FilterableS
 
 
             Retrofit retrofit = RetrofitBuilder.getRetrofit(getApplication());
-            IBorusanServices ibs = retrofit.create(IBorusanServices.class);
+            IsanServices ibs = retrofit.create(IsanServices.class);
             Call<EquipmentsResponse> response = ibs.catEquipmentEdit(baseService.auth, baseService.username, jsonObject.toString());
             response.enqueue(new Callback<EquipmentsResponse>() {
                 @Override
@@ -531,7 +531,7 @@ public class UpdateEquipmentActivity extends BaseActivity implements FilterableS
 
     public void getLookUpsPWC(String r3Ident){
         Retrofit retrofit = RetrofitBuilder.getRetrofit(getApplication());
-        IBorusanServices ibs = retrofit.create(IBorusanServices.class);
+        IsanServices ibs = retrofit.create(IsanServices.class);
 
         Call<EtPwcResponse> responseCall = ibs.equipmentIndustryCode(baseService.auth, r3Ident);
         responseCall.enqueue(new Callback<EtPwcResponse>() {
@@ -568,7 +568,7 @@ public class UpdateEquipmentActivity extends BaseActivity implements FilterableS
 
     public void getLookUps(final String value) {
         Retrofit retrofit = RetrofitBuilder.getRetrofit(getApplication());
-        IBorusanServices ibs = retrofit.create(IBorusanServices.class);
+        IsanServices ibs = retrofit.create(IsanServices.class);
 
         Call<Fields> responseCall = ibs.updateFields(baseService.auth, baseService.username, value);
         responseCall.enqueue(new Callback<Fields>() {

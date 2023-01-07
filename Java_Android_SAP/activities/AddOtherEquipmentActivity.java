@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import android.app.SearchManager;
 import android.os.Bundle;
@@ -13,15 +13,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.borusan.sniper.DataKeys;
-import com.borusan.sniper.R;
-import com.borusan.sniper.adapters.AddOtherEquipmentAdapter;
-import com.borusan.sniper.builders.RetrofitBuilder;
-import com.borusan.sniper.interfaces.IBorusanServices;
-import com.borusan.sniper.responsepojos.BaseResponse;
-import com.borusan.sniper.responsepojos.OtherEquipment;
-import com.borusan.sniper.service.BaseService;
-import com.borusan.sniper.singletons.DataTransfer;
+import com.san.sniper.DataKeys;
+import com.san.sniper.R;
+import com.san.sniper.adapters.AddOtherEquipmentAdapter;
+import com.san.sniper.builders.RetrofitBuilder;
+import com.san.sniper.interfaces.IsanServices;
+import com.san.sniper.responsepojos.BaseResponse;
+import com.san.sniper.responsepojos.OtherEquipment;
+import com.san.sniper.service.BaseService;
+import com.san.sniper.singletons.DataTransfer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,7 +120,7 @@ public class AddOtherEquipmentActivity extends BaseActivity {
             if(!swipeRefreshLayout.isRefreshing())
                 mProgressBar.setVisibility(View.VISIBLE);
             Retrofit retrofit = RetrofitBuilder.getRetrofit(getApplication());
-            IBorusanServices ibs = retrofit.create(IBorusanServices.class);
+            IsanServices ibs = retrofit.create(IsanServices.class);
             Call<BaseResponse<ArrayList<OtherEquipment>>> call = ibs.getOtherEquipments(baseService.auth, baseService.username);
             baseService.callRequest(call, (otherEquipmentResponse, t) -> {
                 if(otherEquipmentResponse != null){

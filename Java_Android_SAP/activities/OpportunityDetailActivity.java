@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,9 +7,9 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.borusan.sniper.R;
-import com.borusan.sniper.databinding.ActivityOpportunityDetailBinding;
-import com.borusan.sniper.responsepojos.Opportunity;
+import com.san.sniper.R;
+import com.san.sniper.databinding.ActivityOpportunityDetailBinding;
+import com.san.sniper.responsepojos.Opportunity;
 
 public class OpportunityDetailActivity extends BaseActivity {
 

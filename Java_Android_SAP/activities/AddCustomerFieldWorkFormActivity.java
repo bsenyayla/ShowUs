@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,27 +35,27 @@ import android.widget.Toast;
 
 import com.bestsoft32.tt_fancy_gif_dialog_lib.TTFancyGifDialog;
 import com.bestsoft32.tt_fancy_gif_dialog_lib.TTFancyGifDialogListener;
-import com.borusan.sniper.AppConstants;
-import com.borusan.sniper.DataKeys;
-import com.borusan.sniper.R;
-import com.borusan.sniper.Utility;
-import com.borusan.sniper.adapters.customersearch.FilterableSearchTypeListAdapter;
-import com.borusan.sniper.builders.RetrofitBuilder;
-import com.borusan.sniper.entity.RecentSearchEntity;
-import com.borusan.sniper.enums.CustomerFilterType;
-import com.borusan.sniper.enums.CustomerSearchType;
-import com.borusan.sniper.interfaces.IBorusanServices;
-import com.borusan.sniper.requestpojos.CustomerFieldWorkUpladFileRequest;
-import com.borusan.sniper.requestpojos.CustomerSearchRequest;
-import com.borusan.sniper.responsepojos.customerfieldwork.Customer;
-import com.borusan.sniper.responsepojos.response.CustomerResponse;
-import com.borusan.sniper.service.BaseService;
-import com.borusan.sniper.service.CustomerService;
-import com.borusan.sniper.singletons.DataTransfer;
-import com.borusan.sniper.singletons.SniperUser;
-import com.borusan.sniper.utility.TimeEditText;
-import com.borusan.sniper.views.FilterableSearchView;
-import com.borusan.sniper.views.LabelledSpinner;
+import com.san.sniper.DataKeys;
+import com.san.sniper.AppConstants;
+import com.san.sniper.R;
+import com.san.sniper.Utility;
+import com.san.sniper.adapters.customersearch.FilterableSearchTypeListAdapter;
+import com.san.sniper.builders.RetrofitBuilder;
+import com.san.sniper.entity.RecentSearchEntity;
+import com.san.sniper.enums.CustomerFilterType;
+import com.san.sniper.enums.CustomerSearchType;
+import com.san.sniper.interfaces.IsanServices;
+import com.san.sniper.requestpojos.CustomerFieldWorkUpladFileRequest;
+import com.san.sniper.requestpojos.CustomerSearchRequest;
+import com.san.sniper.responsepojos.customerfieldwork.Customer;
+import com.san.sniper.responsepojos.response.CustomerResponse;
+import com.san.sniper.service.BaseService;
+import com.san.sniper.service.CustomerService;
+import com.san.sniper.singletons.DataTransfer;
+import com.san.sniper.singletons.SniperUser;
+import com.san.sniper.utility.TimeEditText;
+import com.san.sniper.views.FilterableSearchView;
+import com.san.sniper.views.LabelledSpinner;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
@@ -643,7 +643,7 @@ public class AddCustomerFieldWorkFormActivity extends AppCompatActivity implemen
             }
 
             Retrofit retrofit = RetrofitBuilder.getRetrofit(this.getApplication());
-            IBorusanServices ibs = retrofit.create(IBorusanServices.class);
+            IsanServices ibs = retrofit.create(IsanServices.class);
             MultipartBody.Part form = MultipartBody.Part.createFormData("form", json);
             Call<String> call = ibs.uploadCustomerFieldWorkMedia(SniperUser.getInstance().auth, form, fileArray);
             call.enqueue(new Callback<String>() {
@@ -678,7 +678,7 @@ public class AddCustomerFieldWorkFormActivity extends AppCompatActivity implemen
     public void getBrands(String brand) {
 
         Retrofit retrofit = RetrofitBuilder.getRetrofit(getApplication());
-        IBorusanServices ibs = retrofit.create(IBorusanServices.class);
+        IsanServices ibs = retrofit.create(IsanServices.class);
         Call<List<String>> responseCall = ibs.getFieldWorkCategories(baseService.auth, brand);
         responseCall.enqueue(new Callback<List<String>>() {
             @Override
@@ -729,7 +729,7 @@ public class AddCustomerFieldWorkFormActivity extends AppCompatActivity implemen
         });
     }
 
-    public void customersOnReady(List<com.borusan.sniper.responsepojos.response.CustomerResponse.SingleCustomer> customerList){
+    public void customersOnReady(List<com.san.sniper.responsepojos.response.CustomerResponse.SingleCustomer> customerList){
         myMap.clear();
         for (int i = 0; i < customerList.size(); i++) {
             myMap.put(customers.get(i).getName(), customers.get(i));

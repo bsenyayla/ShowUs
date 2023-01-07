@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -19,15 +19,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.borusan.sniper.LogConstants;
-import com.borusan.sniper.R;
-import com.borusan.sniper.Utility;
-import com.borusan.sniper.adapters.SparePartOrderListAdapter;
-import com.borusan.sniper.fragments.SqarePartListDetailFragment;
-import com.borusan.sniper.interfaces.RecyclerItemClickListener;
-import com.borusan.sniper.responsepojos.response.SparePartOrderResponse;
-import com.borusan.sniper.responsepojos.sparepartorder.PssrOrderItem;
-import com.borusan.sniper.singletons.DataTransfer;
+import com.san.sniper.LogConstants;
+import com.san.sniper.R;
+import com.san.sniper.Utility;
+import com.san.sniper.adapters.SparePartOrderListAdapter;
+import com.san.sniper.fragments.SqarePartListDetailFragment;
+import com.san.sniper.interfaces.RecyclerItemClickListener;
+import com.san.sniper.responsepojos.response.SparePartOrderResponse;
+import com.san.sniper.responsepojos.sparepartorder.PssrOrderItem;
+import com.san.sniper.singletons.DataTransfer;
 
 import java.util.ArrayList;
 

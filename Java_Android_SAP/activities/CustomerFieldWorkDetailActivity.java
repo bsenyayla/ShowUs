@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,9 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.borusan.sniper.R;
-import com.borusan.sniper.adapters.CustomerFieldWorkDetailAdapter;
-import com.borusan.sniper.responsepojos.customerfieldwork.CustomerFieldWorkResponse;
+import com.san.sniper.R;
+import com.san.sniper.adapters.CustomerFieldWorkDetailAdapter;
+import com.san.sniper.responsepojos.customerfieldwork.CustomerFieldWorkResponse;
 
 import java.util.ArrayList;
 import java.util.List;

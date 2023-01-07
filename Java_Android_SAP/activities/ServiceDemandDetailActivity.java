@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -8,25 +8,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.borusan.sniper.AppDatabase;
-import com.borusan.sniper.DBAsyncTask;
-import com.borusan.sniper.R;
-import com.borusan.sniper.builders.RetrofitBuilder;
-import com.borusan.sniper.databinding.ActivityServiceDemandDetailBinding;
-import com.borusan.sniper.requestpojos.AddServiceDemandRequest;
-import com.borusan.sniper.responsepojos.BaseResponse;
-import com.borusan.sniper.responsepojos.ServiceDemandDetailResponse;
-import com.borusan.sniper.responsepojos.ServiceDemands;
-import com.borusan.sniper.responsepojos.response.NameValueResponse;
-import com.borusan.sniper.searchableuifields.CategoryUIField;
-import com.borusan.sniper.searchableuifields.ContactPersonUIField;
-import com.borusan.sniper.searchableuifields.CustomerUIField;
-import com.borusan.sniper.searchableuifields.SalesOfficeUIField;
-import com.borusan.sniper.searchableuifields.SearchableUIField;
-import com.borusan.sniper.searchableuifields.ServiceRepresentativeUIField;
-import com.borusan.sniper.searchableuifields.StatusUIField;
-import com.borusan.sniper.searchableuifields.UIFieldDependency;
-import com.borusan.sniper.service.BaseService;
+import com.san.sniper.AppDatabase;
+import com.san.sniper.DBAsyncTask;
+import com.san.sniper.R;
+import com.san.sniper.builders.RetrofitBuilder;
+import com.san.sniper.databinding.ActivityServiceDemandDetailBinding;
+import com.san.sniper.requestpojos.AddServiceDemandRequest;
+import com.san.sniper.responsepojos.BaseResponse;
+import com.san.sniper.responsepojos.ServiceDemandDetailResponse;
+import com.san.sniper.responsepojos.ServiceDemands;
+import com.san.sniper.responsepojos.response.NameValueResponse;
+import com.san.sniper.searchableuifields.CategoryUIField;
+import com.san.sniper.searchableuifields.ContactPersonUIField;
+import com.san.sniper.searchableuifields.CustomerUIField;
+import com.san.sniper.searchableuifields.SalesOfficeUIField;
+import com.san.sniper.searchableuifields.SearchableUIField;
+import com.san.sniper.searchableuifields.ServiceRepresentativeUIField;
+import com.san.sniper.searchableuifields.StatusUIField;
+import com.san.sniper.searchableuifields.UIFieldDependency;
+import com.san.sniper.service.BaseService;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -255,7 +255,7 @@ public class ServiceDemandDetailActivity extends BaseActivity {
     private void onSaveServiceDemandClick(View view) {
         Toast.makeText(this, "Save", Toast.LENGTH_LONG).show();
         AddServiceDemandRequest serviceDemandRequest = getServiceDemandFromUI();
-        Call<BaseResponse<Object>> addServiceDemandCall = RetrofitBuilder.getBorusanServices().postAddServiceDemand(baseService.auth, getUsername(), serviceDemandRequest);
+        Call<BaseResponse<Object>> addServiceDemandCall = RetrofitBuilder.getsanServices().postAddServiceDemand(baseService.auth, getUsername(), serviceDemandRequest);
         addCall(addServiceDemandCall);
         showProgressDialog();
         addServiceDemandCall.enqueue(new Callback<BaseResponse<Object>>() {
@@ -297,7 +297,7 @@ public class ServiceDemandDetailActivity extends BaseActivity {
     }
 
     private void fetchServiceDemandDetail() {
-        Call<ServiceDemandDetailResponse> demandDetailCall = RetrofitBuilder.getBorusanServices().getServiceDemandDetail(baseService.auth, getUsername(), getDemandId());
+        Call<ServiceDemandDetailResponse> demandDetailCall = RetrofitBuilder.getsanServices().getServiceDemandDetail(baseService.auth, getUsername(), getDemandId());
         showProgressDialog();
         addCall(demandDetailCall);
         demandDetailCall.enqueue(new Callback<ServiceDemandDetailResponse>() {

@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.borusan.sniper.AppDatabase;
-import com.borusan.sniper.ContextWrapper;
-import com.borusan.sniper.R;
+import com.san.sniper.AppDatabase;
+import com.san.sniper.ContextWrapper;
+import com.san.sniper.R;
 
 import java.util.ArrayList;
 import java.util.List;

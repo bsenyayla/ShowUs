@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -6,9 +6,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.borusan.sniper.R;
-import com.borusan.sniper.adapters.DetailListAdapter;
-import com.borusan.sniper.responsepojos.notification.DetailTypePushNotificationResponse;
+import com.san.sniper.R;
+import com.san.sniper.adapters.DetailListAdapter;
+import com.san.sniper.responsepojos.notification.DetailTypePushNotificationResponse;
 import java.util.ArrayList;
 
 @SuppressWarnings("unchecked")

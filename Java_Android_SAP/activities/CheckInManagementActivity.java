@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import android.content.Intent;
 import androidx.fragment.app.Fragment;
@@ -7,11 +7,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.borusan.sniper.R;
-import com.borusan.sniper.fragments.CheckInFragments.ActivityDetailFragment;
-import com.borusan.sniper.fragments.CheckInFragments.ActivityListFragment;
-import com.borusan.sniper.fragments.CheckInFragments.CreateActivityFragment;
-import com.borusan.sniper.responsepojos.checkin.ActivityAddress;
+import com.san.sniper.R;
+import com.san.sniper.fragments.CheckInFragments.ActivityDetailFragment;
+import com.san.sniper.fragments.CheckInFragments.ActivityListFragment;
+import com.san.sniper.fragments.CheckInFragments.CreateActivityFragment;
+import com.san.sniper.responsepojos.checkin.ActivityAddress;
 
 public class CheckInManagementActivity extends BaseActivity {
     public static final String TO_VIEW_TAG = "TO_VIEW_TAG";

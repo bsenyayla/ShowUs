@@ -15,7 +15,7 @@ import com.borusan.sniper.views.SalesmanBottomDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.san.widget.san;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -100,7 +100,7 @@ public class CustomerDetailActivity extends BaseActivity implements
     RecyclerView myRecycleView;
     CustomerDetailModel customerDetail;
     LinearLayout topContent, AdressContent;
-    ConstraintLayout secondContainer;
+    san secondContainer;
     LinearLayout salesRelations;
     TextView tvSalesRelations;
     SalesmanBottomDialog salesmanActionDialog;

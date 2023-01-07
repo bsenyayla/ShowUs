@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,21 +16,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.borusan.sniper.AppDatabase;
-import com.borusan.sniper.R;
-import com.borusan.sniper.singletons.ExpertiseSession;
-import com.borusan.sniper.entity.ExpertiseFormWrapper;
-import com.borusan.sniper.fragments.ExpertiseFragments.Expertise10Fragment;
-import com.borusan.sniper.fragments.ExpertiseFragments.Expertise1Fragment;
-import com.borusan.sniper.fragments.ExpertiseFragments.Expertise2Fragment;
-import com.borusan.sniper.fragments.ExpertiseFragments.Expertise3Fragment;
-import com.borusan.sniper.fragments.ExpertiseFragments.Expertise4Fragment;
-import com.borusan.sniper.fragments.ExpertiseFragments.Expertise5Fragment;
-import com.borusan.sniper.fragments.ExpertiseFragments.Expertise6Fragment;
-import com.borusan.sniper.fragments.ExpertiseFragments.Expertise7Fragment;
-import com.borusan.sniper.fragments.ExpertiseFragments.Expertise8Fragment;
-import com.borusan.sniper.fragments.ExpertiseFragments.Expertise9Fragment;
-import com.borusan.sniper.responsepojos.expertise.ExpertiseForm;
+import com.san.sniper.AppDatabase;
+import com.san.sniper.R;
+import com.san.sniper.singletons.ExpertiseSession;
+import com.san.sniper.entity.ExpertiseFormWrapper;
+import com.san.sniper.fragments.ExpertiseFragments.Expertise10Fragment;
+import com.san.sniper.fragments.ExpertiseFragments.Expertise1Fragment;
+import com.san.sniper.fragments.ExpertiseFragments.Expertise2Fragment;
+import com.san.sniper.fragments.ExpertiseFragments.Expertise3Fragment;
+import com.san.sniper.fragments.ExpertiseFragments.Expertise4Fragment;
+import com.san.sniper.fragments.ExpertiseFragments.Expertise5Fragment;
+import com.san.sniper.fragments.ExpertiseFragments.Expertise6Fragment;
+import com.san.sniper.fragments.ExpertiseFragments.Expertise7Fragment;
+import com.san.sniper.fragments.ExpertiseFragments.Expertise8Fragment;
+import com.san.sniper.fragments.ExpertiseFragments.Expertise9Fragment;
+import com.san.sniper.responsepojos.expertise.ExpertiseForm;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

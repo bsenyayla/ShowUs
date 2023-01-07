@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import android.annotation.SuppressLint;
 import android.content.ClipData;
@@ -12,13 +12,13 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import com.borusan.sniper.R;
-import com.borusan.sniper.registerpushtoken.PushTokenManager;
-import com.borusan.sniper.requestpojos.UpdateNotificationPreferencesRequest;
-import com.borusan.sniper.responsepojos.notification.NotificationPreferencesResponse;
-import com.borusan.sniper.responsepojos.notification.SinglePreferenceResponse;
-import com.borusan.sniper.service.NotificationService;
-import com.borusan.sniper.singletons.SniperUser;
+import com.san.sniper.R;
+import com.san.sniper.registerpushtoken.PushTokenManager;
+import com.san.sniper.requestpojos.UpdateNotificationPreferencesRequest;
+import com.san.sniper.responsepojos.notification.NotificationPreferencesResponse;
+import com.san.sniper.responsepojos.notification.SinglePreferenceResponse;
+import com.san.sniper.service.NotificationService;
+import com.san.sniper.singletons.SniperUser;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -14,19 +14,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.borusan.sniper.AppConstants;
-import com.borusan.sniper.DataKeys;
-import com.borusan.sniper.Filter.LatinInputFilter;
-import com.borusan.sniper.LogConstants;
-import com.borusan.sniper.R;
-import com.borusan.sniper.Utility;
-import com.borusan.sniper.builders.RetrofitBuilder;
-import com.borusan.sniper.interfaces.IBorusanServices;
-import com.borusan.sniper.responsepojos.BaseResponse;
-import com.borusan.sniper.responsepojos.customer.Address;
-import com.borusan.sniper.service.BaseService;
-import com.borusan.sniper.singletons.DataTransfer;
-import com.borusan.sniper.singletons.SniperUser;
+import com.san.sniper.AppConstants;
+import com.san.sniper.DataKeys;
+import com.san.sniper.Filter.LatinInputFilter;
+import com.san.sniper.LogConstants;
+import com.san.sniper.R;
+import com.san.sniper.Utility;
+import com.san.sniper.builders.RetrofitBuilder;
+import com.san.sniper.interfaces.IsanServices;
+import com.san.sniper.responsepojos.BaseResponse;
+import com.san.sniper.responsepojos.customer.Address;
+import com.san.sniper.service.BaseService;
+import com.san.sniper.singletons.DataTransfer;
+import com.san.sniper.singletons.SniperUser;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -250,7 +250,7 @@ public class CustomerAdressMapsActivity extends BaseActivity implements OnMapRea
         String Note = edtNotes.getText().toString();
 
         Retrofit retrofit = RetrofitBuilder.getRetrofit(getApplication());
-        IBorusanServices ibs = retrofit.create(IBorusanServices.class);
+        IsanServices ibs = retrofit.create(IsanServices.class);
 
         showProgressDialog();
 

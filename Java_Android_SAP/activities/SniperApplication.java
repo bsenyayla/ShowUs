@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import android.app.Application;
 import android.content.SharedPreferences;
@@ -8,11 +8,11 @@ import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 
-import com.borusan.sniper.Utility;
-import com.borusan.sniper.inbox.data.InboxMessageResponse;
-import com.borusan.sniper.inbox.data.InboxResponse;
-import com.borusan.sniper.responsepojos.NewsItem;
-import com.borusan.sniper.utility.AppExceptionHandler;
+import com.san.sniper.Utility;
+import com.san.sniper.inbox.data.InboxMessageResponse;
+import com.san.sniper.inbox.data.InboxResponse;
+import com.san.sniper.responsepojos.NewsItem;
+import com.san.sniper.utility.AppExceptionHandler;
 
 import java.util.ArrayList;
 import java.util.List;

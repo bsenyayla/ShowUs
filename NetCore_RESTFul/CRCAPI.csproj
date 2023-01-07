@@ -6,14 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="appsettings.Ankara.json" />
-    <Content Remove="appsettings.CustomProfile.json" />
     <Content Remove="appsettings.Debug.json" />
-    <Content Remove="appsettings.FolderProfile.json" />
-    <Content Remove="appsettings.Gebze.json" />
-    <Content Remove="appsettings.ProdAnkara.json" />
-    <Content Remove="appsettings.ProdGebze.json" />
-    <Content Remove="appsettings.Release.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,45 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <_WebToolingArtifacts Remove="Properties\PublishProfiles\CustomProfileAnkara.pubxml" />
-    <_WebToolingArtifacts Remove="Properties\PublishProfiles\CustomProfilePreProd.pubxml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Content\CameraCustomError.jpg" />
     <Content Include="Content\CameraLoading.jpg" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="appsettings.Ankara.json">
-      <IsTransformFile>true</IsTransformFile>
-      <DependentUpon>appsettings.json</DependentUpon>
-    </None>
-    <None Include="appsettings.CustomProfile.json">
-      <IsTransformFile>true</IsTransformFile>
-      <DependentUpon>appsettings.json</DependentUpon>
-    </None>
     <None Include="appsettings.Debug.json">
-      <IsTransformFile>true</IsTransformFile>
-      <DependentUpon>appsettings.json</DependentUpon>
-    </None>
-    <None Include="appsettings.FolderProfile.json">
-      <IsTransformFile>true</IsTransformFile>
-      <DependentUpon>appsettings.json</DependentUpon>
-    </None>
-    <None Include="appsettings.Gebze.json">
-      <IsTransformFile>true</IsTransformFile>
-      <DependentUpon>appsettings.json</DependentUpon>
-    </None>
-    <None Include="appsettings.ProdAnkara.json">
-      <IsTransformFile>true</IsTransformFile>
-      <DependentUpon>appsettings.json</DependentUpon>
-    </None>
-    <None Include="appsettings.ProdGebze.json">
-      <IsTransformFile>true</IsTransformFile>
-      <DependentUpon>appsettings.json</DependentUpon>
-    </None>
-    <None Include="appsettings.Release.json">
       <IsTransformFile>true</IsTransformFile>
       <DependentUpon>appsettings.json</DependentUpon>
     </None>

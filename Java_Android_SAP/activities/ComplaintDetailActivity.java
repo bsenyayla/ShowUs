@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 
 import android.app.AlertDialog;
@@ -28,19 +28,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.borusan.sniper.LogConstants;
-import com.borusan.sniper.R;
-import com.borusan.sniper.Utility;
-import com.borusan.sniper.adapters.ComplaintNoteAdapter;
-import com.borusan.sniper.adapters.searchdialog.SnpSimpleSearchDialogCompact;
-import com.borusan.sniper.builders.RetrofitBuilder;
-import com.borusan.sniper.interfaces.IBorusanServices;
-import com.borusan.sniper.responsepojos.complaint.ComplaintItemUpdateModel;
-import com.borusan.sniper.responsepojos.complaint.ComplaintUpdateResponse;
-import com.borusan.sniper.responsepojos.response.NameValueResponse;
-import com.borusan.sniper.responsepojos.response.ComplaintResponse;
-import com.borusan.sniper.responsepojos.response.ResponsiblePersonelResponse;
-import com.borusan.sniper.service.BaseService;
+import com.san.sniper.LogConstants;
+import com.san.sniper.R;
+import com.san.sniper.Utility;
+import com.san.sniper.adapters.ComplaintNoteAdapter;
+import com.san.sniper.adapters.searchdialog.SnpSimpleSearchDialogCompact;
+import com.san.sniper.builders.RetrofitBuilder;
+import com.san.sniper.interfaces.IsanServices;
+import com.san.sniper.responsepojos.complaint.ComplaintItemUpdateModel;
+import com.san.sniper.responsepojos.complaint.ComplaintUpdateResponse;
+import com.san.sniper.responsepojos.response.NameValueResponse;
+import com.san.sniper.responsepojos.response.ComplaintResponse;
+import com.san.sniper.responsepojos.response.ResponsiblePersonelResponse;
+import com.san.sniper.service.BaseService;
 import com.google.android.gms.common.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -159,7 +159,7 @@ public class ComplaintDetailActivity extends BaseActivity {
 
                     progressDialog.show();
                     Retrofit retrofit = RetrofitBuilder.getRetrofit(getApplication());
-                    IBorusanServices ibs = retrofit.create(IBorusanServices.class);
+                    IsanServices ibs = retrofit.create(IsanServices.class);
                     Call<ComplaintUpdateResponse> call = ibs.updateComplaint(baseService.auth, baseService.username, updateModel);
                     call.enqueue(new Callback<ComplaintUpdateResponse>() {
                         @Override
@@ -251,7 +251,7 @@ public class ComplaintDetailActivity extends BaseActivity {
     private void prpComplaints(Runnable nextTask) {
         progressDialog.show();
         Retrofit retrofit = RetrofitBuilder.getRetrofit(getApplication());
-        IBorusanServices ibs = retrofit.create(IBorusanServices.class);
+        IsanServices ibs = retrofit.create(IsanServices.class);
         Call<ComplaintResponse> call = ibs.complaintDetail(baseService.auth, baseService.username, complaintId);
         call.enqueue(new Callback<ComplaintResponse>() {
             @Override
@@ -289,7 +289,7 @@ public class ComplaintDetailActivity extends BaseActivity {
     private void prpStatus(Runnable nextTask) {
         progressDialog.show();
         Retrofit retrofit = RetrofitBuilder.getRetrofit(getApplication());
-        IBorusanServices ibs = retrofit.create(IBorusanServices.class);
+        IsanServices ibs = retrofit.create(IsanServices.class);
         Call<NameValueResponse> call = ibs.complaintStatus(baseService.auth, baseService.username);
         call.enqueue(new Callback<NameValueResponse>() {
             @Override
@@ -340,7 +340,7 @@ public class ComplaintDetailActivity extends BaseActivity {
     private void prpMessageTypes() {
         progressDialog.show();
         Retrofit retrofit = RetrofitBuilder.getRetrofit(getApplication());
-        IBorusanServices ibs = retrofit.create(IBorusanServices.class);
+        IsanServices ibs = retrofit.create(IsanServices.class);
         Call<NameValueResponse> call = ibs.complaintMessageTypes(baseService.auth, baseService.username);
         call.enqueue(new Callback<NameValueResponse>() {
             @Override
@@ -387,7 +387,7 @@ public class ComplaintDetailActivity extends BaseActivity {
         } else {
             progressDialog.show();
             Retrofit retrofit = RetrofitBuilder.getRetrofit(ComplaintDetailActivity.this.getApplication());
-            IBorusanServices ibs = retrofit.create(IBorusanServices.class);
+            IsanServices ibs = retrofit.create(IsanServices.class);
             Call<ResponsiblePersonelResponse> call = ibs.complaintResponsiblePersonel(baseService.auth, baseService.username);
             call.enqueue(new Callback<ResponsiblePersonelResponse>() {
                 @Override

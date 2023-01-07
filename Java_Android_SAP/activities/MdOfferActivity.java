@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -25,28 +25,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.borusan.sniper.CreateOffer.CreateOfferActivity;
-import com.borusan.sniper.DataKeys;
-import com.borusan.sniper.R;
-import com.borusan.sniper.Utility;
-import com.borusan.sniper.adapters.OfferProductsAdapter;
-import com.borusan.sniper.adapters.SimpleListItemRVAdapter;
-import com.borusan.sniper.requestpojos.quotation.CreateOfferRequestBody;
-import com.borusan.sniper.requestpojos.quotation.OfferItem;
-import com.borusan.sniper.responsepojos.BaseResponse;
-import com.borusan.sniper.responsepojos.checkin.KeyValuePair;
-import com.borusan.sniper.responsepojos.checkin.NoteType;
-import com.borusan.sniper.responsepojos.common.Note;
-import com.borusan.sniper.responsepojos.createoffer.QuotationDetailResponseBody;
-import com.borusan.sniper.responsepojos.customer.CustomerDetailModel;
-import com.borusan.sniper.responsepojos.mdoffers.OfferDetail;
-import com.borusan.sniper.responsepojos.mdoffers.OfferInfo;
-import com.borusan.sniper.responsepojos.mdoffers.OfferProduct;
-import com.borusan.sniper.responsepojos.quotation.QuotationOutput;
-import com.borusan.sniper.responsepojos.relatedperson.RelatedPersonList;
-import com.borusan.sniper.responsepojos.response.CustomerResponse;
-import com.borusan.sniper.service.BaseService;
-import com.borusan.sniper.singletons.DataTransfer;
+import com.san.sniper.CreateOffer.CreateOfferActivity;
+import com.san.sniper.DataKeys;
+import com.san.sniper.R;
+import com.san.sniper.Utility;
+import com.san.sniper.adapters.OfferProductsAdapter;
+import com.san.sniper.adapters.SimpleListItemRVAdapter;
+import com.san.sniper.requestpojos.quotation.CreateOfferRequestBody;
+import com.san.sniper.requestpojos.quotation.OfferItem;
+import com.san.sniper.responsepojos.BaseResponse;
+import com.san.sniper.responsepojos.checkin.KeyValuePair;
+import com.san.sniper.responsepojos.checkin.NoteType;
+import com.san.sniper.responsepojos.common.Note;
+import com.san.sniper.responsepojos.createoffer.QuotationDetailResponseBody;
+import com.san.sniper.responsepojos.customer.CustomerDetailModel;
+import com.san.sniper.responsepojos.mdoffers.OfferDetail;
+import com.san.sniper.responsepojos.mdoffers.OfferInfo;
+import com.san.sniper.responsepojos.mdoffers.OfferProduct;
+import com.san.sniper.responsepojos.quotation.QuotationOutput;
+import com.san.sniper.responsepojos.relatedperson.RelatedPersonList;
+import com.san.sniper.responsepojos.response.CustomerResponse;
+import com.san.sniper.service.BaseService;
+import com.san.sniper.singletons.DataTransfer;
 
 import java.io.File;
 import java.io.FileOutputStream;

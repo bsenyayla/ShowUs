@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -24,24 +24,24 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.borusan.sniper.CreateOffer.adapters.EditNotesAdapter;
-import com.borusan.sniper.LogConstants;
-import com.borusan.sniper.R;
-import com.borusan.sniper.Utility;
-import com.borusan.sniper.adapters.QuotationAttachmentAdapter;
-import com.borusan.sniper.adapters.QuotationProductListAdapter;
-import com.borusan.sniper.enums.ServiceQuotationStatus;
-import com.borusan.sniper.requestpojos.QuotationNoteRequest;
-import com.borusan.sniper.requestpojos.ServiceQuotationUpdateRequest;
-import com.borusan.sniper.requestpojos.quotation.OfferNote;
-import com.borusan.sniper.responsepojos.checkin.KeyValuePair;
-import com.borusan.sniper.responsepojos.servicequotation.QuotationAttachment;
-import com.borusan.sniper.responsepojos.servicequotation.ServiceQuotation;
-import com.borusan.sniper.responsepojos.servicequotation.ServiceQuotationDetail;
-import com.borusan.sniper.responsepojos.servicequotation.ServiceQuotationNote;
-import com.borusan.sniper.responsepojos.servicequotation.ServiceQuotationOutput;
-import com.borusan.sniper.service.QuotationService;
-import com.borusan.sniper.views.LabelledSpinner;
+import com.san.sniper.CreateOffer.adapters.EditNotesAdapter;
+import com.san.sniper.LogConstants;
+import com.san.sniper.R;
+import com.san.sniper.Utility;
+import com.san.sniper.adapters.QuotationAttachmentAdapter;
+import com.san.sniper.adapters.QuotationProductListAdapter;
+import com.san.sniper.enums.ServiceQuotationStatus;
+import com.san.sniper.requestpojos.QuotationNoteRequest;
+import com.san.sniper.requestpojos.ServiceQuotationUpdateRequest;
+import com.san.sniper.requestpojos.quotation.OfferNote;
+import com.san.sniper.responsepojos.checkin.KeyValuePair;
+import com.san.sniper.responsepojos.servicequotation.QuotationAttachment;
+import com.san.sniper.responsepojos.servicequotation.ServiceQuotation;
+import com.san.sniper.responsepojos.servicequotation.ServiceQuotationDetail;
+import com.san.sniper.responsepojos.servicequotation.ServiceQuotationNote;
+import com.san.sniper.responsepojos.servicequotation.ServiceQuotationOutput;
+import com.san.sniper.service.QuotationService;
+import com.san.sniper.views.LabelledSpinner;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;

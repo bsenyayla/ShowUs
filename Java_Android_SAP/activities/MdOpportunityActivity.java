@@ -1,4 +1,4 @@
-package com.borusan.sniper.activities;
+package com.san.sniper.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,21 +12,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.borusan.sniper.CreateOffer.CreateOfferActivity;
-import com.borusan.sniper.R;
-import com.borusan.sniper.Utility;
-import com.borusan.sniper.adapters.OpportunityOffersAdapter;
-import com.borusan.sniper.adapters.OpportunityProductsAdapter;
-import com.borusan.sniper.builders.RetrofitBuilder;
-import com.borusan.sniper.requestpojos.quotation.CreateOfferRequestBody;
-import com.borusan.sniper.requestpojos.quotation.OfferItem;
-import com.borusan.sniper.responsepojos.BaseResponse;
-import com.borusan.sniper.responsepojos.mdopportunity.MdOpportunities;
-import com.borusan.sniper.responsepojos.mdopportunity.MdOpportunity;
-import com.borusan.sniper.responsepojos.mdopportunity.Offer;
-import com.borusan.sniper.responsepojos.mdopportunity.OfferList;
-import com.borusan.sniper.responsepojos.mdopportunity.Product;
-import com.borusan.sniper.service.BaseService;
+import com.san.sniper.CreateOffer.CreateOfferActivity;
+import com.san.sniper.R;
+import com.san.sniper.Utility;
+import com.san.sniper.adapters.OpportunityOffersAdapter;
+import com.san.sniper.adapters.OpportunityProductsAdapter;
+import com.san.sniper.builders.RetrofitBuilder;
+import com.san.sniper.requestpojos.quotation.CreateOfferRequestBody;
+import com.san.sniper.requestpojos.quotation.OfferItem;
+import com.san.sniper.responsepojos.BaseResponse;
+import com.san.sniper.responsepojos.mdopportunity.MdOpportunities;
+import com.san.sniper.responsepojos.mdopportunity.MdOpportunity;
+import com.san.sniper.responsepojos.mdopportunity.Offer;
+import com.san.sniper.responsepojos.mdopportunity.OfferList;
+import com.san.sniper.responsepojos.mdopportunity.Product;
+import com.san.sniper.service.BaseService;
 
 
 import java.util.Iterator;
@@ -80,7 +80,7 @@ public class MdOpportunityActivity extends BaseActivity {
 
     private void fetchOffers(String mdOpportunityId,Runnable onComplete) {
         showProgressDialog();
-        Call<BaseResponse<OfferList>> mdOpportunityCall = RetrofitBuilder.getBorusanServices().getMdOpportunityOffers(baseService.auth, baseService.username,mdOpportunityId);
+        Call<BaseResponse<OfferList>> mdOpportunityCall = RetrofitBuilder.getsanServices().getMdOpportunityOffers(baseService.auth, baseService.username,mdOpportunityId);
         mdOpportunityCall.enqueue(new Callback<BaseResponse<OfferList>>() {
             @Override
             public void onResponse(Call<BaseResponse<OfferList>> call, Response<BaseResponse<OfferList>> response) {
@@ -101,7 +101,7 @@ public class MdOpportunityActivity extends BaseActivity {
 
     private void fetchMdOpportunities(String opportunityId,Runnable onComplete) {
         showProgressDialog();
-        Call<BaseResponse<MdOpportunities>> opportunityCall = RetrofitBuilder.getBorusanServices().getMdOpportunityById(baseService.auth, baseService.username, opportunityId);
+        Call<BaseResponse<MdOpportunities>> opportunityCall = RetrofitBuilder.getsanServices().getMdOpportunityById(baseService.auth, baseService.username, opportunityId);
         opportunityCall.enqueue(new Callback<BaseResponse<MdOpportunities>>() {
             @Override
             public void onResponse(Call<BaseResponse<MdOpportunities>> call, Response<BaseResponse<MdOpportunities>> response) {
