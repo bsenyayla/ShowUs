@@ -126,11 +126,6 @@ AS
                                                                getdinamikkeyvalue (
                                                                   TRIM (
                                                                      'TMS_DERBISIZ_LIGTV_SERVIS_LIST')))))
-                         /*                            (SELECT DCS.DBS_CODE
-                                                        FROM DBS_ADDR.DBS_ADDR_DBS_CAS_SERVICES DCS,
-                                                             DBS_ADDR.DBS_ADDR_CAS_SERVICES     CS
-                                                       WHERE CS.CODE = DCS.CAS_CODE AND CS.PRODUCT_NUMBER = TO_NUMBER(DBS_ADDR.GETDINAMIKKEYVALUE('TMS_DERBI_FILTER_PRD')) --DERBISIZ FULL LIG  ICIN DERBI BLACKOUT PRODUCTI
-                                                      )*/
                          AND dcs.dbs_code = rec.urun_kodu;
                EXCEPTION
                   WHEN OTHERS
@@ -144,12 +139,6 @@ AS
                END IF;
 
                BEGIN
-                  /*                   SELECT count(1) INTO v_derbisiz_paket_cnt
-                                       FROM DBS_ADDR.DBS_ADDR_DBS_CAS_SERVICES DCS,
-                                            DBS_ADDR.DBS_ADDR_CAS_SERVICES     CS
-                                      WHERE CS.CODE = DCS.CAS_CODE AND CS.PRODUCT_NUMBER = TO_NUMBER(DBS_ADDR.GETDINAMIKKEYVALUE('TMS_DERBI_FILTER_PRD'))--DERBISIZ FULL LIG  ICIN DERBI BLACKOUT PRODUCTI
-                                        AND DCS.DBS_CODE=REC.URUN_KODU;*/
-
                   IF (INSTR (
                          dbs_addr.getdinamikkeyvalue (
                             'TMS_DERBISIZ_LIGTV_SERVIS_LIST'),
@@ -859,27 +848,7 @@ AS
    EXCEPTION
       WHEN input_exception OR log_exception
       THEN
-         /*
-         BEGIN
-             SELECT PISYS_INPUT_EXCEPTION_LOG_SEQ.NEXTVAL INTO exc_id FROM dual;
-             INSERT INTO PISYS_INPUT_EXCEPTION_LOG ( ID,
-                                                          REQ_DBS_TYPE,
-                                                     REQ_GROUP_TYPE,
-                                                     REQ_TYPE,
-                                                     ACCOUNT_NUMBER,
-                                                     SERIAL_NUMBER,
-                                                        ERROR) VALUES
-                                                   ( exc_id,
-                                                        p_req_dbs_type,
-                                                     v_req_group_type,
-                                                     v_req_type,
-                                                     v_account_number,
-                                                     p_serial_number,
-                                                     p_errm );
-             INSERT INTO EXC_UNPAIR_CHIPSET (ID, CHIPSET) VALUES (exc_id, p_chipset);
-         EXCEPTION WHEN OTHERS THEN
-             p_errm     := SQLERRM;
-         END;*/
+
          RETURN 0;
       WHEN OTHERS
       THEN
@@ -963,7 +932,9 @@ AS
 
       IF p_req_id IS NULL
       THEN
-         SELECT seq_addr_req_id.NEXTVAL INTO v_req_id FROM DUAL;
+         SELECT seq_addr_req_id.NEXTVAL 
+		 INTO v_req_id 
+		 FROM DUAL;
       ELSE
          v_req_id := p_req_id;
       END IF;
