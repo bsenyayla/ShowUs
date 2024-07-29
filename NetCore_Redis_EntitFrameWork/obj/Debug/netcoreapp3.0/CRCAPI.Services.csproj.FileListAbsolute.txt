@@ -1,0 +1,15 @@
+C:\GitBorusan\Crcapi.Services\bin\Debug\netcoreapp3.0\log4net.config
+C:\GitBorusan\Crcapi.Services\bin\Debug\netcoreapp3.0\CRCAPI.Services.deps.json
+C:\GitBorusan\Crcapi.Services\bin\Debug\netcoreapp3.0\CRCAPI.Services.dll
+C:\GitBorusan\Crcapi.Services\bin\Debug\netcoreapp3.0\CRCAPI.Services.pdb
+C:\GitBorusan\Crcapi.Services\bin\Debug\netcoreapp3.0\StandartLibrary.dll
+C:\GitBorusan\Crcapi.Services\bin\Debug\netcoreapp3.0\StandartLibrary.pdb
+C:\GitBorusan\Crcapi.Services\bin\Debug\netcoreapp3.0\ru\StandartLibrary.resources.dll
+C:\GitBorusan\Crcapi.Services\bin\Debug\netcoreapp3.0\tr\StandartLibrary.resources.dll
+C:\GitBorusan\Crcapi.Services\obj\Debug\netcoreapp3.0\CRCAPI.Services.csprojAssemblyReference.cache
+C:\GitBorusan\Crcapi.Services\obj\Debug\netcoreapp3.0\CRCAPI.Services.AssemblyInfoInputs.cache
+C:\GitBorusan\Crcapi.Services\obj\Debug\netcoreapp3.0\CRCAPI.Services.AssemblyInfo.cs
+C:\GitBorusan\Crcapi.Services\obj\Debug\netcoreapp3.0\CRCAPI.Services.csproj.CoreCompileInputs.cache
+C:\GitBorusan\Crcapi.Services\obj\Debug\netcoreapp3.0\CRCAPI.Services.csproj.CopyComplete
+C:\GitBorusan\Crcapi.Services\obj\Debug\netcoreapp3.0\CRCAPI.Services.dll
+C:\GitBorusan\Crcapi.Services\obj\Debug\netcoreapp3.0\CRCAPI.Services.pdb

@@ -1,0 +1,777 @@
+<PUBLIC:COMPONENT URN="www.idb.com.tr" >
+   	<PUBLIC:ATTACH EVENT="onreadystatechange" ONEVENT="TableStateChange()"  />
+   	<PUBLIC:ATTACH EVENT="onclick"  ONEVENT="TableClick()"  />
+   	<PUBLIC:ATTACH EVENT="ondblclick" ONEVENT="TableDblClick()"  />
+   	<PUBLIC:ATTACH EVENT="onkeydown" ONEVENT="TableKeyDown()" />
+   	<PUBLIC:ATTACH EVENT="onkeypress" ONEVENT="TableKeyPress ()" />
+   	<PUBLIC:METHOD NAME="deleteRow" />
+   	<PUBLIC:METHOD NAME="selectRow" />
+   	<PUBLIC:METHOD NAME="cancelSelect" />
+   	<PUBLIC:METHOD NAME="refreshSubTotals" />
+   	<PUBLIC:METHOD NAME="fireKey" />
+   	<PUBLIC:METHOD NAME="asNumber" />
+   	<PUBLIC:METHOD NAME="loadFromArray" />
+   	<PUBLIC:METHOD NAME="refreshRow" />
+   	<PUBLIC:METHOD NAME="refreshCurRow" />
+   	<PUBLIC:METHOD NAME="filterValue" />	
+   	<PUBLIC:METHOD NAME="next" />	
+   	<PUBLIC:METHOD NAME="prev" />	
+   	<PUBLIC:METHOD NAME="nextPage" />	
+   	<PUBLIC:METHOD NAME="prevPage" />	
+	<PUBLIC:METHOD NAME="first" />	
+   	<PUBLIC:METHOD NAME="last" />	
+   	<PUBLIC:METHOD NAME="search" />	
+   	<PUBLIC:METHOD NAME="refresh" />
+   	<PUBLIC:METHOD NAME="locate" />
+   	<PUBLIC:METHOD NAME="adjustRowCount" />
+
+
+   	<script language="JavaScript" src="/Script/utils.js"></script>
+   	<script language="JavaScript" src="/Script/tblNavigate.js"></script>
+   	<script language="JavaScript" src="/Script/cookies.js"></script>
+   	<script language="JavaScript" src="/Script/tblSearch.js"></script>
+   	<script language="JavaScript" src="/Script/tblSort.js"></script>
+   	<script language="JavaScript" src="/Script/tblSubTotals.js"></script>
+   	<script language="JavaScript" src="/Script/Navigate/nsFis.js"></script>
+   	<script language="JavaScript" src="/Script/Navigate/nsDefault.js"></script>	
+   	<script language="JavaScript" src="/Script/Navigate/nsHP.js"></script>
+   	<script language="JavaScript" src="/Script/navigateDocument.js"></script>
+   	<script language="JavaScript" src="/Script/event/esHKLookUp.js"></script>
+   	<script language="JavaScript" src="/Script/event/esLookUp.js"></script> 
+
+<SCRIPT LANGUAGE="JavaScript">
+
+   var selcolor_ = "D7CFFF"
+
+function fireKey (key,altKey,ctrlKey)
+{	
+	oEvent=document.createEventObject();		
+	oEvent.keyCode = key;  			
+  	oEvent.altKey = altKey;  
+	oEvent.ctrlKey = ctrlKey;          	
+       	fireEvent ("onkeydown", oEvent);
+}
+
+
+function TableDblClick()
+{ 	  
+	  event.keyCode = 13;
+	  TableKeyDown ();
+}
+
+
+function TableKeyPress()
+{
+ 	if (getAttribute ("editing")) return false;      
+}
+
+
+function TableStateChange ()
+{
+	if  (rows.length > 2)
+        {
+ 	     setAttribute ("defaultBgColor", rows [1].cells [0].bgColor); 	
+		
+	     if (! getAttribute ("focusDisabled"))
+	     { 
+               _lcInd = GetCookie ('lc', window.document); SetCookie ('lc', "");
+               _lrInd = GetCookie ('lr', window.document); SetCookie ('lr', "");
+	          
+               if (_lcInd == null || _lcInd == "null") _lcInd = 0;
+	       if (_lrInd == null || _lrInd == "null") _lrInd = 1;
+	
+               if (_lrInd == -1 || _lrInd >= rows.length) //son satira gitmesi istenmisse
+	  	{		
+			_lrInd = rows.length -2; 
+		}
+
+               _lc = rows [_lrInd].cells [_lcInd];
+		
+               if (_lc) selectRow(_lc);
+               setActive ();
+ 	     }
+             
+             setSubtotals (this);
+	     showNavigationKeys();	 
+	} 
+
+	if (getAttribute ("STATECHANGEEVENT")) 
+	   eval (getAttribute ("STATECHANGEEVENT") + "(this)");
+}
+
+
+function TableClick()
+{
+	if ((event.srcElement.tagName) && (event.srcElement.tagName == "TD"))
+        {
+		_td = event.srcElement;
+            	_tr = event.srcElement.parentElement; //TD nin parenti TR dir
+
+	    	if (_tr.rowIndex > 0) selectRow (_td)
+             	 else if (_tr.rowIndex == 0)
+		 {
+		     	if (event.ctrlKey) multiRow = true
+   		          else multiRow = false; 
+
+		     	sortTable (this, 1, rows.length -2, _td, multiRow); //son satir status
+ 		 }	  
+        }
+}
+
+
+function getCurCell()
+{
+         _tr = rows [parseInt (getAttribute ("curRow"))];
+	 if (_tr) return _tr.cells [parseInt (getAttribute ("curCol"))];
+	  else return null;
+}
+
+
+function selectRow (_td)
+{
+	rw = _td.parentElement;
+	if (rw.rowIndex && rw.rowIndex < rows.length-1)
+        {
+	  _lc = getCurCell ();
+	  if (_lc)
+	   {
+	     if (rw.rowIndex != _lc.parentElement.rowIndex && getAttribute ("edited") == _lc.parentElement.rowIndex)
+	     {
+                      if (confirm ('Deðiþiklikler kaydedilsin mi?')) postline ();
+	            setAttribute ("edited", 0);
+	     }
+	     changeRowColor (_lc, "");
+	   }
+
+          if (! _td) return -1;
+	  
+	  _td.scrollIntoView (false);
+          changeRowColor (_td, selcolor_); 
+          setAttribute ("curRow", rw.rowIndex);
+	  setAttribute ("curCol", _td.cellIndex);
+        }
+}
+
+
+function cancelSelect ()
+{
+      	_lc = getCurCell ();
+      	if (! _lc) return true;
+      
+      	changeRowColor (_lc, "");
+      	setAttribute (curRow, "");
+	setAttribute (curCol, "");
+}
+
+
+function changeRowColor (_td, Color)
+{
+	Rw = _td.parentElement;
+		
+	if (getAttribute ("rowSelect") == "true") 
+	{
+	   if (Rw)
+	   {
+      	    	for (i=0;i<Rw.cells.length;i++)
+               	  Rw.cells [i].style.backgroundColor = Color;
+	   }	
+        }
+	  else if (_td) _td.style.backgroundColor = Color; 
+}
+
+
+function deleteRow (_tr)
+{	
+	if (! _tr) return true;
+
+	if (! _tr.nextSibling)
+        if (_tr.previousSibling  && _tr.previousSibling.rowIndex)
+	{
+		tdPrev = _tr.previousSibling.cells [getAttribute ("curCol")];
+              	selectRow (tdPrev); //silenin arkasindakini sec, arkasi bossa bi oncekini sec
+	}
+
+        _tr.removeNode (true); //sil
+
+        if (getCurCell ()) selectRow (getCurCell ());
+  
+        setSubtotals (this); 
+        focus ();
+}
+
+
+function refreshSubTotals()
+{
+	setSubtotals (this); 
+}
+
+
+function OpenEditScreen (tbl)
+{
+	editorUrl = getAttribute ("editScreen");
+
+	if (editorUrl) 
+	{
+ 	  curCell = getCurCell ();
+
+	  if (curCell)
+	  {
+	    dt = curCell.offsetTop;
+	    dl = 10;
+	  }
+	    else 
+          {
+	    dt = tbl.offsetTop;
+	    dl = tbl.offsetLeft;
+	  }
+
+          window.showModalDialog (editorUrl, tbl,"dialogWidth:300px;dialogHeight:200px; dialogTop: " + dt + "px; dialogLeft: " + dl + "px; center: Yes; help: No; status: No;");   
+	  return true;
+        }
+	  else return false;
+}			
+
+
+function TableKeyDown ()
+{
+	var handled = false;
+        key         = event.keyCode;
+
+	lrInd = getAttribute ("curRow");
+	lcInd = getAttribute ("curCol");
+	if (lrInd == -1) lrInd = rows.length -2;
+	_tr = rows [lrInd];	 
+
+ 	 //satirin secili olmasini gerektiren islemler burada basliyor	
+	 if (_tr) 
+	 {
+	 	_td = _tr.cells [lcInd];
+  	 		 	
+         	if (key == 38) //Yukari Ok
+          	{
+            		handled = true;
+            		if (_tr.rowIndex > 1)
+             		{ 
+	       			if (_tr.previousSibling)
+				{
+	  	  			tdPrev = _tr.previousSibling.cells [_td.cellIndex];
+		  			selectRow (tdPrev);
+				}
+	      		}
+               		 else
+		 	{
+		   		if (getAttribute ("paging"))
+		    		{
+		      			cancelSelect();
+		      			event.keyCode = 33; handled = false; SetCookie ('lr', -1);
+		    		}
+		 	}
+          	}
+         	 else
+          	if (key == 40) //Asagi Ok
+           	{       	     			
+             		if (_tr.rowIndex < rows.length-2)
+	      		{	
+				handled = true;	
+				selectRow (_tr.nextSibling.cells [_td.cellIndex]);
+	      		}
+               		 else
+	 		{
+		  		if (getAttribute ("paging"))
+		   		{
+		     			cancelSelect();	
+	             			event.keyCode = 34; handled = false; SetCookie ('lr', 1);
+		   		}
+			}
+           	}
+         	 else
+		if (key == 33 || key == 34) //pgUp or pgDown
+	  	{
+	     		if (getAttribute ("paging")) { cancelSelect(); SetCookie ('lr', getAttribute ("curRow"));}   
+	  	}
+	 	 else
+        	if (key == 35 && window.event.ctrlKey) //Ctrl + End
+	  	{
+            		if (getAttribute ("paging")) SetCookie ('lr', -1);
+          	}
+         	 else
+        	if (key == 36 && window.event.ctrlKey) //Ctrl + Home
+	  	{
+            		if (getAttribute ("paging")) SetCookie ('lr', 1);
+          	}
+         	 else
+		if (key == 37) //Sol Ok
+          	{
+            		if (_td.previousSibling) selectRow (_td.previousSibling);
+          	}
+		 else
+		if (key == 27) //ESC
+          	{
+            		cancelSelect ();
+          	}
+         	 else
+          	if (key == 39) //Sag Ok
+           	{
+             		if (_td.nextSibling) selectRow (_td.nextSibling);              
+           	}
+         	 else          	
+           	if (key == 35 && ! window.event.ctrlKey) //End
+	    	{
+	       		lastR = rows.length - 2;			
+               		_lc = rows [lastR].cells [_td.cellIndex]; //last row
+               		if (_lc) selectRow (_lc);
+               		handled = true;
+            	}
+           	 else
+           	if (key == 36 && ! window.event.ctrlKey) //Home
+	    	{
+	      		if (rows.length > 1)
+	      		{
+				_fc = this.rows [1].cells [_td.cellIndex]; //first row
+                		if (_fc) selectRow (_fc);
+                		handled = true;
+	      		}
+            	}
+           	 else
+            	if (key == 83 && window.event.ctrlKey)
+             	{
+               		if (getAttribute ("searchOn"))
+               		{
+                 		createSearchPane (this, getAttribute ("searchOn"));
+                 		handled = true;
+               		}
+             	}
+	}
+
+   	if (! handled && getAttribute ("navExt")) 
+	   handled = eval (getAttribute ("navExt") + "(this)");
+
+ 	if (! handled && getAttribute ("KEYDOWNEVENT")) 
+	   handled = eval (getAttribute ("KEYDOWNEVENT") + "(this)");
+
+	if (getAttribute ("isLookUp")) 
+	{
+		if (window.dialogHeight)
+	   	{
+			if (key == 13 && _tr)
+			{
+				window.returnValue = _tr.cloneNode (true);
+				window.close();	
+			}
+		 	 else
+	  		if (key == 27)
+			{
+		 		window.close();
+			}
+		}
+	}
+
+	if (checkRight(key)) 
+	{		
+		if (_tr && key == 13 && rows.length > 1 && getAttribute ("edit") == "true") //Enter
+    		{	    
+	  		if (getAttribute ("inPlaceEditing"))
+	     		{
+    	       			handled = true;	
+	       			setAttribute ("lastVal", _td.innerText);
+	       			setAttribute ("editing", rw.rowIndex);
+	       			fnEdit (_td); 
+	     		}
+			 else 
+			  if (getAttribute ("editScreen"))
+			  { 
+				setAttribute ("isUpdate", true); 
+				OpenEditScreen (this); 
+				removeAttribute ("isUpdate");
+				handled = true;
+			  }
+   		}
+	  	 else
+		if (key == 45 && getAttribute ("edit") == "true") //Insert
+    		{			
+	    		if (getAttribute ("inPlaceEditing"))
+	     		{
+	       			newTr = insertRow (rw.rowIndex);
+	       			setAttribute ("lastVal", "");
+	       			setAttribute ("editing", newTr.rowIndex);
+	       			fnEdit (newTr.cells [0]);
+				handled = true; 
+	     		}
+	         	 else 
+			  if (getAttribute ("editScreen"))
+			  { 
+				setAttribute ("isInsert", true); 
+				OpenEditScreen (this); 
+				removeAttribute ("isInsert"); 
+				handled = true;
+			  }
+   		}
+
+		if (key == 46 && ! handled) //Del Tusu
+        	{
+           		handled = ! confirm ("Kayýt silinecek emin misiniz?");
+ 	      	}
+
+		if (! handled) 
+		{			
+			var parsedLink = executeLink (key);
+			handled = (parsedLink > "");
+		}
+		
+		if (key == 46) //Del Tusu
+        	{
+           		if ((handled && parsedLink) || (! parsedLink && ! handled)) deleteRow (_tr); 
+ 	      	}
+ 	}
+
+        if (handled)
+        {
+		event.keyCode = 0;
+      		event.returnValue = false;
+        }
+}
+
+         
+function getNavigationSt (tbl, sqlTable, method, keyFields, keyValues, keyFilter, Fields, navExt)
+{
+	urlSet = "screen=" + tbl.getAttribute ("screen") + "&METHOD="+ method + "&KEYFIELDS=" + keyFields + "&KEYVALUES=" + keyValues + "&FILTER=" + tbl.getAttribute ("activeFilter");
+	return urlSet;	
+}
+
+	
+function asNumber(row, col)
+{
+	asNum = rows [row].cells [col].innerText;
+	asNum = clearChar (asNum, ",");
+	asNum = clearChar (asNum, ".");
+	return asNum;	
+}
+
+
+function loadFromArray (rowsArr)
+{
+	var s=0; 
+  	var initialRow = 1;
+	var refreshing = false;	
+	var rowCount= parseInt (rowsArr.length / rows [0].cells.length); //yeni gelen satir sayisi
+
+	if (getAttribute ("refreshing"))
+	{
+		initialRow = getAttribute ("refreshing");  	   	
+		removeAttribute ("refreshing"); 
+		refreshing = true;
+	}	
+	  else
+	{			
+		var sizeGap= rowCount - (rows.length - initialRow);
+		adjustRowCount (sizeGap); 
+	}
+
+    	for (var rw=initialRow;rw < initialRow + rowCount -1;rw++)
+	{ 	 		
+     	    for (var i=0;i<rows [0].cells.length;i++)
+	    { 
+	      var oTd = rows [rw].cells [i];
+              if (s < rowsArr.length) oTd.innerText = rowsArr [s++];			      	       
+	    } 	
+	}		  
+
+	if (! refreshing) TableStateChange();
+}
+
+	
+function executeLink (key)
+{
+	if (event.altKey || event.ctrlKey) return ""; //henuz alt ve ctrl tuslari ile ilgili bir calisma yapilmadi, o yuzden bu tuslari gecirme
+
+	var link = ""; 
+	var btnTarget="";
+	if (! tblLinks) var tblLinks = new ActiveXObject("Scripting.Dictionary");
+	if (tblLinks.Exists (key)) link = tblLinks.Item (key);
+	 else
+	{
+		var kLinks = getAttribute ("keyLinks");
+		var linkStart = "|" + key + "=>";
+		var index = kLinks.indexOf (linkStart) + 1;
+		if (index > 0)
+		{			   
+		   wholeLink = kLinks.substring (index, kLinks.length);	
+		   delimiterIndex = wholeLink.indexOf ("::");
+		   link = wholeLink.substring (linkStart.length-1, delimiterIndex);			   
+		   tblLinks.add (key, link);		
+		   endIndex = wholeLink.indexOf ("|");
+		   btnTarget=wholeLink.substring (delimiterIndex+2, endIndex);			    			   
+		}
+	}	
+	
+		link = loadParams (link);
+		if (link && link !== "?") { 
+	        if (! btnTarget) btnTarget="_blank";
+
+		if (btnTarget == "_hide") hiddenNavigate ("/"+link); 	     	
+		  else window.open("/"+link, btnTarget, 'resizable=yes,status=yes,toolbar=no,menubar=no,scrollbars=yes,location=no'); return link; 
+	}
+	return "";
+}
+
+function loadParams (link)
+{	
+	var loadedParams = ""; 	
+	tr = rows [getAttribute ("curRow")];
+	
+	var sCh = "["; var eCh = "]";				
+	sChPos = link.indexOf (sCh);
+	eChPos = link.indexOf (eCh);
+	while (sChPos > -1 && eChPos > -1)
+	{	
+		fld = link.substring (sChPos+1, eChPos);					
+		link = link.replace (sCh + fld + eCh, clearNumSeperators (tr?tr.all [fld].innerText:filterValue(fld)));	
+		sChPos = link.indexOf (sCh);
+		eChPos = link.indexOf (eCh);
+	}			
+	return link;
+}
+
+
+function checkRight(key)
+{
+	var kLinks = getAttribute ("keyLinks");
+	if (! kLinks) return false;
+	var linkStart = "|" + key + "=>";
+	index = kLinks.indexOf (linkStart) + 1;
+	if (index > 0) return true;
+	  else return false;
+}
+
+
+function refreshRow (rwInd, uniqueFields, uniqueValues)
+{
+	setAttribute ("refreshing", rwInd);
+	navPath = getAttribute ("navPath");
+
+      	url = "/isapi/navigator.dll/" + navPath + "?" + getNavigationSt (this, "", "", uniqueFields, uniqueValues, "", "");
+      	setLocation (url + "&SEEK=1&RECORDCOUNT=1"); 
+	return true;
+}
+
+
+function refreshCurRow ()
+{
+	var rw = getAttribute ("curRow");	
+	var keyFields= getAttribute ("uniqueSet");
+	if (! keyFields) keyFields= getAttribute ("curIndex");	
+	var keyValues = getKeyValues (this, keyFields, rw);	
+	refreshRow (rw, keyFields, keyValues);
+}
+
+
+function filterValue(fld)
+{
+	filter = getAttribute ("activeFilter");	
+     	if (filter)
+     	{	  
+          	p = filter.indexOf (fld);	
+          	if (p > -1)	   	
+	  	{	     	
+	    		p = p + fld.length;
+	    		tmp = filter.substring (p,filter.length);
+	    		start = tmp.indexOf ("=") + 1;
+            		endp = tmp.indexOf (")");
+
+     	    		fldVal = tmp.substring (start, endp);
+	    		while (fldVal.indexOf ("'") > -1) fldVal = fldVal.replace ("'", "");
+
+            		return fldVal;	
+	  	}         
+      }   
+      return "";	
+}
+
+function next()
+{
+  	fireKey (40,false,false);  	
+}
+
+function prev()
+{
+  	fireKey (38,false,false);  	
+}
+
+function prevPage()
+{
+  	fireKey (33);  	
+}
+
+function nextPage()
+{
+  	fireKey (34);  	
+}
+
+function first()
+{
+  	fireKey (36,false,true);  	
+}
+
+function last()
+{
+  	fireKey (35,false,true);  	
+}
+
+function search()
+{
+  	fireKey (83,false,true);  	
+}
+
+
+function showNavigationKeys()
+{  		
+	if (! window.document.body.all["navKeys"])
+	{
+		var oDiv = window.document.createElement ("DIV");			
+		oDiv.id = "navKeys"
+		oDiv.align="center";		
+		oDiv.style.marginTop = 3;
+		window.document.body.appendChild (oDiv);
+
+		oBtn = window.document.createElement ("BUTTON");		
+		oDiv.appendChild (oBtn);
+		oBtn.className= "subBtn";
+		oBtn.innerText = "|<";
+		oBtn.onclick = first;
+		oBtn.style.marginRight = 2;
+
+		oBtn = window.document.createElement ("BUTTON");		
+		oDiv.appendChild (oBtn);
+		oBtn.className= "subBtn";
+		oBtn.innerText = "<<";
+		oBtn.onclick = prevPage;
+		oBtn.style.marginRight = 2;
+
+		oBtn = window.document.createElement ("BUTTON");		
+		oDiv.appendChild (oBtn);
+		oBtn.className= "subBtn";
+		oBtn.innerText = "<";
+		oBtn.onclick = prev;
+		oBtn.style.marginRight = 2;
+
+		oBtn = window.document.createElement ("BUTTON");		
+		oDiv.appendChild (oBtn);
+		oBtn.className= "subBtn";
+		oBtn.innerText = ">";
+		oBtn.onclick = next;
+		oBtn.style.marginRight = 2;
+
+		oBtn = window.document.createElement ("BUTTON");		
+		oDiv.appendChild (oBtn);
+		oBtn.className= "subBtn";
+		oBtn.innerText = ">>";
+		oBtn.onclick = nextPage;
+		oBtn.style.marginRight = 2;
+
+		oBtn = window.document.createElement ("BUTTON");		
+		oDiv.appendChild (oBtn);
+		oBtn.className= "subBtn";
+		oBtn.innerText = ">|";
+		oBtn.onclick = last;	
+		oBtn.style.marginRight = 2;
+	
+		oBtn = window.document.createElement ("BUTTON");		
+		oDiv.appendChild (oBtn);
+		oBtn.className= "subBtn";
+		oBtn.innerText = " Ara ";
+		oBtn.onclick = search;			
+		oBtn.style.marginRight = 2;
+
+		oBtn = window.document.createElement ("BUTTON");		
+		oDiv.appendChild (oBtn);
+		oBtn.className= "subBtn";
+		oBtn.innerText = "Tazele";
+		oBtn.onclick = callRefresh;	
+	}
+	SatirRenklendir();
+}
+
+
+function refresh()
+{
+	var navPath = getAttribute ("navPath");
+	var keyFields = getAttribute ("curIndex");
+	var keyValues = getKeyValues (this, keyFields, 1); //1. satirdaki degerleri al		
+      	var url = "/isapi/navigator.dll/" + navPath + "?" + getNavigationSt (this, "", "", keyFields, keyValues, "", "");
+      	setLocation (url + "&SEEK=1"); 
+	return true;  	
+}
+
+
+function callRefresh()
+{
+ 	refresh();
+}
+
+
+function SatirRenklendir()
+{
+  if (! this.rows[0].all ["RENK"]) return true;
+  for (var rw=1;rw < rows.length-1;rw++) 
+	this.rows[rw].bgColor= this.rows[rw].all["RENK"].nodeValue;      
+}
+
+
+function adjustRowCount(rowCount)
+{
+	if (rowCount)
+	{
+		var shrink= (rowCount > 0); 
+		rowCount= Math.abs(rowCount);		
+
+		for (i=0; i < rowCount; i++)
+		{
+			if (shrink) //buyume
+			{	
+				var oTr = insertRow(rows.length-1);				
+				for (var c=0; c < rows[0].cells.length; c++)
+				{
+					var oTd= oTr.insertCell();
+					oTd.id= rows[0].cells[c].id;
+				}
+			}		
+			  else 	//kuculme
+			{
+				rows[rows.length-2].removeNode(true);
+			}
+		}
+	}
+}
+
+
+function locate (keyFields, keyValues)
+ { 
+   var whichASC = window.event.keyCode;
+
+   _tr   = rows [getAttribute ("curRow")];
+
+   var method = "NEXT";
+   navPath = getAttribute ("navPath");
+
+   var recCount = "";
+   if (! getAttribute("disableAutoSize"))
+   {
+	var recCount = parseInt (window.document.body.offsetHeight / (rows[0].offsetHeight + 5)) - 3;		
+	recCount = "&RECORDCOUNT=" + recCount;
+   }
+
+   var url="/isapi/navigator.dll/" + navPath + "?" + getNavigationSt (this,"", method, keyFields, keyValues, "", "") + "&SEEK=1" + recCount;
+
+   if (navPath=="nvgtHP") window.document.location=url;
+     else
+     {	
+	setAttribute ("curIndex",keyFields); 
+	setLocation (url);
+     }
+}
+
+
+
+</SCRIPT>
+</PUBLIC:COMPONENT>
+

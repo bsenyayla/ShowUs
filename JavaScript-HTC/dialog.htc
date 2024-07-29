@@ -1,0 +1,17 @@
+<PUBLIC:COMPONENT URN="www.idb.com.tr" >
+	<PUBLIC:ATTACH EVENT="onkeydown" ONEVENT="bodyKeyDown()" />
+
+   <SCRIPT LANGUAGE="JavaScript">
+
+      	function bodyKeyDown()  
+       	{ 
+	  	key = window.event.keyCode;
+          	if (key == 27)
+	  	{
+	    		if (window.dialogHeight) window.close (); //bir dialogsa kapat
+          	}
+       	}
+
+    </SCRIPT>
+
+</PUBLIC:COMPONENT>

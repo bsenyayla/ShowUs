@@ -1,0 +1,22 @@
+<PUBLIC:ATTACH EVENT="onmouseover" ONEVENT="btnMouseOver()" />
+<PUBLIC:ATTACH EVENT="onmouseout" ONEVENT="btnMouseOut()" />
+
+<SCRIPT LANGUAGE="JavaScript">
+ 
+function btnMouseOver()
+{
+  	style.borderLeft="1px solid #ff9999";
+	style.borderBottom="1px solid red";
+	style.borderTop="1px solid #ff9999";
+	style.borderRight="1px solid red";	
+}
+
+function btnMouseOut()
+{
+  	style.borderLeft="1px solid gray";
+	style.borderBottom="1px solid black";
+	style.borderTop="1px solid gray";
+	style.borderRight="1px solid black";	
+}
+
+</SCRIPT>

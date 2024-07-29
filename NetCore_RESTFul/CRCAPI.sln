@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRCAPI", "CRCAPI.csproj", "{96A04DE9-841F-436E-A91F-4B11363C2ADD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Ankara|Any CPU = Ankara|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		DevAnkara|Any CPU = DevAnkara|Any CPU
+		Gebze|Any CPU = Gebze|Any CPU
+		PreProd|Any CPU = PreProd|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96A04DE9-841F-436E-A91F-4B11363C2ADD}.Ankara|Any CPU.ActiveCfg = Ankara|Any CPU
+		{96A04DE9-841F-436E-A91F-4B11363C2ADD}.Ankara|Any CPU.Build.0 = Ankara|Any CPU
+		{96A04DE9-841F-436E-A91F-4B11363C2ADD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96A04DE9-841F-436E-A91F-4B11363C2ADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96A04DE9-841F-436E-A91F-4B11363C2ADD}.DevAnkara|Any CPU.ActiveCfg = DevAnkara|Any CPU
+		{96A04DE9-841F-436E-A91F-4B11363C2ADD}.DevAnkara|Any CPU.Build.0 = DevAnkara|Any CPU
+		{96A04DE9-841F-436E-A91F-4B11363C2ADD}.Gebze|Any CPU.ActiveCfg = Gebze|Any CPU
+		{96A04DE9-841F-436E-A91F-4B11363C2ADD}.Gebze|Any CPU.Build.0 = Gebze|Any CPU
+		{96A04DE9-841F-436E-A91F-4B11363C2ADD}.PreProd|Any CPU.ActiveCfg = PreProd|Any CPU
+		{96A04DE9-841F-436E-A91F-4B11363C2ADD}.PreProd|Any CPU.Build.0 = PreProd|Any CPU
+		{96A04DE9-841F-436E-A91F-4B11363C2ADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96A04DE9-841F-436E-A91F-4B11363C2ADD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DC8F5DEB-B192-4E50-ACE1-3A1E9E82B288}
+	EndGlobalSection
+EndGlobal
