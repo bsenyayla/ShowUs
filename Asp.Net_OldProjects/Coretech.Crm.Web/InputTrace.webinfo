@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<log>
+  <inputMessage utc="14.03.2013 21:31:22" messageId="urn:uuid:0e81cfab-1628-4166-9dc1-9cb02857a164">
+    <processingStep description="Unprocessed message">
+      <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+        <soap:Header>
+          <wsa:Action>http://tempuri.org/SendRegion</wsa:Action>
+          <wsa:MessageID>urn:uuid:0e81cfab-1628-4166-9dc1-9cb02857a164</wsa:MessageID>
+          <wsa:ReplyTo>
+            <wsa:Address>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:Address>
+          </wsa:ReplyTo>
+          <wsa:To>http://localhost/Coretech.Crm.Web/ISV/Avea/WebServices/MastersWebService.asmx</wsa:To>
+          <wsse:Security soap:mustUnderstand="1">
+            <wsu:Timestamp wsu:Id="Timestamp-bff5d25d-8b7a-4bea-b193-157af48d2f09">
+              <wsu:Created>2013-03-14T21:29:54Z</wsu:Created>
+              <wsu:Expires>2013-03-14T21:34:54Z</wsu:Expires>
+            </wsu:Timestamp>
+            <wsse:UsernameToken xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="SecurityToken-1897951e-14e9-465c-88e6-6ce10a526cc8">
+              <wsse:Username>WebServiceUserPRM</wsse:Username>
+              <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">PRMWebServiceUser12</wsse:Password>
+              <wsse:Nonce>7WeqshqaLSEQlBRVrpX0og==</wsse:Nonce>
+              <wsu:Created>2013-03-14T21:29:54Z</wsu:Created>
+            </wsse:UsernameToken>
+          </wsse:Security>
+        </soap:Header>
+        <soap:Body>
+          <SendRegion xmlns="http://tempuri.org/">
+            <data>
+              <RegionObject>
+                <RegionExternalCode>SOUTH_MARMARA1255125654565656656</RegionExternalCode>
+                <RegionName>Güney Marmara</RegionName>
+                <ValidFlag>true</ValidFlag>
+              </RegionObject>
+            </data>
+          </SendRegion>
+        </soap:Body>
+      </soap:Envelope>
+    </processingStep>
+    <processingStep description="Entering SOAP filter Microsoft.Web.Services3.Design.RequireSoapHeaderAssertion+RequireSoapHeaderFilter" />
+    <processingStep description="Exited SOAP filter Microsoft.Web.Services3.Design.RequireSoapHeaderAssertion+RequireSoapHeaderFilter" />
+    <processingStep description="Entering SOAP filter Microsoft.Web.Services3.Design.UsernameOverTransportAssertion+ServiceInputFilter" />
+    <processingStep description="Exception thrown: The security token could not be authenticated or authorized">   at Microsoft.Web.Services3.Security.Tokens.SecurityTokenManager.LoadXmlSecurityToken(XmlElement element)
+   at Microsoft.Web.Services3.Security.Tokens.SecurityTokenManager.GetTokenFromXml(XmlElement element)
+   at Microsoft.Web.Services3.Security.Security.LoadToken(XmlElement element, SecurityConfiguration configuration, Int32&amp; tokenCount)
+   at Microsoft.Web.Services3.Security.Security.LoadXml(XmlElement element)
+   at Microsoft.Web.Services3.Security.Security.CreateFrom(SoapEnvelope envelope, String localActor, String serviceActor)
+   at Microsoft.Web.Services3.Security.ReceiveSecurityFilter.ProcessMessage(SoapEnvelope envelope)
+   at Microsoft.Web.Services3.Pipeline.ProcessInputMessage(SoapEnvelope envelope)</processingStep>
+  </inputMessage>
+  <inputMessage utc="14.03.2013 21:39:45" messageId="urn:uuid:901cb0f3-7c75-4369-be82-0661e1a907ab">
+    <processingStep description="Unprocessed message">
+      <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+        <soap:Header>
+          <wsa:Action>http://tempuri.org/SendRegion</wsa:Action>
+          <wsa:MessageID>urn:uuid:901cb0f3-7c75-4369-be82-0661e1a907ab</wsa:MessageID>
+          <wsa:ReplyTo>
+            <wsa:Address>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:Address>
+          </wsa:ReplyTo>
+          <wsa:To>http://localhost/Coretech.Crm.Web/ISV/Avea/WebServices/MastersWebService.asmx</wsa:To>
+          <wsse:Security soap:mustUnderstand="1">
+            <wsu:Timestamp wsu:Id="Timestamp-83fdb648-daed-48e7-b572-aaee008771fe">
+              <wsu:Created>2013-03-14T21:38:39Z</wsu:Created>
+              <wsu:Expires>2013-03-14T21:43:39Z</wsu:Expires>
+            </wsu:Timestamp>
+            <wsse:UsernameToken xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="SecurityToken-c52fa0af-f4d5-4a49-b11c-b3f2d1e6b768">
+              <wsse:Username>WebServiceUserPRM</wsse:Username>
+              <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">PRMWebServiceUser12</wsse:Password>
+              <wsse:Nonce>yU7enX8NTXQFSSxDxzTlmQ==</wsse:Nonce>
+              <wsu:Created>2013-03-14T21:38:39Z</wsu:Created>
+            </wsse:UsernameToken>
+          </wsse:Security>
+        </soap:Header>
+        <soap:Body>
+          <SendRegion xmlns="http://tempuri.org/">
+            <data>
+              <RegionObject>
+                <RegionExternalCode>SOUTH_MARMARA1255125654565656656</RegionExternalCode>
+                <RegionName>Güney Marmara</RegionName>
+                <ValidFlag>true</ValidFlag>
+              </RegionObject>
+            </data>
+          </SendRegion>
+        </soap:Body>
+      </soap:Envelope>
+    </processingStep>
+    <processingStep description="Entering SOAP filter Microsoft.Web.Services3.Design.RequireSoapHeaderAssertion+RequireSoapHeaderFilter" />
+    <processingStep description="Exited SOAP filter Microsoft.Web.Services3.Design.RequireSoapHeaderAssertion+RequireSoapHeaderFilter" />
+    <processingStep description="Entering SOAP filter Microsoft.Web.Services3.Design.UsernameOverTransportAssertion+ServiceInputFilter" />
+    <processingStep description="Exited SOAP filter Microsoft.Web.Services3.Design.UsernameOverTransportAssertion+ServiceInputFilter" />
+    <processingStep description="Entering SOAP filter Microsoft.Web.Services3.Design.AuthorizationAssertion+AuthorizationFilter" />
+    <processingStep description="Exited SOAP filter Microsoft.Web.Services3.Design.AuthorizationAssertion+AuthorizationFilter" />
+    <processingStep description="Processed message">
+      <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+        <soap:Header />
+        <soap:Body>
+          <SendRegion xmlns="http://tempuri.org/">
+            <data>
+              <RegionObject>
+                <RegionExternalCode>SOUTH_MARMARA1255125654565656656</RegionExternalCode>
+                <RegionName>Güney Marmara</RegionName>
+                <ValidFlag>true</ValidFlag>
+              </RegionObject>
+            </data>
+          </SendRegion>
+        </soap:Body>
+      </soap:Envelope>
+    </processingStep>
+  </inputMessage>
+</log>

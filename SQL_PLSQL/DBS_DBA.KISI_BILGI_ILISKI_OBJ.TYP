@@ -1,0 +1,33 @@
+﻿CREATE OR REPLACE TYPE DBS_DBA."KISI_BILGI_ILISKI_OBJ"                                          AS OBJECT
+(
+  ID                            VARCHAR2(128),
+  ADI                           VARCHAR2(128),
+  SOYADI                        VARCHAR2(64),
+  BABAADI                       VARCHAR2(64),
+  ANAADI                        VARCHAR2(64),
+  DOGUMTARIHI                   DATE,
+  N_TCKIMLIKNO                  NUMBER(15),
+  IL                            VARCHAR2(64),
+  ILCE                          VARCHAR2(64),
+  ILISKILI_ID                   VARCHAR2(15),
+  ILISKILI_ADI                  VARCHAR2(128),
+  ILISKILI_SOYADI               VARCHAR2(64),
+  ILISKILI_BABAADI              VARCHAR2(64),
+  ILISKILI_ANAADI               VARCHAR2(64),
+  ILISKILI_DOGUMTARIHI          DATE,
+  ILISKILI_N_TCKIMLIKNO         NUMBER(15),
+  ILISKILI_IL                   VARCHAR2(64),
+  ILISKILI_ILCE                 VARCHAR2(64),
+  ESLESTIRME_TIPI_ID            NUMBER(4),
+  ESLESTIRME_GRUBU              VARCHAR2(25),
+  ESLESTIRME_TIPI               VARCHAR2(25),
+  SAG_KOLON                     VARCHAR2(25),
+  SOL_KOLON                     VARCHAR2(25),
+  ACIKLAMA                      VARCHAR2(100),
+  ESLESTIRME_YONU               CHAR(1),
+  ESLESTIRME_GIREN_KULLANICI    VARCHAR2(255),
+  ESLESTIRME_GIRIS_TARIHI       DATE,
+  ESLESTIRME_DEGISTIREN_KULL    VARCHAR2(255),
+  ESLESTIRME_DEGISTIRME_TARIHI   DATE
+) ;
+/

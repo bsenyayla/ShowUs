@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<log>
+  <outputMessage utc="14.03.2013 21:31:22" messageId="urn:uuid:aaa8fcd6-12b5-4b03-a0a5-7455a00efa67">
+    <processingStep description="Unprocessed message">
+      <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <soap:Body>
+          <soap:Fault>
+            <faultcode xmlns:q0="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">q0:FailedAuthentication</faultcode>
+            <faultstring>Microsoft.Web.Services3.Security.SecurityFault: The security token could not be authenticated or authorized ---&gt; System.UnauthorizedAccessException: User validation failed
+   at Avea.WS.Factory.AveaUsernameTokenManager.AuthenticateToken(UsernameToken token) in D:\Projects\AveaCrm\Avea.WS.Factory\WebServiceBase.cs:line 87
+   at Microsoft.Web.Services3.Security.Tokens.UsernameTokenManager.VerifyToken(SecurityToken token)
+   at Microsoft.Web.Services3.Security.Tokens.SecurityTokenManager.LoadXmlSecurityToken(XmlElement element)
+   --- End of inner exception stack trace ---
+   at Microsoft.Web.Services3.Security.Tokens.SecurityTokenManager.LoadXmlSecurityToken(XmlElement element)
+   at Microsoft.Web.Services3.Security.Tokens.SecurityTokenManager.GetTokenFromXml(XmlElement element)
+   at Microsoft.Web.Services3.Security.Security.LoadToken(XmlElement element, SecurityConfiguration configuration, Int32&amp; tokenCount)
+   at Microsoft.Web.Services3.Security.Security.LoadXml(XmlElement element)
+   at Microsoft.Web.Services3.Security.Security.CreateFrom(SoapEnvelope envelope, String localActor, String serviceActor)
+   at Microsoft.Web.Services3.Security.ReceiveSecurityFilter.ProcessMessage(SoapEnvelope envelope)
+   at Microsoft.Web.Services3.Pipeline.ProcessInputMessage(SoapEnvelope envelope)
+   at Microsoft.Web.Services3.WseProtocol.FilterRequest(SoapEnvelope requestEnvelope)
+   at Microsoft.Web.Services3.WseProtocol.RouteRequest(SoapServerMessage message)
+   at System.Web.Services.Protocols.SoapServerProtocol.Initialize()
+   at System.Web.Services.Protocols.ServerProtocolFactory.Create(Type type, HttpContext context, HttpRequest request, HttpResponse response, Boolean&amp; abortProcessing)</faultstring>
+            <faultactor>http://localhost/Coretech.Crm.Web/ISV/Avea/WebServices/MastersWebService.asmx</faultactor>
+          </soap:Fault>
+        </soap:Body>
+      </soap:Envelope>
+    </processingStep>
+    <processingStep description="Entering SOAP filter Microsoft.Web.Services3.Design.UsernameOverTransportAssertion+ServiceOutputFilter" />
+    <processingStep description="Exited SOAP filter Microsoft.Web.Services3.Design.UsernameOverTransportAssertion+ServiceOutputFilter" />
+    <processingStep description="Processed message">
+      <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+        <soap:Header>
+          <wsa:Action>http://schemas.xmlsoap.org/ws/2004/08/addressing/fault</wsa:Action>
+          <wsa:MessageID>urn:uuid:aaa8fcd6-12b5-4b03-a0a5-7455a00efa67</wsa:MessageID>
+          <wsa:RelatesTo>urn:uuid:0e81cfab-1628-4166-9dc1-9cb02857a164</wsa:RelatesTo>
+          <wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To>
+          <wsse:Security>
+            <wsu:Timestamp wsu:Id="Timestamp-7475790d-7c5b-40bc-8727-6ee1ddeb7da9">
+              <wsu:Created>2013-03-14T21:31:22Z</wsu:Created>
+              <wsu:Expires>2013-03-14T21:36:22Z</wsu:Expires>
+            </wsu:Timestamp>
+          </wsse:Security>
+        </soap:Header>
+        <soap:Body>
+          <soap:Fault>
+            <faultcode xmlns:q0="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">q0:FailedAuthentication</faultcode>
+            <faultstring>Microsoft.Web.Services3.Security.SecurityFault: The security token could not be authenticated or authorized ---&gt; System.UnauthorizedAccessException: User validation failed
+   at Avea.WS.Factory.AveaUsernameTokenManager.AuthenticateToken(UsernameToken token) in D:\Projects\AveaCrm\Avea.WS.Factory\WebServiceBase.cs:line 87
+   at Microsoft.Web.Services3.Security.Tokens.UsernameTokenManager.VerifyToken(SecurityToken token)
+   at Microsoft.Web.Services3.Security.Tokens.SecurityTokenManager.LoadXmlSecurityToken(XmlElement element)
+   --- End of inner exception stack trace ---
+   at Microsoft.Web.Services3.Security.Tokens.SecurityTokenManager.LoadXmlSecurityToken(XmlElement element)
+   at Microsoft.Web.Services3.Security.Tokens.SecurityTokenManager.GetTokenFromXml(XmlElement element)
+   at Microsoft.Web.Services3.Security.Security.LoadToken(XmlElement element, SecurityConfiguration configuration, Int32&amp; tokenCount)
+   at Microsoft.Web.Services3.Security.Security.LoadXml(XmlElement element)
+   at Microsoft.Web.Services3.Security.Security.CreateFrom(SoapEnvelope envelope, String localActor, String serviceActor)
+   at Microsoft.Web.Services3.Security.ReceiveSecurityFilter.ProcessMessage(SoapEnvelope envelope)
+   at Microsoft.Web.Services3.Pipeline.ProcessInputMessage(SoapEnvelope envelope)
+   at Microsoft.Web.Services3.WseProtocol.FilterRequest(SoapEnvelope requestEnvelope)
+   at Microsoft.Web.Services3.WseProtocol.RouteRequest(SoapServerMessage message)
+   at System.Web.Services.Protocols.SoapServerProtocol.Initialize()
+   at System.Web.Services.Protocols.ServerProtocolFactory.Create(Type type, HttpContext context, HttpRequest request, HttpResponse response, Boolean&amp; abortProcessing)</faultstring>
+            <faultactor>http://localhost/Coretech.Crm.Web/ISV/Avea/WebServices/MastersWebService.asmx</faultactor>
+          </soap:Fault>
+        </soap:Body>
+      </soap:Envelope>
+    </processingStep>
+  </outputMessage>
+  <outputMessage utc="14.03.2013 21:40:23" messageId="urn:uuid:dc3ade9d-f68d-4fd0-a85d-80e8a3aa72ab">
+    <processingStep description="Unprocessed message">
+      <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <soap:Body>
+          <soap:Fault>
+            <faultcode>soap:Server</faultcode>
+            <faultstring>System.Web.Services.Protocols.SoapException: Server was unable to process request. ---&gt; System.Xml.XmlException: Root element is missing.
+   at System.Xml.XmlTextReaderImpl.ThrowWithoutLineInfo(String res)
+   at System.Xml.XmlTextReaderImpl.ParseDocumentContent()
+   at System.Xml.XmlLoader.Load(XmlDocument doc, XmlReader reader, Boolean preserveWhitespace)
+   at System.Xml.XmlDocument.Load(XmlReader reader)
+   at System.Xml.XmlDocument.LoadXml(String xml)
+   at Avea.WS.Factory.ExceptionHandling.ExceptionUtility.GetDetail(Status status) in D:\Projects\AveaCrm\Avea.WS.Factory\ExceptionHandling\ExceptionUtility.cs:line 37
+   at Avea.WS.Factory.ExceptionHandling.ExceptionUtility.LogAndThrowSoapException(Exception ex, String category) in D:\Projects\AveaCrm\Avea.WS.Factory\ExceptionHandling\ExceptionUtility.cs:line 21
+   at Avea.WS.Factory.MastersWebService.SendRegion(List`1 data) in D:\Projects\AveaCrm\Avea.WS.Factory\MastersWebService.cs:line 147
+   --- End of inner exception stack trace ---</faultstring>
+            <detail />
+          </soap:Fault>
+        </soap:Body>
+      </soap:Envelope>
+    </processingStep>
+    <processingStep description="Entering SOAP filter Microsoft.Web.Services3.Design.UsernameOverTransportAssertion+ServiceOutputFilter" />
+    <processingStep description="Exited SOAP filter Microsoft.Web.Services3.Design.UsernameOverTransportAssertion+ServiceOutputFilter" />
+    <processingStep description="Processed message">
+      <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+        <soap:Header>
+          <wsa:Action>http://schemas.xmlsoap.org/ws/2004/08/addressing/fault</wsa:Action>
+          <wsa:MessageID>urn:uuid:dc3ade9d-f68d-4fd0-a85d-80e8a3aa72ab</wsa:MessageID>
+          <wsa:RelatesTo>urn:uuid:901cb0f3-7c75-4369-be82-0661e1a907ab</wsa:RelatesTo>
+          <wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To>
+          <wsse:Security>
+            <wsu:Timestamp wsu:Id="Timestamp-18c2c44c-3340-422e-bb3f-328d02af4cd8">
+              <wsu:Created>2013-03-14T21:40:23Z</wsu:Created>
+              <wsu:Expires>2013-03-14T21:45:23Z</wsu:Expires>
+            </wsu:Timestamp>
+          </wsse:Security>
+        </soap:Header>
+        <soap:Body>
+          <soap:Fault>
+            <faultcode>soap:Server</faultcode>
+            <faultstring>System.Web.Services.Protocols.SoapException: Server was unable to process request. ---&gt; System.Xml.XmlException: Root element is missing.
+   at System.Xml.XmlTextReaderImpl.ThrowWithoutLineInfo(String res)
+   at System.Xml.XmlTextReaderImpl.ParseDocumentContent()
+   at System.Xml.XmlLoader.Load(XmlDocument doc, XmlReader reader, Boolean preserveWhitespace)
+   at System.Xml.XmlDocument.Load(XmlReader reader)
+   at System.Xml.XmlDocument.LoadXml(String xml)
+   at Avea.WS.Factory.ExceptionHandling.ExceptionUtility.GetDetail(Status status) in D:\Projects\AveaCrm\Avea.WS.Factory\ExceptionHandling\ExceptionUtility.cs:line 37
+   at Avea.WS.Factory.ExceptionHandling.ExceptionUtility.LogAndThrowSoapException(Exception ex, String category) in D:\Projects\AveaCrm\Avea.WS.Factory\ExceptionHandling\ExceptionUtility.cs:line 21
+   at Avea.WS.Factory.MastersWebService.SendRegion(List`1 data) in D:\Projects\AveaCrm\Avea.WS.Factory\MastersWebService.cs:line 147
+   --- End of inner exception stack trace ---</faultstring>
+            <detail />
+          </soap:Fault>
+        </soap:Body>
+      </soap:Envelope>
+    </processingStep>
+  </outputMessage>
+</log>

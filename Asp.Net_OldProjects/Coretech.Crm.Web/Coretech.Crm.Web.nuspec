@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Upt</id>
+    <version>1.0.0.0</version>
+    <authors>Transfer Sistemleri Gelistirme Birimi</authors>
+    <description>UPT Projesi nuget paketi</description>
+    <language>en-US</language>
+    <projectUrl>https://uptuat.aktifbank.com.tr/</projectUrl>
+    <licenseUrl>https://uptuat.aktifbank.com.tr/</licenseUrl>
+  </metadata>
+  <files>
+    <file src="**" exclude="**\*.config;**\*.pubxml;**\*.ascx.cs;**\*.aspx.cs;**\*.designer.cs;**\*.csproj;**\*.user;**\*.vspscc;obj\**\*.*" />
+    <file src="App_Data\**\*.*" exclude="App_Data\*"></file>
+    <!--<file src="App_Data\**\*.*" exclude="App_Data\*"></file >-->
+    <!--<file src="App_Data\**\*.*" exclude="App_Data\*"></file>-->
+  </files>
+</package>

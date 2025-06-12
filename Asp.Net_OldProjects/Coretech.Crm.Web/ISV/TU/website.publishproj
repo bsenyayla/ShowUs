@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+***********************************************************************************************
+website.publishproj
+
+WARNING: DO NOT MODIFY this file, it is used for the web publish process.
+
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+***********************************************************************************************
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.30319</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{982a7200-0486-4a9b-9e8d-bd381ce85a88}</ProjectGuid>
+    <SourceWebPhysicalPath>$(MSBuildThisFileDirectory)</SourceWebPhysicalPath>
+    <SourceWebVirtualPath>/TuProject.Web</SourceWebVirtualPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SourceWebProject>http://localhost/Coretech.Crm.Web/ISV/TU</SourceWebProject>
+    <SourceWebMetabasePath>/LM/W3SVC/1/ROOT/Coretech.Crm.Web/ISV/TU</SourceWebMetabasePath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <!-- for VS2010 we need to use 10.5 but for VS2012+ we should use VisualStudioVersion -->
+    <WebPublishTargetsVersion Condition=" '$(WebPublishTargetsVersion)' =='' and '$(VisualStudioVersion)' == 10.0 ">10.5</WebPublishTargetsVersion>
+    <WebPublishTargetsVersion Condition=" '$(WebPublishTargetsVersion)'=='' ">$(VisualStudioVersion)</WebPublishTargetsVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(WebPublishTargetsVersion)</VSToolsPath>
+    <_WebPublishTargetsPath Condition=" '$(_WebPublishTargetsPath)'=='' ">$(VSToolsPath)</_WebPublishTargetsPath>
+    <AssemblyFileVersion Condition="'$(AssemblyFileVersion)' == ''">1.0.0.0</AssemblyFileVersion>
+    <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <AssemblyAttributes Include="AssemblyFileVersion">
+      <Value>$(AssemblyFileVersion)</Value>
+    </AssemblyAttributes>
+    <AssemblyAttributes Include="AssemblyVersion">
+      <Value>$(AssemblyVersion)</Value>
+    </AssemblyAttributes>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Coretech.Crm\Coretech.Crm.Data\Coretech.Crm.Data.csproj">
+      <Project>{3BC70DE4-1C9F-4EE5-BD43-A1FD01D737C6}</Project>
+      <Name>Coretech.Crm.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Coretech.Crm\Coretech.Crm.Factory\Coretech.Crm.Factory.csproj">
+      <Project>{4647AF17-14BB-4A21-AC81-88651B58128A}</Project>
+      <Name>Coretech.Crm.Factory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Coretech.Crm\Coretech.Crm.Messenger\Coretech.Crm.Messenger.csproj">
+      <Project>{B88F1547-830A-44D3-90EA-0FDC134C1037}</Project>
+      <Name>Coretech.Crm.Messenger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Coretech.Crm\Coretech.Crm.Objects\Coretech.Crm.Objects.csproj">
+      <Project>{CB63A789-8466-4C78-B648-2C1E18AA24EC}</Project>
+      <Name>Coretech.Crm.Objects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Coretech.Crm\Coretech.Crm.PluginData\Coretech.Crm.PluginData.csproj">
+      <Project>{E9C907A7-13C3-4FF5-B1E2-A66341E05A5D}</Project>
+      <Name>Coretech.Crm.PluginData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Coretech.Crm\Coretech.Crm.Provider\Coretech.Crm.Provider.csproj">
+      <Project>{BA8BCA57-DF2D-417D-A19F-EBFB361D0E3B}</Project>
+      <Name>Coretech.Crm.Provider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Coretech.Crm\Coretech.Crm.Reporting\Coretech.Crm.Reporting.csproj">
+      <Project>{6A2B527D-BCFA-44FA-80EE-3D62296FA54D}</Project>
+      <Name>Coretech.Crm.Reporting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Coretech.Crm\Coretech.Crm.Utility\Coretech.Crm.Utility.csproj">
+      <Project>{E4550504-3945-4DB7-8E30-A430923B1234}</Project>
+      <Name>Coretech.Crm.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Coretech.Crm\Coretech.Crm.Web.UI.RefleX\Coretech.Crm.Web.UI.RefleX.csproj">
+      <Project>{4C032A41-1E87-49BA-A388-CD3CC40DF3F7}</Project>
+      <Name>Coretech.Crm.Web.UI.RefleX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Coretech.RefleX.V07511072002\RefleX.FrameWork\RefleX.FrameWork.csproj">
+      <Project>{D37E4AE8-FA9F-4D86-A25F-0298F35FE6B9}</Project>
+      <Name>RefleX.FrameWork</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Net.Communication\Net.Communication\DotNet.Communication.csproj">
+      <Project>{FCB2BC13-091E-4368-B492-FF1B5FC5C506}</Project>
+      <Name>DotNet.Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Net.Communication\Net.DiffieHellman\DotNet.DiffieHellman.csproj">
+      <Project>{4E09FDA9-5C0F-4EB3-8C90-31180984816E}</Project>
+      <Name>DotNet.DiffieHellman</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Net.Communication\Net.Ftp\DotNet.Ftp.csproj">
+      <Project>{913BEF77-1B5F-4E48-BD66-C8D859095EA9}</Project>
+      <Name>DotNet.Ftp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Net.Communication\Net.Proxy\DotNet.Proxy.csproj">
+      <Project>{FA21714C-63BF-4A02-B4C9-B050C0B7E80D}</Project>
+      <Name>DotNet.Proxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Net.Communication\Net.Security\DotNet.Security.csproj">
+      <Project>{14C16073-D0FC-40C5-84C1-6E8681F03338}</Project>
+      <Name>DotNet.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Net.Communication\Net.SFtp\DotNet.SFtp.csproj">
+      <Project>{7F922F03-361D-4F1B-8B6E-15B7A571D0BD}</Project>
+      <Name>DotNet.SFtp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Upt\Upt.Core\Upt.Core.Business\Upt.Core.Business.csproj">
+      <Project>{1617D016-6317-4AEA-9927-CA12D4EB389B}</Project>
+      <Name>Upt.Core.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Upt\Upt.Core\Upt.Core.Caching\Upt.Core.Caching.csproj">
+      <Project>{CEF336D2-CC0B-417F-9DC7-B6ECC8B4678A}</Project>
+      <Name>Upt.Core.Caching</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Upt\Upt.Core\Upt.Core.Data\Upt.Core.Data.csproj">
+      <Project>{6FC44925-DB0E-4296-8F2A-09E7B9470053}</Project>
+      <Name>Upt.Core.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Upt\Upt.Core\Upt.Core.Domain\Upt.Core.Domain.csproj">
+      <Project>{7BEBD006-CB3D-4946-9E11-6884D57BB57D}</Project>
+      <Name>Upt.Core.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Upt\Upt.Core\Upt.Core.Integrations\Upt.Core.Integrations.Domain\Upt.Core.Integrations.Domain.csproj">
+      <Project>{25FE2ED6-282A-48C9-B41A-5A0FC29D667E}</Project>
+      <Name>Upt.Core.Integrations.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Upt\Upt.Core\Upt.Core.Integrations\Upt.Core.Integrator\Upt.Core.Integrator.csproj">
+      <Project>{92DC1445-EC43-4995-8D31-4599FDF2D003}</Project>
+      <Name>Upt.Core.Integrator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Upt\Upt.Core\Upt.Core.Logging\Upt.Core.Logging.csproj">
+      <Project>{E6933200-52AF-495A-A203-921B5845EF69}</Project>
+      <Name>Upt.Core.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Upt\Upt.Core\Upt.Core.Repository\Upt.Core.Repository.csproj">
+      <Project>{215273CD-1591-47D1-A529-F28648E0EE1C}</Project>
+      <Name>Upt.Core.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Upt\Upt.Projects\Upt.GsmPayment\Upt.GsmPayment.Business\Upt.GsmPayment.Business.csproj">
+      <Project>{B58D3751-5AD0-4D26-ACC6-84DDC69CDDAA}</Project>
+      <Name>Upt.GsmPayment.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Upt\Upt.Projects\Upt.GsmPayment\Upt.GsmPayment.Domain\Upt.GsmPayment.Domain.csproj">
+      <Project>{BF80FD43-9BFC-4A13-A0D0-378A60E24946}</Project>
+      <Name>Upt.GsmPayment.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Upt\Upt.Projects\Upt.GsmPayment\Upt.GsmPayment.Integrations\Upt.GsmPayment.Integrations.Aktifbank\Upt.GsmPayment.Integrations.Aktifbank.csproj">
+      <Project>{69009DC9-E96B-4F6C-A49D-F661C967E86F}</Project>
+      <Name>Upt.GsmPayment.Integrations.Aktifbank</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Upt\Upt.Projects\Upt.GsmPayment\Upt.GsmPayment.Integrations\Upt.GsmPayment.Integrations.Domain\Upt.GsmPayment.Integrations.Domain.csproj">
+      <Project>{0C1EABC6-CBCE-4C68-B430-FCCFF220ECC1}</Project>
+      <Name>Upt.GsmPayment.Integrations.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Upt\Upt.Projects\Upt.GsmPayment\Upt.GsmPayment.Integrations\Upt.GsmPayment.Integrations.Integrator\Upt.GsmPayment.Integrations.Integrator.csproj">
+      <Project>{18B54B7C-E29C-49D2-8C81-4AF5A3057937}</Project>
+      <Name>Upt.GsmPayment.Integrations.Integrator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Upt\Upt.Projects\Upt.GsmPayment\Upt.GsmPayment.Integrations\Upt.GsmPayment.Integrations.TransferTo\Upt.GsmPayment.Integrations.TransferTo.csproj">
+      <Project>{88A8DD6D-E226-4B40-B79E-8C8AF3880847}</Project>
+      <Name>Upt.GsmPayment.Integrations.TransferTo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Upt\Upt.Projects\Upt.GsmPayment\Upt.GsmPayment.Repository\Upt.GsmPayment.Repository.csproj">
+      <Project>{290427E7-646B-42F8-8758-8BD98BD1A229}</Project>
+      <Name>Upt.GsmPayment.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Integration3rd.Ria\Integrationd3rd.Ria.csproj">
+      <Project>{CB3FEE3B-44BC-4F45-8911-CFEE1AA6D3E9}</Project>
+      <Name>Integrationd3rd.Ria</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Integrationd3rd.Data\Integrationd3rd.Data.csproj">
+      <Project>{D99C5A4D-CF0E-4924-BAAC-4C653637C60E}</Project>
+      <Name>Integrationd3rd.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Integrationd3rd.Elva\Integrationd3rd.Elva.csproj">
+      <Project>{6B579101-7E6F-45A9-923E-6E9214001763}</Project>
+      <Name>Integrationd3rd.Elva</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Integrationd3rd.GoldenCrown\Integrationd3rd.GoldenCrown.csproj">
+      <Project>{024F5E76-38CD-4092-9DD1-2B9284182AB2}</Project>
+      <Name>Integrationd3rd.GoldenCrown</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Integrationd3rd.Russlavbank\Integrationd3rd.Russlavbank.csproj">
+      <Project>{EC16BF7A-821C-4210-822A-BBB528D18A50}</Project>
+      <Name>Integrationd3rd.Russlavbank</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Integrationd3rd.SmallWorld\Integrationd3rd.SmallWorld.csproj">
+      <Project>{45F833A4-4204-44A5-8C60-BA6DBCD89F2A}</Project>
+      <Name>Integrationd3rd.SmallWorld</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Integrationd3rd.Unistream\Integrationd3rd.Unistream.csproj">
+      <Project>{C7A71B6C-F353-4497-BE10-2A09EE3631EE}</Project>
+      <Name>Integrationd3rd.Unistream</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Integrationd3rd.Xpressmoney\Integrationd3rd.Xpressmoney.csproj">
+      <Project>{355B245C-4293-4B76-BE44-8C18621DD159}</Project>
+      <Name>Integrationd3rd.Xpressmoney</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.BankingChannel\TuFactory.BankingChannel.csproj">
+      <Project>{CA433C75-35D1-40EC-9781-D473825412FB}</Project>
+      <Name>TuFactory.BankingChannel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.Business.Akustik\TuFactory.Business.Akustik.csproj">
+      <Project>{DCB7B4E8-C083-42BB-B614-7A415E113FF6}</Project>
+      <Name>TuFactory.Business.Akustik</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.Business\TuFactory.Business.csproj">
+      <Project>{31C0DBC4-D085-4D1A-9A08-C4EB71193C8D}</Project>
+      <Name>TuFactory.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.Codec\TuFactory.Codec.csproj">
+      <Project>{E9B0D3C3-171A-41BE-8A7E-E42BFF08BEA1}</Project>
+      <Name>TuFactory.Codec</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.Common\TuFactory.Common.csproj">
+      <Project>{AF01B470-C159-42ED-BD87-60B2C7693D1E}</Project>
+      <Name>TuFactory.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.CustAccount\TuFactory.CustAccount.csproj">
+      <Project>{A75F93D5-458A-45D0-B5AF-A8197F3535BF}</Project>
+      <Name>TuFactory.CustAccount</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.Domain\TuFactory.Domain.csproj">
+      <Project>{E7B584CA-9775-4982-A12A-F5241CDF8FA9}</Project>
+      <Name>TuFactory.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.EntegrationLog\TuFactory.EntegrationLog.csproj">
+      <Project>{08CF7720-BA37-4652-94D9-4F8628A65AD2}</Project>
+      <Name>TuFactory.EntegrationLog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.Exceptions\TuFactory.Exceptions.csproj">
+      <Project>{13F90663-DAFF-4CD7-A909-F4B865CC5A03}</Project>
+      <Name>TuFactory.Exceptions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.Integrationd3rdLayer\TuFactory.Integrationd3rdLayer.csproj">
+      <Project>{C38C98F0-E62E-4B36-B993-C2F470DAC0C8}</Project>
+      <Name>TuFactory.Integrationd3rdLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.LogoTiger\TuFactory.LogoTiger.csproj">
+      <Project>{E341CB02-2CB9-43EE-B7DC-3C8CD10AC48E}</Project>
+      <Name>TuFactory.LogoTiger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.OnlineUPT\TuFactory.OnlineUPT.csproj">
+      <Project>{018B4379-3CD3-478F-909C-F44DBEDF92FC}</Project>
+      <Name>TuFactory.OnlineUPT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.PayU\TuFactory.PayU.csproj">
+      <Project>{CB00AB1A-BC6E-43B7-84FE-703ED7473CD1}</Project>
+      <Name>TuFactory.PayU</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.PreAccounting\TuFactory.PreAccounting.csproj">
+      <Project>{50DBF84F-470F-499D-918A-09C34A57CB80}</Project>
+      <Name>TuFactory.PreAccounting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.Processes.Activities\TuFactory.Processes.Activities.csproj">
+      <Project>{AA5E6AA8-0004-4C54-9D20-1912664B242C}</Project>
+      <Name>TuFactory.Processes.Activities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.Processes\TuFactory.Processes.csproj">
+      <Project>{98EC024C-6439-44B1-8B1E-29E457B2201F}</Project>
+      <Name>TuFactory.Processes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.Shared.Entity\UPT.Shared.Entity.csproj">
+      <Project>{FE052799-ECF3-4F66-AAAE-706F1FACE7EF}</Project>
+      <Name>UPT.Shared.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.Shared.Service\UPT.Shared.Service.csproj">
+      <Project>{1BD3FE63-85F8-4562-B078-FBBCAFDA244F}</Project>
+      <Name>UPT.Shared.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory.SheduleReport\TuFactory.ScheduleReport.csproj">
+      <Project>{16DD3550-AB2B-41E2-8522-4EA201615712}</Project>
+      <Name>TuFactory.ScheduleReport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuFactory\TuFactory.csproj">
+      <Project>{E0EFDE29-4A06-4420-AB67-F6DBA91CA548}</Project>
+      <Name>TuFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TuProject.Cryptography\TuProject.Cryptography.csproj">
+      <Project>{63B68986-1EED-4ED8-BC90-ABF1C15D23D1}</Project>
+      <Name>TuProject.Cryptography</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(_WebPublishTargetsPath)\Web\Microsoft.WebSite.Publishing.targets" />
+</Project>
