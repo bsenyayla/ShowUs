@@ -1,0 +1,76 @@
+﻿<%@ Master Language="C#" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<script runat="server">
+    MainClass m = new MainClass();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+       // SecurtyCheck();
+        if (Application[m.UserNameWithDomain] == null)
+        {
+            Response.Redirect("Default.aspx");
+        }
+    }
+
+    void SecurtyCheck()
+    {
+        string adres = Request.Url.OriginalString;
+        if (Request.Url.OriginalString.Contains("localhost"))
+        {
+            return;
+            adres = adres.Replace(@"http://localhost:3611", @"https://olympos.speak.entp");
+        }
+        adres = adres.Replace(":443", "");
+
+        bool qStringVarMi = (Request.QueryString.Count != 0);
+
+        if (qStringVarMi)
+        {
+            int bas = adres.IndexOf("?", 0);
+            adres = adres.Remove(bas, adres.Length - bas);
+        }
+
+        System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection("server=olympos;Database=SecurityManagerDb;User Id=Report_User;Password=M0xe11-");
+        System.Data.SqlClient.SqlCommand com = new System.Data.SqlClient.SqlCommand("spSayfaGirisYetkisi", con);
+        com.CommandType = System.Data.CommandType.StoredProcedure;
+        com.Parameters.AddWithValue("@Sayfa", adres);
+        com.Parameters.AddWithValue("@Domain", m.UserName);
+
+        con.Open();
+        string cevap = com.ExecuteScalar().ToString();
+        con.Close();
+
+        //Response.Write(cevap);
+
+        switch (cevap)
+        {
+            case "Sayfa Yok":
+                Response.Redirect(@"https://olympos.speak.entp/Speak/SayfaYok.aspx?Adres=" + Request.Url.OriginalString);
+                break;
+            case "Deny":
+                Response.Redirect(@"https://olympos.speak.entp/Speak/YetkiYok.aspx?Adres=" + Request.Url.OriginalString);
+                break;
+            default:
+                break;
+        }
+
+    }
+</script>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Untitled Page</title>
+    <link href="App_Themes/Default/Default.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+    <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+    </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

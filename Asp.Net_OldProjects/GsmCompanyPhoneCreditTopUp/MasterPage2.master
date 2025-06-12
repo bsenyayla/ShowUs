@@ -1,0 +1,343 @@
+﻿<%@ Master Language="C#" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<script runat="server">
+    MainClass m = new MainClass();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+      
+        //SecurtyCheck();
+        if (Application[m.UserNameWithDomain]==null)
+        {
+            Response.Redirect("Default.aspx");
+        }
+        if (Session["telno"] != null)
+        {
+            lblNo.Visible = true;
+            lblNo.Text = Session["telno"].ToString();
+        }
+        bool telefonyetki = false;
+        int musteriId = Convert.ToInt32(Request.QueryString["MusteriId"]);
+        dbAcbDbDataContext context = new dbAcbDbDataContext();
+
+        var yetki = (from x in context.Yetkilers where x.Domainname == m.UserName select x).SingleOrDefault();
+        if (yetki != null)
+        {
+            telefonyetki = yetki.TelefonYetki != null ? yetki.TelefonYetki.Value : false;
+        }
+        Musteri musteri = context.Musteris.FirstOrDefault(p => p.Id == musteriId);
+
+        lblAd.Text = musteri.Ad;
+        if (telefonyetki==false)
+        {
+            if (musteri.CepTelefon != null && musteri.CepTelefon.ToString().Length > 8)
+            {
+                lblCepTel.Text = musteri.CepTelefon.Replace(musteri.CepTelefon.Substring(5, 3), "***");
+            }
+            lblDogumTarih.Text = musteri.DogumTarih != null ? musteri.DogumTarih.Value.ToShortDateString() : "";
+            if (musteri.EvTelefon != null && musteri.EvTelefon.ToString().Length > 8)
+            {
+                lblEvTel.Text = musteri.EvTelefon.Replace(musteri.EvTelefon.Substring(5, 3), "***");
+            }
+            if (musteri.IsTelefon != null && musteri.IsTelefon.ToString().Length > 8)
+            {
+                lblIsTel.Text = musteri.IsTelefon.Replace(musteri.IsTelefon.Substring(5, 3), "***");
+            }
+        }
+        else
+        {
+             lblCepTel.Text = musteri.CepTelefon;
+             lblEvTel.Text = musteri.EvTelefon;
+             lblIsTel.Text = musteri.IsTelefon;
+        }
+        lbltcno.Text = musteri.TcKimlikNo;
+        lblSoyad.Text = musteri.Soyad;
+        lblId.Text = musteri.Id.ToString();
+    }
+    void SecurtyCheck()
+    {
+        string adres = Request.Url.OriginalString;
+        if (Request.Url.OriginalString.Contains("localhost"))
+        {
+            return;
+            adres = adres.Replace(@"http://localhost:3611", @"https://olympos.speak.entp");
+        }
+        adres = adres.Replace(":443", "");
+
+        bool qStringVarMi = (Request.QueryString.Count != 0);
+
+        if (qStringVarMi)
+        {
+            int bas = adres.IndexOf("?", 0);
+            adres = adres.Remove(bas, adres.Length - bas);
+        }
+
+        System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection("server=olympos;Database=SecurityManagerDb;User Id=Report_User;Password=M0xe11-");
+        System.Data.SqlClient.SqlCommand com = new System.Data.SqlClient.SqlCommand("spSayfaGirisYetkisi", con);
+        com.CommandType = System.Data.CommandType.StoredProcedure;
+        com.Parameters.AddWithValue("@Sayfa", adres);
+        com.Parameters.AddWithValue("@Domain", m.UserName);
+
+        con.Open();
+        string cevap = com.ExecuteScalar().ToString();
+        con.Close();
+
+        //Response.Write(cevap);
+
+        switch (cevap)
+        {
+            case "Sayfa Yok":
+                Response.Redirect(@"https://olympos.speak.entp/Speak/SayfaYok.aspx?Adres=" + Request.Url.OriginalString);
+                break;
+            case "Deny":
+                Response.Redirect(@"https://olympos.speak.entp/Speak/YetkiYok.aspx?Adres=" + Request.Url.OriginalString);
+                break;
+            default:
+                break;
+        }
+    }
+    public void SelectTab(string tabName)
+    {
+        System.Web.UI.HtmlControls.HtmlGenericControl tab = FindControl(tabName) as System.Web.UI.HtmlControls.HtmlGenericControl;
+        tab.Attributes.Add("class", "selected");
+    }
+</script>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Untitled Page</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style type="text/css">
+        .animatedtabs
+        {
+            border-bottom: 1px solid #5280FF;
+            overflow: hidden;
+            width: 100%;
+            font-size: 12px; /*font of menu text*/
+        }
+        .animatedtabs ul
+        {
+            list-style-type: none;
+            margin: 0;
+            margin-left: 10px; /*offset of first tab relative to page left edge*/
+            padding: 0;
+        }
+        .animatedtabs li
+        {
+            float: left;
+            margin: 0;
+            padding: 0;
+        }
+        .animatedtabs a
+        {
+            float: left;
+            position: relative;
+            top: 5px; /* 1) Number of pixels to protrude up for selected tab. Should equal (3) MINUS (2) below */
+            background: url(images/tab-blue-lef.gif) no-repeat left top;
+            margin-right: 3px; /*Spacing between each tab*/
+            padding: 0 0 0 9px;
+            text-decoration: none;
+            left: 0px;
+            height: 23px;
+            margin-left: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .animatedtabs a span
+        {
+            float: left;
+            position: relative;
+            display: block;
+            background: url(images/tab-blue-righ.gif) no-repeat right top;
+            padding: 5px 14px 3px 5px; /* 2) Padding within each tab. The 3rd value, or 3px, should equal (1) MINUS (3) */
+            font-weight: bold;
+            color: black;
+        }
+        .animatedtabs .red a
+        {
+            float: left;
+            position: relative;
+            top: 5px; /* 1) Number of pixels to protrude up for selected tab. Should equal (3) MINUS (2) below */
+            background: url(images/tab-blue-lef2.gif) no-repeat left top;
+            margin: 0;
+            margin-right: 3px; /*Spacing between each tab*/
+            padding: 0 0 0 9px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .animatedtabs .red a span
+        {
+            float: left;
+            position: relative;
+            display: block;
+            background: url(images/tab-blue-righ2.gif) no-repeat right top;
+            padding: 5px 14px 3px 5px; /* 2) Padding within each tab. The 3rd value, or 3px, should equal (1) MINUS (3) */
+            font-weight: bold;
+            color: black;
+            cursor: pointer;
+        }
+        .animatedtabs .redselected a
+        {
+            float: left;
+            position: relative;
+            top: 5px; /* 1) Number of pixels to protrude up for selected tab. Should equal (3) MINUS (2) below */
+            background: url(images/tab-blue-lef2.gif) no-repeat left top;
+            margin: 0;
+            margin-right: 3px; /*Spacing between each tab*/
+            padding: 0 0 0 9px;
+            text-decoration: none;
+            cursor: pointer;
+            background-position: 0 -125px;
+            top: 0;
+        }
+        .animatedtabs .redselected a span
+        {
+            float: left;
+            position: relative;
+            display: block;
+            background: url(images/tab-blue-righ2.gif) no-repeat right top;
+            padding: 5px 14px 3px 5px; /* 2) Padding within each tab. The 3rd value, or 3px, should equal (1) MINUS (3) */
+            font-weight: bold;
+            color: black;
+            cursor: pointer;
+            background-position: 100% -125px;
+            color: black;
+            padding-bottom: 8px; /* 3) Bottom padding of selected tab. Should equal (1) PLUS (2) above */
+            top: 0;
+        }
+        /* Commented Backslash Hack hides rule from IE5-Mac \*/.animatedtabs a span
+        {
+            float: none;
+        }
+        /* End IE5-Mac hack */.animatedtabs .selected a
+        {
+            background-position: 0 -125px;
+            top: 0;
+        }
+        .animatedtabs .selected a span
+        {
+            background-position: 100% -125px;
+            color: black;
+            padding-bottom: 8px; /* 3) Bottom padding of selected tab. Should equal (1) PLUS (2) above */
+            top: 0;
+        }
+        .animatedtabs a:hover
+        {
+            background-position: 0% -125px;
+            top: 0;
+        }
+        .animatedtabs a:hover span
+        {
+            background-position: 100% -125px;
+            padding-bottom: 8px; /* 3) Bottom padding of selected tab. Should equal (1) PLUS (2) above */
+            top: 0;
+        }
+        .style
+        {
+            width: 140px;
+            font-weight: bold;
+        }
+        .style1
+        {
+            width: 228px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+      
+       
+        <br />
+        <fieldset>
+            <legend>&nbsp;
+                <img alt="" src="images/user.png" style="width: 16px; height: 16px" />
+                Müşteri Bilgileri #<asp:Label ID="lblId" runat="server" Text=""></asp:Label></legend>
+           <table class="myBorderlessTable">
+                <tr>
+                    <td class="Header" style="width: 150px">
+                        Ad:
+                    </td>
+                    <td style="width: 250px">
+                        <asp:Label ID="lblAd" runat="server"></asp:Label>
+                    </td>
+                    <td class="style1">
+                        Doğum Tarihi:
+                    </td>
+                    <td style="width: 250px">
+                        <asp:Label ID="lblDogumTarih" runat="server"></asp:Label>
+                    </td>
+                    <td style="width: 250px">
+                        Aranan Tel</td>
+                    <td style="width: 250px">
+                        <asp:Label ID="lblNo" Font-Bold="true" runat="server" Text=""></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="Header" style="width: 200px">
+                        Soyad:
+                    </td>
+                    <td style="width: 300px">
+                        <asp:Label ID="lblSoyad" runat="server"></asp:Label>
+                    </td>
+                    <td class="style1">
+                        İş Telefonu:
+                    </td>
+                    <td>
+                        <asp:Label ID="lblIsTel" runat="server"></asp:Label>
+                    </td>
+                    <td>
+                        Tc No:</td>
+                    <td>
+                        <asp:Label ID="lbltcno" ForeColor="Red" runat="server" Text=""></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="Header">
+                        Ev Telefonu:
+                    </td>
+                    <td>
+                        <asp:Label ID="lblEvTel" runat="server"></asp:Label>
+                    </td>
+                    <td class="style1">
+                        Cep Telefonu:
+                    </td>
+                    <td>
+                        <asp:Label ID="lblCepTel" runat="server"></asp:Label>
+                    </td>
+                    <td>
+                        Belgeler</td>
+                    <td>
+                       <a href="Belgeler.aspx?MusteriId=<%= Request.QueryString["MusteriId"] %>" target="_blank">Belgeler</a> </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <div class="animatedtabs" align="right">
+        <ul>
+         <li runat="server" id="li1"><a href='default.aspx'
+                title="Anasayfa"><span>Anasayfa</span></a></li>
+            <li runat="server" id="liYeniMobilSatis"><a href='satis.aspx?MusteriId=<%= Request.QueryString["MusteriId"] %>'
+                title="Yeni Satış"><span>Yeni Satış</span></a></li>
+            <li runat="server" id="liMusteriBilgileri"><a href='MusteriIslem.aspx?MusteriId=<%= Request.QueryString["MusteriId"] %>'
+                title="Müşteri Bilgileri"><span>Müşteri Bilgileri</span></a></li>
+            <li runat="server" id="liGecmisMobilSatis"><a href='gecmissatis.aspx?MusteriId=<%= Request.QueryString["MusteriId"] %>'
+                title="Geçmiş Satışlar"><span>Geçmiş Satışlar</span></a></li>
+                  <li runat="server" id="liOlumsuz"><a href='OlumsuzGorusme.aspx?MusteriId=<%= Request.QueryString["MusteriId"] %>'
+                title="Olumsuz Görüşme"><span>Olumsuz Görüşme</span></a></li>
+                  <li runat="server" id="liticket"><a href='Ticketac.aspx?MusteriId=<%= Request.QueryString["MusteriId"] %>'
+                title="Ticket"><span>Ticket</span></a></li>
+                       <li runat="server" style="display:none;" id="liMail"><a href='MailGonder.aspx?MusteriId=<%= Request.QueryString["MusteriId"] %>'
+                title="Ticket"><span>Bilgi Maili</span></a></li>
+        </ul>
+    </div>
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder><br /><a href="default.aspx">
+          <img src="images/logocrm.png" border="0" width="100px" height="77px;"/>
+          </a>
+    </div>
+    </form>
+</body>
+</html>
